@@ -4,9 +4,11 @@ Work in `C:\Projects\EconmicSimulationGame`. Create a feature branch, push it, o
 
 ## One-time GitHub configuration
 
+**Current setup verified:** Actions is enabled, Build 1.1 passed and deployed, the package is anonymously downloadable, and the five-minute checker is installed/enabled. No further configuration is required. The steps below are for recreating the setup.
+
 1. Under **econgame → Settings → Actions → General**, enable Actions. The workflow uses pinned official `actions/checkout`, `actions/setup-python`, and `actions/setup-node` actions. If you restrict allowed actions, allow those. No broad write-default setting is necessary: the publishing job explicitly requests `packages: write` using GitHub's automatic `GITHUB_TOKEN`.
 2. Open **Actions → Test and publish**. The first push runs automatically. Wait for all four test shards and **Publish tested image** to pass. The workflow can also be started with **Run workflow → main**. Pull requests never publish images.
-3. After the first successful publication, open your GitHub profile's **Packages → econgame → Package settings → Change visibility → Public**. GitHub creates new packages as private by default, even for a public repository. The source is already public; this makes the built application downloadable without credentials. Saved campaigns, access keys and `.env` files are excluded from the Docker image. Do not make a different private package public.
+3. After the first successful publication, open your GitHub profile's **Packages → econgame → Package settings → Change visibility → Public**. New packages may initially be private; confirm visibility instead of assuming it follows the repository. The source is already public; this makes the built application downloadable without credentials. Saved campaigns, access keys and `.env` files are excluded from the Docker image. Do not make a different private package public.
 
 No repository secrets or variables need to be added. The first private-package pull will fail safely; making the package public lets the next scheduled check proceed. If you deliberately keep the image private, authenticate Docker on Unraid with a classic PAT limited to `read:packages` instead; do not put that token into Git or the game container.
 
