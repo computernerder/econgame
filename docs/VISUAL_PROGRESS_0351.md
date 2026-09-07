@@ -31,3 +31,8 @@ Browser checks use an isolated seeded campaign, not the player's campaign. Deskt
 - The supplied study's repeated outsourcing of a small warranty claim, consistent inbox resolution controls, and purchase-success feedback are separate behavior/workflow follow-ups. This visual increment does not claim to fix them. Prioritize the legal spend-versus-recovery/retry guardrail next.
 
 No save schema or simulation rules changed. Existing campaigns and daily-step/time-skip behavior remain supported.
+
+## Delivery verification — 2026-09-07
+
+83 focused Windows tests passed. All four groups of the complete GitHub suite and the image publication job passed in Actions run 34145385560. Build 2.1 (3781136) deployed through the guarded updater at 17:00:14 UTC, with backup build-2.1-20260907T170005Z. Normal browser sign-in, the saved campaign, live charts, readable invoice narrative and quiet activity link were verified at http://game.lan. The temporary local preview server was stopped after verification.
+
