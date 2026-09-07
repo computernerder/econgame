@@ -18,4 +18,12 @@ Browser QA used a disposable campaign: personal cash change $0 versus store/grou
 
 This changes reporting and navigation, not cash transactions or staffing behavior. Cash movement includes financing and transfers and is not profit. Whole-dollar display retains cent-accurate internal values. Group membership can change group cash totals when an acquisition or sale completes. Completed skip digests remain session-local as before and reset on server restart. Shared workspaces deliberately reuse one implementation and retain access to group providers; this is not a redesign of service queues or employee hierarchy.
 
-Release validation pending.
+Local validation: 88 tests passed across cash context, navigation, charts, skip controls, employee management and the core game suite. Browser checked the selected-account summary, correct sidebar/tab states, benefits wording and shared-workspace return link. Source backup: backups/before-usability-0362-20260907-150317.zip.
+
+The first full GitHub run (34154102687) found one historical workflow test requiring duplicated hiring controls. It now follows the Operations → Team link and verifies the single specialist picker, HVAC/HR options and policy shortcuts there. All 11 workflow tests passed locally; the other three full-suite groups passed.
+
+Corrected release run: https://github.com/computernerder/econgame/actions/runs/34154440172. All 859 tests passed (259 + 239 + 185 + 176); image publication and startup/health checks passed.
+
+Build 7.1 / v0.36.2, revision 40db810a6a1a60e8ab65ba357bbe4ca3f54a3125, deployed at 2026-09-07T19:14:17Z. Save backup: /mnt/user/appdata/econgame/backups/build-7.1-20260907T191408Z. Image: ghcr.io/computernerder/econgame@sha256:2739083880879aa1f85e079ad7328172bdb1c5f1c06ecb323267119a2d1acd4c.
+
+Live verification at http://game.lan: normal sign-in, Build 7.1 badge, personal monthly change -$87 with $70,485 opening and $70,398 current cash, Businesses sidebar highlighted on the business Properties tab, four business tabs and no duplicated Properties charts. Existing saved names remained intact. No live gameplay action was performed; next time advance will populate the new scoped skip digest. Local QA server was stopped.
