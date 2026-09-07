@@ -231,7 +231,8 @@ class Engine:
             prop = Property(**template, id=f"p{self.world.next_id}", asking=0)
             prop.condition = max(20, min(95, prop.condition + self.random_int(-5, 5)))
             prop.asking = prop.value * self.random_int(90, 96) // 100
-            prop.name = f"{100 + self.world.next_id} {prop.name}"
+            from .world_names import property_name
+            prop.name = property_name(self.world,prop.id,prop.category,prop.kind)
             self.world.properties.append(prop)
             self.world.next_id += 1
 
@@ -520,7 +521,10 @@ class Engine:
                     self.event("Renovation complete", f"{p.name} is ready. Choose a tenant or put it up for sale.", True)
                     important = True
                 elif p.status == "seeking":
-                    p.status, p.tenant = "rented", f"Household {self.random_int(100, 999)}"
+                    # Preserve the historical RNG draw; display names use a separate hash.
+                    self.random_int(100, 999)
+                    from .world_names import tenant_name
+                    p.status, p.tenant = 'rented', tenant_name(self.world,p.id+':'+self.world.date,p.category)
                     p.lease_end = calendar_target(today, "year").isoformat()
                     self.event("Tenant moved in", f"{p.name} now earns rental income. Lease ends {p.lease_end}.", True)
                     important = True

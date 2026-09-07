@@ -7,13 +7,13 @@ from .simulation_support import stable_roll
 
 class SupplierContracts(Campaign):
     def offers(self,task,quality):
-        names=('Regional Practice','Specialist Cooperative','National Service Bureau')
+        from .world_names import supplier_name
         offers=self.s.setdefault('supplier_offers',[])
         for index,(minutes,capacity) in enumerate(((1200,120),(3600,240),(7200,360))):
             willing=stable_roll(self.w,'supplier:'+task['id']+':'+str(index))<quality
             rate=150-max(1,quality*(index+1)//15)
             offers.append(dict(id=self.uid('supplier-offer'),request=task['id'],buyer=task['recipient'],
-                department=task['service_department'],supplier=names[index],original_rate=150,rate=rate,
+                department=task['service_department'],supplier=supplier_name(self.w,task['id']+':'+str(index),task['service_department']),original_rate=150,rate=rate,
                 minutes=minutes,daily_capacity=capacity,valid_until=(date.fromisoformat(self.w.date)+timedelta(days=14)).isoformat(),
                 credit_days=60,status='open' if willing else 'refused',created=self.w.date))
         task['outcome']='Three suppliers responded with capacity, rates and prepaid blocks; some may refuse. Quotes are future terms, not cash savings. Unused unassigned credits expire after 60 days.'

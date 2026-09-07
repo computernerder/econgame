@@ -1,6 +1,10 @@
 "use strict";
 // Drafts are local to this browser tab and campaign. They never issue commands.
 (() => {
+  document.querySelectorAll('input[data-random-seed]').forEach(input => {
+    const bytes = new Uint32Array(1); crypto.getRandomValues(bytes);
+    input.value = String(bytes[0] & 0x7fffffff);
+  });
   const campaign = document.querySelector('meta[name="campaign-session"]')?.content;
   const context = location.pathname + location.search;
   const prefix = 'empire-draft:' + campaign + ':' + context + ':';

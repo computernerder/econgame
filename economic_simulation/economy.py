@@ -118,7 +118,9 @@ class Economy(Campaign):
     def competitors(self,today):
         if not self.s['competitors']:
             for region in self.s['regions']:
-                self.s['competitors'].append(dict(id=self.uid('competitor'),name=region['id']+' Trading Co.',region=region['id'],cash=2500000,inventory=500000,staff=8,capacity=120,reputation=60,wage=250000,status='operating',history=[],capital=3000000,profit=0))
+                from .world_names import business_name
+                label=business_name(self.w,'competitor:'+region['id'],'retail')
+                self.s['competitors'].append(dict(id=self.uid('competitor'),name=label,region=region['id'],cash=2500000,inventory=500000,staff=8,capacity=120,reputation=60,wage=250000,status='operating',history=[],capital=3000000,profit=0))
         for firm in self.s['competitors']:
             if firm['status']!='operating':continue
             region=self.region(firm['region']);revenue=min(firm['capacity']*2200*20,region['demand']*2200*20);stock=revenue//2

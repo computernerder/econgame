@@ -32,6 +32,8 @@ class PropertyOperations(Campaign):
                 if any(p.category==category and p.region==spec['region'] and p.status=='market' for p in self.w.properties):continue
                 values=dict(spec,category=category,kind='Office building' if category=='office' else 'Shops and apartments',name=spec['region']+(' Office Court' if category=='office' else ' Market House'),description='Purpose-built office suites.' if category=='office' else 'A mixed-use building with space for shops and residences.')
                 p=Property(**values,id='p'+str(self.w.next_id),asking=0);self.w.next_id+=1
+                from .world_names import property_name
+                p.name=property_name(self.w,p.id,p.category,p.kind)
                 p.asking=p.value*94//100;self.w.properties.append(p)
         self.s['extended_property_types']=True
 
@@ -357,7 +359,9 @@ class PropertyOperations(Campaign):
             for index in range(3):
                 key=vacancy['id']+':'+str(index);reliability=55+stable_roll(self.w,key+':reliability',45)
                 rent=min(vacancy['asking'],market*105//100)*(90+index*8)//100
-                self.s.setdefault('tenant_offers',[]).append(dict(id=self.uid('tenant-offer'),property_id=p.id,space_id=space['id'],name='Applicant '+key,rent=rent,max_rent=rent*103//100,reliability=reliability,area=space['area']*(70+stable_roll(self.w,key+':area',41))//100,months=(6,12,24)[index],improvement=(0,p.suggested_rent//2,p.suggested_rent)[index],status='open'))
+                from .world_names import tenant_name
+                applicant=tenant_name(self.w,key,space['use'])
+                self.s.setdefault('tenant_offers',[]).append(dict(id=self.uid('tenant-offer'),property_id=p.id,space_id=space['id'],name=applicant,rent=rent,max_rent=rent*103//100,reliability=reliability,area=space['area']*(70+stable_roll(self.w,key+':area',41))//100,months=(6,12,24)[index],improvement=(0,p.suggested_rent//2,p.suggested_rent)[index],status='open'))
             vacancy['status']='proposals';self.e.event('Tenant proposals received',p.name+' has three proposals with different reliability, space needs and concessions.',True)
         self.sales_tick()
 
@@ -416,7 +420,8 @@ class PropertyOperations(Campaign):
                 other=sum(totals.values())+self.s.get('inspections',{}).get(p.id,{}).get('cost',0)
                 listing.update(status='sold',sold=self.w.date,proceeds=net,principal_and_interest=debt,project_profit=gross-fees-basis-other-arrears,cash_returned=net-debt-deposits,deposit_transfer=deposits,receivables_transferred=arrears)
                 p.owner=buyer;p.status='managed' if leases else 'rented' if p.status=='rented' else 'vacant';p.basis=gross-arrears
-                self.s.setdefault('outside_property_owners',{})[buyer]=dict(name='Independent property buyer',property_id=p.id)
+                from .world_names import business_name
+                self.s.setdefault('outside_property_owners',{})[buyer]=dict(name=business_name(self.w,buyer,'rental'),property_id=p.id)
                 progress=self.s.get('flip_progress',{}).get(p.id)
                 if progress:
                     unused=progress['reserve']

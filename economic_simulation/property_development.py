@@ -43,6 +43,8 @@ class Development(Campaign):
                 p=Property(id=f'land-{index}-{level}',name=region['id']+(' Starter Lot' if level==1 else ' Development Lot'),
                     kind='Empty lot',region=region['id'],description='Vacant serviced land. Fund a suitable building before occupation or rent.',
                     full_value=size*(4000+(index%3)*500),full_rent=0,upkeep=size*20,condition=100,asking=size*(4000+(index%3)*500),category='land',usable_area=size)
+                from .world_names import property_name
+                p.name=property_name(self.w,p.id,'land','Development lot' if level==3 else 'Starter lot')
                 self.w.properties.append(p)
         self.s['land_market_version']=22
 

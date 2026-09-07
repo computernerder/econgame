@@ -20,7 +20,8 @@ class TransactionLegal(Campaign):
             for original in self.w.properties[:]:
                 if original.category!='industrial' or original.status!='market' or original.owner is not None or original.region in regions:continue
                 regions.add(original.region)
-                p=copy.deepcopy(original);p.id='covenant-'+original.id;p.name=original.region+' Covenant Works'
+                from .world_names import property_name
+                p=copy.deepcopy(original);p.id='covenant-'+original.id;p.name=property_name(self.w,p.id,p.category,p.kind)
                 p.condition=min(35,p.condition);p.asking=p.value*90//100
                 p.description='Discounted industrial property: buyer-specific transfer consent and a disclosed 90-day roof-work covenant. Review terms before committing.'
                 self.w.properties.append(p)

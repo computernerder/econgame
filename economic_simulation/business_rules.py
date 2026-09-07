@@ -112,15 +112,16 @@ class BusinessRules:
         self.w.people.append(p)
         return p
 
-    def add_business(self, template_index: int) -> None:
+    def add_business(self, template_index: int, group: bool = False) -> None:
         spec = dict(BUSINESS_CONTENT["catalog"][template_index])
+        catalog_name = spec["name"]
         staff = spec.pop("staff")
         property_specs = spec.pop("properties", [])
         number = self.w.next_business_id
         self.w.next_business_id += 1
         bid = f"business-{number}"
-        if number > len(BUSINESS_CONTENT["catalog"]):
-            spec["name"] += f" · Branch {number}"
+        from .world_names import business_name, property_name
+        spec['name']=business_name(self.w,bid,'holding' if group else spec['industry'])
         business = Business(id=bid, **spec)
         self.w.businesses.append(business)
         manager_id = None
@@ -134,7 +135,9 @@ class BusinessRules:
         for index, spec in enumerate(property_specs):
             spec = dict(spec)
             use, basis = spec.pop("use"), spec.pop("basis")
+            spec["description"] = spec["description"].replace(catalog_name, business.name)
             p = Property(**spec, id=f"{bid}-property-{index+1}", asking=0, status="business_asset", reserved_for=bid, acquisition_basis=basis, occupancy_use=use)
+            p.name=property_name(self.w,p.id,p.category,p.kind)
             self.w.properties.append(p)
 
     def initialize(self) -> None:

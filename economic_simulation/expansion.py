@@ -27,8 +27,7 @@ class Expansion(Campaign):
 
     def seed_group(self):
         if any(b.market_parent for b in self.w.businesses):return
-        self.rules.add_business(5);root=self.w.businesses[-1]
-        root.name='Northbank Enterprise Group'
+        self.rules.add_business(5,group=True);root=self.w.businesses[-1]
         root.description='An established group with a grocer, retail subsidiary, engineering subsidiary, staffed central leadership and owned headquarters premises. The whole ownership tree transfers together.'
         for index in (0,2):
             self.rules.add_business(index);child=self.w.businesses[-1];child.market_parent=root.id;root.asking+=child.asking

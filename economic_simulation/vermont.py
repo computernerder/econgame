@@ -86,6 +86,8 @@ def migrate(engine):
     for index, spec in enumerate(CONTENT['properties']):
         if spec['region'] in added:
             prop = Property(**spec, id='vermont-property-' + str(index), asking=0)
+            from .world_names import property_name
+            prop.name = property_name(world,prop.id,prop.category,prop.kind)
             prop.asking = prop.value * 94 // 100
             world.properties.append(prop)
     from .property_development import Development
