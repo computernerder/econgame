@@ -39,8 +39,8 @@ class Command(BaseModel):
     command_id: str = Field(min_length=8, max_length=100)
 
 
-def create_app(game: Game, token: str, host: str) -> FastAPI:
-    app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None, default_response_class=DisplayJSONResponse)
+def create_app(game: Game, token: str, host: str, *, network_access=None, lifespan=None) -> FastAPI:
+    app = FastAPI(docs_url=None, redoc_url=None, openapi_url=None, default_response_class=DisplayJSONResponse, lifespan=lifespan)
     # Capture every template at startup, including lazily used page includes.
     # Installing an update must not mix new templates with an older running engine.
     templates = {p.relative_to(ROOT / "templates").as_posix(): p.read_text(encoding="utf-8")
@@ -51,9 +51,17 @@ def create_app(game: Game, token: str, host: str) -> FastAPI:
     from .ui_workflows import role_label
     env.filters["role_label"] = role_label
     origin = f"http://{host}"
+    env.globals['network_mode'] = network_access is not None
+
+    def secure_headers(response):
+        response.headers.update({"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "no-referrer", "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"})
+        return response
 
     @app.middleware("http")
     async def local_session(request: Request, call_next):
+        if network_access is not None:
+            response = await network_access.check(request, env)
+            return secure_headers(response if response is not None else await call_next(request))
         if request.headers.get("host") != host:
             return DisplayJSONResponse({"detail": "This game accepts only its own local address."}, status_code=403)
         if request.url.path == "/" and secrets.compare_digest(request.query_params.get("key", ""), token):
@@ -67,8 +75,7 @@ def create_app(game: Game, token: str, host: str) -> FastAPI:
             if request.headers.get("origin") != origin or not secrets.compare_digest(request.headers.get("x-game-token", ""), token):
                 return DisplayJSONResponse({"detail": "This action did not come from the game window."}, status_code=403)
         response = await call_next(request)
-        response.headers.update({"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "no-referrer", "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"})
-        return response
+        return secure_headers(response)
 
     @app.exception_handler(RuleError)
     async def rule_error(request: Request, error: RuleError):

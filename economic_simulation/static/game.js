@@ -1,4 +1,13 @@
 "use strict";
+// randomUUID requires HTTPS, but getRandomValues also works on a private HTTP LAN.
+function commandId() {
+  if (typeof crypto.randomUUID === 'function') return crypto.randomUUID();
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
+  bytes[6] = (bytes[6] & 15) | 64;
+  bytes[8] = (bytes[8] & 63) | 128;
+  const hex = Array.from(bytes, byte => byte.toString(16).padStart(2, '0')).join('');
+  return `${hex.slice(0,8)}-${hex.slice(8,12)}-${hex.slice(12,16)}-${hex.slice(16,20)}-${hex.slice(20)}`;
+}
 const token = document.querySelector('meta[name="game-token"]').content;
 const campaign_session = document.querySelector('meta[name="campaign-session"]')?.content;
 const revision = Number(document.querySelector('meta[name="revision"]').content);
@@ -99,7 +108,7 @@ const savedMessage = sessionStorage.getItem('game-notice');
 if (savedMessage) { message(savedMessage); sessionStorage.removeItem('game-notice'); }
 
 document.querySelectorAll('[data-preview]').forEach(button => button.addEventListener('click', () => {
-  pending = {action: button.dataset.preview, args: {property_id: button.dataset.property, business_id: button.dataset.business, employment_id: button.dataset.employment, entity: scope}, command_id: crypto.randomUUID()};
+  pending = {action: button.dataset.preview, args: {property_id: button.dataset.property, business_id: button.dataset.business, employment_id: button.dataset.employment, entity: scope}, command_id: commandId()};
   document.getElementById('action-title').textContent = button.dataset.title;
   document.getElementById('action-description').textContent = button.dataset.description;
   document.getElementById('action-amount').textContent = button.dataset.amount;
@@ -132,9 +141,9 @@ document.querySelectorAll('[data-period], [data-resume-target]').forEach(button 
   const preferences = advancePreferences();
   if (!preferences) return;
   const target = button.dataset.resumeTarget ? {target:button.dataset.resumeTarget} : {period:button.dataset.period};
-  command({action:'advance', args:{...target,...preferences}, command_id:crypto.randomUUID()});
+  command({action:'advance', args:{...target,...preferences}, command_id:commandId()});
 }));
-document.querySelectorAll('[data-immediate]').forEach(button => button.addEventListener('click', () => command({action:button.dataset.immediate, args:{}, command_id:crypto.randomUUID()})));
+document.querySelectorAll('[data-immediate]').forEach(button => button.addEventListener('click', () => command({action:button.dataset.immediate, args:{}, command_id:commandId()})));
 document.querySelectorAll('form[data-action]').forEach(form => form.addEventListener('submit', async event => {
   event.preventDefault();
   form.querySelector('.form-error')?.remove();
@@ -152,7 +161,7 @@ document.querySelectorAll('form[data-action]').forEach(form => form.addEventList
   const fingerprint = JSON.stringify(args);
   if (form.dataset.fingerprint !== fingerprint) {
     form.dataset.fingerprint = fingerprint;
-    form.dataset.commandId = crypto.randomUUID();
+    form.dataset.commandId = commandId();
   }
   const payload = {action:form.dataset.action, args, command_id:form.dataset.commandId};
   if (form.dataset.review === 'true') {
@@ -252,7 +261,7 @@ if (forecastForm) forecastForm.addEventListener('submit', async event => {
   button.disabled = true;
   result.textContent = 'Calculating three demand scenarios…';
   try {
-    const response = await fetch('/api/forecast', {method: 'POST', headers: {'Content-Type': 'application/json', 'X-Game-Token': token}, body: JSON.stringify({action: 'forecast', args: {days: new FormData(forecastForm).get('days')}, revision, campaign_session, command_id: crypto.randomUUID()})});
+    const response = await fetch('/api/forecast', {method: 'POST', headers: {'Content-Type': 'application/json', 'X-Game-Token': token}, body: JSON.stringify({action: 'forecast', args: {days: new FormData(forecastForm).get('days')}, revision, campaign_session, command_id: commandId()})});
     const data = await response.json();
     if (!response.ok) throw new Error(typeof data.detail === 'string' ? data.detail : 'The forecast could not be calculated.');
     result.replaceChildren();

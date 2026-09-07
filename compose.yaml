@@ -1,0 +1,29 @@
+services:
+  econgame:
+    build: .
+    image: econgame:0.34.0
+    container_name: econgame
+    restart: unless-stopped
+    init: true
+    user: "${PUID:-10001}:${PGID:-10001}"
+    ports:
+      - "${EMPIRE_BIND_ADDRESS:-0.0.0.0}:${EMPIRE_HOST_PORT:-8892}:8000"
+    environment:
+      EMPIRE_PUBLIC_URL: "${EMPIRE_PUBLIC_URL:-http://localhost:8892}"
+      EMPIRE_DATA_DIR: /data
+      TZ: "${TZ:-America/New_York}"
+    volumes:
+      - "${EMPIRE_DATA_DIR:-empire-data}:/data"
+    read_only: true
+    tmpfs:
+      - /tmp:rw,noexec,nosuid,size=64m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 60s
+    labels:
+      org.opencontainers.image.source: https://github.com/computernerder/econgame
+      net.unraid.docker.webui: "http://[IP]:[PORT:8000]"
+volumes:
+  empire-data:

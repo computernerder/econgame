@@ -2,7 +2,15 @@
 
 A local business and real-estate simulation set in Vermont. Manage one business, a property portfolio, or a group of companies with employees, delegated leadership, shared services and separate financial accounts.
 
-Current source version: **0.33.8**. Repository: [computernerder/econgame](https://github.com/computernerder/econgame), using SSH remote `git@github.com:computernerder/econgame.git`.
+Current source version: **0.34.0**. Repository: [computernerder/econgame](https://github.com/computernerder/econgame), using SSH remote `git@github.com:computernerder/econgame.git`.
+
+## Docker and Unraid
+
+The game now has a headless network server with sign-in, persistent campaigns and graceful shutdown. Follow [Docker and Unraid deployment](docs/DOCKER_UNRAID_034.md) for the server at `192.168.1.3`, appdata permissions, access keys, updates and importing desktop saves.
+
+For a local Docker test, run `docker compose up -d --build`, then open `http://localhost:8892`. Retrieve the generated sign-in key with `docker compose exec econgame cat /data/access-key`. For other computers to connect, set `EMPIRE_PUBLIC_URL` to the exact LAN address in `.env` before starting; `.env.example` supplies the Unraid settings.
+
+Each container serves one shared game library and one active campaign. Existing revision checks prevent stale decisions from overwriting newer work. Separate containers and data volumes provide independent game libraries. Desktop play remains available below.
 
 ## Set up a new checkout
 

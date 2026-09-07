@@ -1,0 +1,6 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sign in · Empire Manager</title><link rel="stylesheet" href="/static/login.css"></head>
+<body><main><p class="eyebrow">EMPIRE MANAGER · NETWORK GAME</p><h1>Welcome back</h1><p>Enter the server access key to open your games.</p>
+{% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+<form method="post" action="/login"><label for="access-key">Server access key</label><input type="password" id="access-key" name="access_key" autocomplete="current-password" required maxlength="512" autofocus><button type="submit">Open game →</button></form>
+<p class="note">Everyone signed into this server shares its saved games and active campaign. Your progress saves after each decision and simulated day.</p></main></body></html>

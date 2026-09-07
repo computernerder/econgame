@@ -11,6 +11,8 @@ saves/
 # Local campaign data, source backups and development runs.
 backups/
 qa/
+container-data/
+access-key
 *.sqlite
 *.sqlite3
 *.sqlite-*

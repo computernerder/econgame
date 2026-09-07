@@ -1,0 +1,7 @@
+# Build only the application. Campaigns and local credentials never enter the image.
+**
+!pyproject.toml
+!economic_simulation/
+!economic_simulation/**
+economic_simulation/**/__pycache__/
+economic_simulation/**/*.pyc
