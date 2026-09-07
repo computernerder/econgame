@@ -96,7 +96,10 @@ class Game:
         blocker = ""
         digest={}
         with self.lock:
-            start_cash = sum(self.world.cash(e) for e in entity_names(self.world))
+            start_balances = {e:self.world.cash(e) for e in self.world.accounts}
+            start_cash = sum(start_balances[e] for e in entity_names(self.world))
+            self.progress['cash_start'] = start_balances
+            self.progress['start_date'] = self.world.date
         try:
             for _ in range(days):
                 if self.cancel.is_set():
@@ -143,9 +146,26 @@ class Game:
             reason = f"Time stopped safely at the last saved day: {exc}"
         finally:
             with self.lock:
+                self.progress['cash_end'] = {e:self.world.cash(e) for e in self.world.accounts}
+                self.progress['end_date'] = self.world.date
                 change = sum(self.world.cash(e) for e in entity_names(self.world)) - start_cash
+                self.progress['group_cash_change'] = change
                 count = self.progress["completed"]
-                self.progress.update(running=False, blocked=blocked, blocker=blocker, reason=reason, message=f"{reason} Advanced {count} {'day' if count == 1 else 'days'}. Cash change: {money(change)}.")
+                self.progress.update(running=False, blocked=blocked, blocker=blocker, reason=reason, message=f"{reason} Advanced {count} {'day' if count == 1 else 'days'}. Group cash change: {money(change)}.")
+
+    def progress_view(self, scope='personal') -> dict:
+        """Render the completed skip against its frozen account balances, not later actions."""
+        progress=copy.deepcopy(self.progress)
+        if not progress['running'] and 'cash_end' in progress:
+            names=entity_names(self.world);scope=scope if scope in names else 'personal'
+            start=progress['cash_start'].get(scope,0);end=progress['cash_end'].get(scope,0)
+            change=end-start;count=progress['completed']
+            progress.update(cash_change=change,cash_before=start,cash_after=end,change_scope=scope)
+            progress['message']=(f"{progress['reason']} Advanced {count} {'day' if count==1 else 'days'}. "
+                f"{names[scope]} cash change: {money(change)} ({money(start)} → {money(end)}). "
+                f"{progress['start_date']} to {progress['end_date']}. "
+                f"Group cash change across owned accounts: {money(progress['group_cash_change'])}.")
+        return progress
 
     def stop(self) -> None:
         self.cancel.set()
@@ -182,7 +202,7 @@ class Game:
             company_equity = business['all_business_wealth']
             personal_equity = business['total_wealth'] - company_equity
             from .holding_company import exists, name
-            view = dict(has_holding_company=exists(w), holding_company_name=name(w), date=w.date, date_label=today.strftime("%d %b %Y"), revision=w.revision, name=w.owner_name, age=age, scope=scope, cash=w.cash(scope), personal_cash=w.cash("personal"), company_cash=w.cash("company"), total_wealth=personal_equity + company_equity, personal_book=personal_book, company_equity=company_equity, invested=w.accounts["personal"].get("asset:investment", 0), owned=owned, market=[p for p in properties if p["status"] == "market"], events=list(reversed(w.events)), monthly_rent=sum(p["rent"] for p in owned if p["status"] == "rented")+sum(l["rent"] for l in w.systems.get("leases",[]) if l["owner"]==scope and l["status"]=="active"), monthly_upkeep=sum(p["upkeep"] for p in owned), portfolio_value=sum(p["value"] for p in owned), basis=accounts.get("asset:property", 0), payable=-accounts.get("liability:payable", 0), lifetime_profit=-sum(v for k, v in accounts.items() if k.startswith(("income:", "expense:"))), progress=copy.deepcopy(self.progress), accounts=dict(accounts))
+            view = dict(has_holding_company=exists(w), holding_company_name=name(w), date=w.date, date_label=today.strftime("%d %b %Y"), revision=w.revision, name=w.owner_name, age=age, scope=scope, cash=w.cash(scope), personal_cash=w.cash("personal"), company_cash=w.cash("company"), total_wealth=personal_equity + company_equity, personal_book=personal_book, company_equity=company_equity, invested=w.accounts["personal"].get("asset:investment", 0), owned=owned, market=[p for p in properties if p["status"] == "market"], events=list(reversed(w.events)), monthly_rent=sum(p["rent"] for p in owned if p["status"] == "rented")+sum(l["rent"] for l in w.systems.get("leases",[]) if l["owner"]==scope and l["status"]=="active"), monthly_upkeep=sum(p["upkeep"] for p in owned), portfolio_value=sum(p["value"] for p in owned), basis=accounts.get("asset:property", 0), payable=-accounts.get("liability:payable", 0), lifetime_profit=-sum(v for k, v in accounts.items() if k.startswith(("income:", "expense:"))), progress=self.progress_view(scope), accounts=dict(accounts))
             from .personal_residence import view as residence_view
             view['residence']=residence_view(w)
             view["all_owned"]=[p for p in properties if p["owner"] in entity_names(w)]

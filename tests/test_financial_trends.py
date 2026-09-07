@@ -96,7 +96,7 @@ def test_display_names_do_not_mutate_stored_ids_or_escape_html(game):
 def test_chart_scope_and_compact_overview(game):
     bid=acquire(game,2)
     with client_for(game) as client:
-        for page,extra,count in [('overview','',2),('finance','',4),('portfolio','',2),('business','&business_id='+bid+'&scope='+bid,2)]:
+        for page,extra,count in [('overview','',2),('finance','',4),('portfolio','',0),('business','&business_id='+bid+'&scope='+bid,2)]:
             html=client.get('/?page='+page+extra).text
             assert html.count('class="panel trend-card"')==count
             assert 'aria-label="Cash trend over' in html

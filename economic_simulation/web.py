@@ -288,7 +288,7 @@ def create_app(game: Game, token: str, host: str, *, network_access=None, lifesp
             from .leadership_activity import notification
             from .decision_inbox import count
             from .recovery_navigation import progress_links
-            return {**game.progress, 'account_balances':account_balances(game.world), 'campaign_session':game.session_id, 'links':progress_links(game.world,game.progress), 'inbox_count':count(game.world), 'leadership_activity':notification(game.world), 'cash_on_hand':cash, 'cash_label':money(cash), 'cash_scope':account}
+            return {**game.progress_view(account), 'account_balances':account_balances(game.world), 'campaign_session':game.session_id, 'links':progress_links(game.world,game.progress), 'inbox_count':count(game.world), 'leadership_activity':notification(game.world), 'cash_on_hand':cash, 'cash_label':money(cash), 'cash_scope':account}
 
     @app.post("/api/cancel")
     def cancel(request: Request):

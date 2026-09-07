@@ -27,7 +27,7 @@ def test_company_switch_keeps_the_current_tool_and_discards_record_selection(gam
 
 
 @pytest.mark.parametrize('page,section,primary',[('property_workbench','properties','portfolio'),('property_services','properties','portfolio'),
-    ('services','services','services'),('home_office','services','home_office'),('finance','finance','finance'),('people','team','people')])
+    ('services','services','services'),('home_office','services','home_office'),('finance','finance','businesses'),('people','team','businesses')])
 def test_tools_highlight_the_right_business_section_and_sidebar(game,page,section,primary):
     bid=acquire(game);nav=navigation_view(game.world,page,bid,bid)
     assert nav['section']==section and nav['primary']==primary

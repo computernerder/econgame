@@ -110,11 +110,16 @@ def navigation_view(world,page,scope,business_id='',chart='ownership',all_proper
     if current or scope=='company':
         tabs=[dict(key='business',label='Operations' if current else 'Overview',url=url('business',scope,business_id=scope) if current else url('overview',scope)),
               dict(key='properties',label='Properties',url=url('portfolio',scope)),
-              dict(key='finance',label='Finances',url=url('finance',scope)),
-              dict(key='ownership',label='Ownership',url=url('organization',scope,chart='ownership',org_root=scope))]
+              dict(key='finance',label='Finances',url=url('finance',scope))]
         if current:
             tabs.insert(1,dict(key='team',label='Team',url=url('people',scope,business_id=scope)))
-            tabs.append(dict(key='services',label='Services',url=url('home_office',scope)))
+
+    shared_page=page in ('organization','home_office')
+    shared=[]
+    if current or scope=='company':
+        shared=[dict(label='Organization · ownership chart',url=url('organization',scope,chart='ownership',org_root=scope))]
+        if current:shared.append(dict(label='Home Office · shared services',url=url('home_office',scope)))
+    if shared_page:tabs=[]
     # Fleet-wide directories explicitly leave a company; company tabs keep it.
     global_page=page in ('businesses','management') or page=='portfolio' and all_properties
     if global_page:tabs=[]
@@ -124,9 +129,10 @@ def navigation_view(world,page,scope,business_id='',chart='ownership',all_proper
         cursor=owned[cursor].owner if cursor in owned else 'personal' if cursor=='company' else None
     primary=('portfolio' if page in PROPERTY_PAGES-{'market','spaces'} else 'people' if page in TEAM_PAGES else
              'businesses' if page=='business' else page)
+    if current and tabs and not global_page and page in ('business','people','employee','hiring','workforce','portfolio','property','finance'):primary='businesses'
     related=[dict(page=p,label=PAGE_LABELS[p],url=url(p,scope),active=p==page) for p in
         ('operations_center','home_office','property_workbench','commercial_contracts','property_services')]
-    return dict(primary=primary,page_label=PAGE_LABELS.get(page,page.replace('_',' ').title()),related=related,
+    return dict(shared=shared,shared_page=shared_page,primary=primary,page_label=PAGE_LABELS.get(page,page.replace('_',' ').title()),related=related,
                 choices=choices,current=current.name if current else names[scope],tabs=tabs,section=section,trail=trail,
                 context='All businesses' if page=='businesses' else 'All properties' if all_properties else 'Managing business' if current else 'Holding company' if scope=='company' else 'Personal portfolio',
                 buyer=page in ('market','business_market') or page=='business' and business_id not in owned,global_page=global_page)
