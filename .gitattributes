@@ -1,0 +1,5 @@
+# Keep Linux deployment files executable after archiving from a Windows checkout.
+*.sh text eol=lf
+*.yaml text eol=lf
+Dockerfile text eol=lf
+.env.example text eol=lf
