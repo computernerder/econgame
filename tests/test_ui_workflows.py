@@ -52,12 +52,17 @@ def test_property_recovery_link_preserves_exact_work_context(game):
 def test_staffing_and_team_offer_visible_specialist_picker_and_policy_shortcuts(game):
     bid=create_office(game)
     with client_for(game) as c:
-        for url in ('/?page=business&business_id='+bid,'/?page=people&business_id='+bid):
-            html=c.get(url).text
-            assert 'Role to hire' in html and 'HVAC technician' in html and '>HR</option>' in html
-            assert '#vacancies' in html and '#staffing-policy-'+bid in html
+        from html import unescape
         html=c.get('/?page=business&business_id='+bid).text
-        assert html.index('Role to hire')<html.index('<h2>Staffing guide</h2>')
+        destination='/?page=people&business_id='+bid+'&scope='+bid+'#hire-employee'
+        assert destination in unescape(html)
+        assert 'Role to hire' not in html
+        assert html.index('Hire and manage the team')<html.index('<h2>Staffing guide</h2>')
+        team=c.get(destination).text
+        assert 'Role to hire' in team and 'HVAC technician' in team and '>HR</option>' in team
+        assert '#vacancies' in team and '#staffing-policy-'+bid in team
+        assert team.count('id="hire-employee"')==1
+
 
 
 def test_management_directory_precedes_activity_and_policies_have_direct_targets(game):
