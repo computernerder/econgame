@@ -2,7 +2,7 @@
 # Run from a source checkout on Unraid. All persistent state lives in appdata.
 set -eu
 cd "$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
-image="econgame:0.34.0"
+image="econgame:0.35.0"
 name="${EMPIRE_CONTAINER_NAME:-econgame}"
 data="${EMPIRE_DATA_DIR:-/mnt/user/appdata/econgame/data}"
 port="${EMPIRE_HOST_PORT:-8892}"

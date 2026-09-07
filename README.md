@@ -327,3 +327,7 @@ Management overview now has cash commitment forecasts, saved authority contracts
 Existing campaigns retain their existing delegation settings. Open Management, expand a business's cash commitments and authority contract, review the forecast, and save limits to activate the stronger controls. No headquarters or holding company is required.
 
 This is the first design increment, not completion of the larger design. See docs/DESIGN_UPGRADE_PLAN.md for the code inventory, acceptance gates and remaining work.
+
+## Automatic GitHub updates
+
+Push to main to run the complete test suite and publish a numbered Docker build. Unraid can pull successful builds every five minutes. The build badge appears under the game logo and on the login page. See [GitHub and Unraid setup](docs/GITHUB_UPDATES_035.md) for the one-time package visibility setting and installation.

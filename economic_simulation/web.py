@@ -14,6 +14,8 @@ from jinja2 import Environment, DictLoader, select_autoescape
 from pydantic import BaseModel, Field
 
 from . import __version__
+from .build_info import build_info
+from .build_info import build_info
 from .application import Game, money
 from .domain import RuleError, Engine
 from .business_views import business_context, company_view
@@ -52,9 +54,19 @@ def create_app(game: Game, token: str, host: str, *, network_access=None, lifesp
     env.filters["role_label"] = role_label
     origin = f"http://{host}"
     env.globals['network_mode'] = network_access is not None
+    build = build_info()
+    env.globals['build'] = build
+    build = build_info()
+    env.globals['build'] = build
 
     def secure_headers(response):
-        response.headers.update({"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "no-referrer", "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"})
+        # Native login/logout forms need their real Origin for CSRF validation.
+        # no-referrer makes browsers send Origin: null on form POSTs.
+        # Network URLs contain no launcher key; do not send referrers off-site.
+        referrer_policy = "same-origin" if network_access is not None else "no-referrer"
+        response.headers.update({"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Referrer-Policy": referrer_policy, "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"})
+        response.headers["X-Empire-Build"] = build["header"]
+        response.headers["X-Empire-Build"] = build["header"]
         return response
 
     @app.middleware("http")

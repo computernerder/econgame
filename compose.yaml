@@ -1,7 +1,7 @@
 services:
   econgame:
     build: .
-    image: econgame:0.34.0
+    image: "${EMPIRE_IMAGE:-econgame:0.35.0}"
     container_name: econgame
     restart: unless-stopped
     init: true

@@ -46,3 +46,6 @@
 .county-filter select { width: 100%; min-height: 42px; padding: 9px 12px; border: 1px solid var(--line); background: var(--white); color: var(--ink); }
 /* Keep skip choices and interruption preferences usable together. */
 #advance-dialog{width:680px;max-width:calc(100vw - 32px)}#advance-preferences{border:1px solid var(--line);border-radius:6px;padding:12px 16px;margin:14px 0}#advance-preferences legend{font-weight:600;padding:0 6px}#advance-preferences .skip-checkbox{display:flex;align-items:center;gap:10px;margin-bottom:12px}#advance-preferences .skip-checkbox input{width:auto;margin:0}#advance-preferences p{margin:10px 0}#advance-dialog .time-options{margin:16px 0}#advance-dialog>p{margin:10px 0}.time-status>div{min-width:0;flex:1}.time-status li{margin:6px 0;overflow-wrap:anywhere}.time-status details{margin:12px 0}
+
+/* Build identity belongs beside the brand, above the chapter navigation. */
+.sidebar .build-badge{margin-top:14px;color:#e4e9d9;font-size:12px;line-height:1.5}.build-badge strong,.build-badge small{display:block}.sidebar .build-badge small{color:#b5c6b7;font-size:10px}.sidebar .build-badge+.chapter{margin-top:18px}

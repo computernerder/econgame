@@ -193,3 +193,39 @@ def test_shutdown_waits_for_saved_day_and_releases_locks(tmp_path, monkeypatch):
     assert not game.worker.is_alive()
     assert Store(game.store.path).load().to_dict() == game.world.to_dict()
     game.store.audit(game.world)
+
+
+@pytest.mark.parametrize('origin', [ORIGIN, 'http://game.lan', 'https://game.example'])
+def test_native_login_and_logout_preserve_origin(tmp_path, monkeypatch, origin):
+    monkeypatch.setenv('EMPIRE_ACCESS_KEY', KEY)
+    monkeypatch.delenv('EMPIRE_ACCESS_KEY_FILE', raising=False)
+    app = create_server(Settings(tmp_path, origin))
+    with TestClient(app, base_url=origin) as client:
+        # A browser form POST under no-referrer sends Origin: null.
+        # Preserve the real same-origin value without permitting null origins.
+        page = client.get('/login')
+        assert page.headers['referrer-policy'] == 'same-origin'
+        assert '<form method="post" action="/login">' in page.text
+        for rejected in (None, 'null', 'http://untrusted.example'):
+            headers = {} if rejected is None else {'Origin': rejected}
+            assert client.post('/login', data={'access_key': KEY}, headers=headers).status_code == 403
+        token = sign_in(client)
+        assert client.get('/').headers['referrer-policy'] == 'same-origin'
+        for rejected in (None, 'null', 'http://untrusted.example'):
+            headers = {} if rejected is None else {'Origin': rejected}
+            assert client.post('/logout', data={'csrf': token}, headers=headers).status_code == 403
+        result = client.post('/logout', data={'csrf': token}, headers={'Origin': origin})
+        assert result.url.path == '/login'
+        assert result.headers['referrer-policy'] == 'same-origin'
+        assert client.get('/api/progress').status_code == 401
+
+
+def test_local_launcher_keeps_key_out_of_referrers(server):
+    from economic_simulation.web import create_app
+    app, _, _ = server
+    local = create_app(app.state.game, 'local-launch-key', 'testserver')
+    with TestClient(local) as client:
+        redirect = client.get('/?key=local-launch-key', follow_redirects=False)
+        assert redirect.status_code == 303
+        assert redirect.headers['referrer-policy'] == 'no-referrer'
+        assert client.get('/').headers['referrer-policy'] == 'no-referrer'

@@ -1,0 +1,107 @@
+name: Test and publish
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Tests (${{ matrix.shard }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '22'
+      - run: python -m pip install '.[dev]'
+      - run: python -m pip check
+      - name: Run this shard of the complete test suite
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: |
+          python - <<'PY'
+          import os, pathlib, subprocess, sys
+          files = sorted(str(p) for p in pathlib.Path('tests').glob('test_*.py'))
+          selected = files[int(os.environ['SHARD'])::4]
+          assert selected, 'Empty test shard'
+          sys.exit(subprocess.call([sys.executable, '-m', 'pytest', '-q', *selected]))
+          PY
+
+  publish:
+    name: Publish tested image
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    env:
+      IMAGE: ghcr.io/computernerder/econgame
+      BUILD_NUMBER: ${{ github.run_number }}.${{ github.run_attempt }}
+      REVISION: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Isolate registry credentials to this job
+        run: echo "DOCKER_CONFIG=$RUNNER_TEMP/econgame-docker" >> "$GITHUB_ENV"
+      - name: Build the exact tested revision
+        run: |
+          docker build \
+            --build-arg EMPIRE_BUILD_NUMBER="$BUILD_NUMBER" \
+            --build-arg EMPIRE_GIT_SHA="$REVISION" \
+            --tag "$IMAGE:build-$BUILD_NUMBER" .
+      - name: Check the packaged server before publishing
+        run: |
+          docker run -d --name image-check --read-only \
+            --tmpfs /tmp:rw,noexec,nosuid,size=64m \
+            --tmpfs /data:rw,nosuid,size=128m,uid=10001,gid=10001 \
+            --network none --cap-drop ALL --security-opt no-new-privileges:true \
+            -e EMPIRE_PUBLIC_URL=http://image-check "$IMAGE:build-$BUILD_NUMBER"
+          ready=false
+          for attempt in $(seq 1 30); do
+            if docker exec image-check python -m economic_simulation.server --healthcheck; then
+              ready=true; break
+            fi
+            sleep 2
+          done
+          if [ "$ready" != true ]; then docker logs image-check; exit 1; fi
+          docker exec image-check python -c 'import os; from economic_simulation.build_info import build_info; b=build_info(); assert b["number"] == os.environ["EMPIRE_BUILD_NUMBER"] and b["revision"] == os.environ["EMPIRE_GIT_SHA"]; print(b["label"], b["detail"])'
+      - name: Authenticate to GitHub Container Registry
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: printf '%s' "$GH_TOKEN" | docker login ghcr.io -u '${{ github.actor }}' --password-stdin
+      - name: Publish and promote to main
+        run: |
+          docker push "$IMAGE:build-$BUILD_NUMBER"
+          docker tag "$IMAGE:build-$BUILD_NUMBER" "$IMAGE:sha-$REVISION"
+          docker push "$IMAGE:sha-$REVISION"
+          # Only a tested and bootable image reaches the channel Unraid follows.
+          docker tag "$IMAGE:build-$BUILD_NUMBER" "$IMAGE:main"
+          docker push "$IMAGE:main"
+          printf '### Build %s\n\nCommit: `%s`\n\nImage: `%s:build-%s`\n\nUnraid checks the main channel every five minutes.\n' "$BUILD_NUMBER" "$REVISION" "$IMAGE" "$BUILD_NUMBER" >> "$GITHUB_STEP_SUMMARY"
+      - name: Clean up temporary container and credentials
+        if: always()
+        run: |
+          docker rm -f image-check 2>/dev/null || true
+          docker logout ghcr.io || true
