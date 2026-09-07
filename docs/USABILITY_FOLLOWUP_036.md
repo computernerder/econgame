@@ -30,3 +30,11 @@ Next: use the updated game to assess whether routine exceptions need further tun
 ## Local release validation
 
 The combined 204-test affected suite passed 203 tests and exposed one stale static-asset version assertion. The asset version was corrected and the affected context-form tests were rerun. Twelve new regression tests and browser checks passed. Complete GitHub validation and deployment are recorded after publication.
+
+## Live delivery — 2026-09-07
+
+All 844 tests passed in GitHub Actions run 34148207649 (242, 193, 220 and 189 across the four shards). The packaged container startup check and image publication passed.
+
+Build 3.1, code revision aa3b795881d6df35486f7ab2cc47d0c2e6ce04d8, deployed through the guarded Unraid updater at 17:40:13 UTC. Image digest: sha256:0eca9189658d9ae33b3f96b2cef1a5fa2c8fc445361d8cf8718861d27c2bed55. Saved-game backup: /mnt/user/appdata/econgame/backups/build-3.1-20260907T174004Z.
+
+Normal browser sign-in and the saved campaign's Portfolio overview were verified at http://game.lan, including Build 3.1 / v0.36.0, the new Start a business shortcut and the new UI script. The disposable local preview server was stopped. Existing player campaigns were not modified for QA.
