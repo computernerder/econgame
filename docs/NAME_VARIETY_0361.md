@@ -20,4 +20,13 @@ Source: user attachment d71f2ebf-7d1f-4f52-92f0-fee2da25584d, received September
 
 ## Validation
 
-Pending final regression and browser checks; results will be recorded before release completion.
+- Windows: 65 tests passed across naming variety, employee management, saved games and property scale. After final naming polish, 21 naming/usability tests passed.
+- Nine new tests cover unique people, cross-seed variety, replay, saved identities, RNG/ledger independence, tenants/suppliers/competitors and seed controls.
+- Browser: created a disposable game with explicit seed 8317; confirmed varied market names and saved seed. Reloading the new-game form suggested two different seeds without changing the saved seed. Checked the rendered business market at desktop width.
+- Existing player saves were not modified during browser QA.
+- Source backup before install: backups/before-naming-0361-20260907-140911.zip.
+- First GitHub run found two older tests tied to fixed labels: Northbank Enterprise Group and Household tenants. Updated them to locate the ownership root through market-parent relationships and verify occupied rental state, named tenant and active lease. All 11 organization/property-category tests passed locally; other first-run shards passed.
+- Corrected full-suite release: https://github.com/computernerder/econgame/actions/runs/34150815972. All four groups passed: 204 + 220 + 188 + 241 = 853 tests; image build and startup/health checks passed.
+- Deployed Build 5.1 / v0.36.1, revision a7ff108cbbf5a2e346266c7701b0138ffab8df9b, at 2026-09-07T18:19:31Z.
+- Unraid save backup: /mnt/user/appdata/econgame/backups/build-5.1-20260907T181922Z.
+- Live browser verification at http://game.lan: Build 5.1 badge, normal sign-in, saved-game list, original Willow Corner Market name and cash balances, and a fresh suggested seed on the new-game form. No new live campaign or gameplay action was created for QA.
