@@ -1,0 +1,19 @@
+{% if e.status=='active' %}
+<section class="panel" id="home-office-promotion">
+<h2>{{ 'Change home-office leadership' if e.role in ('home_office_director','division_vp','corporate_services_vp') else 'Move to home-office leadership' }}</h2>
+{% if e.role in ('home_office_director','division_vp','corporate_services_vp') %}<p>Choose a new leadership position or employing home office for {{ e.name }}. Their existing business oversight and compensated responsibility carry forward.</p>{% else %}<p>Promote {{ e.name }} to Home Office Director or VP and move their employment out of {{ e.business_name }}. Their business oversight continues; their old position becomes vacant so you can hire a replacement manager.</p>{% endif %}
+{% if e.home_offices %}
+<form data-action="promote_home_office" data-review="true" data-title="Promote and move to the home office">
+<input type="hidden" name="employment_id" value="{{ e.id }}">
+<div class="form-pair">
+<label>New employing home office<select name="office_id">{% for office in e.home_offices %}<option data-account-label="{{ office.name }}" value="{{ office.id }}" {% if office.id==e.business_id %}selected{% endif %}>{{ office.name }} · {{ office.cash|money }} cash available</option>{% endfor %}</select></label>
+<label>New position<select name="role">{% for key,label in [('home_office_director','Home Office Director'),('division_vp','Division VP'),('corporate_services_vp','VP of Corporate Services')] %}<option value="{{ key }}" {% if key==e.role %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+<label>Primary supervisor<select name="supervisor_id"><option value="">Player / owner</option>{% for id,label in e.transfer_supervisors.items() %}<option value="{{ id }}">{{ label }}</option>{% endfor %}</select></label>
+</div>
+<p class="fine-print">The preview shows the responsibility raise and future payroll. Existing salary credit, leave balances, approved time off, annual review timing and spending commitments remain. The home office needs enough cash for its known obligations and 30 days of payroll. Its benefit policies apply alongside retained individual agreements.</p>
+<p class="fine-print">Home Office Director and VP of Corporate Services prioritize shared service work. Division VP focuses on business oversight and approved investment. All retain your director scope and gain oversight of the selected home office, with 30 minutes reserved per business per working day, up to eight. Saved authority contracts still apply.</p>
+<button class="primary">Review promotion and transfer →</button>
+</form>
+{% else %}<p>Create and open a home-office company before transferring an employee into it.</p><a class="secondary" href="/?page=home_office">Set up a home office →</a>{% endif %}
+</section>
+{% endif %}

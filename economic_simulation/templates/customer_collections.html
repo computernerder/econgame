@@ -1,0 +1,19 @@
+<section id="customer-collections">
+  <div class="section-heading"><h2>Customer collections</h2></div>
+  <p>Late payment is different from a default. A promised late payment retries automatically on its new date. You can request earlier payment or pursue recovery here; a headquarters is optional.</p>
+  <p>Managers own collections by default: reminders, installments, contingency agencies, justified legal recovery and small exhausted-balance write-offs within your limits. Routine invoices wait in the manager’s queue; only questions need your attention in Decision inbox. You can override an individual invoice below. Completed actions appear in Leadership activity.</p>
+  <nav class="task-navigation" aria-label="Collection policies">{% for link in campaign.collection_policy_links %}<a href="{{ link.url }}">{{ link.label }} →</a>{% endfor %}</nav>
+  {% for invoice in campaign.collection_cards %}
+  <details class="panel" {% if invoice.focused %}open id="inbox-target"{% endif %}>
+    <summary>{{ invoice.business }} · {{ invoice.id }} · {{ invoice.amount|money }} · {{ invoice.status }}</summary>
+    <p>Remaining balance: <b>{{ invoice.amount|money }}</b> · Scheduled payment: {{ invoice.due }}. This amount is owed to {{ invoice.business }}; it is not cash on hand.</p>
+    {% if invoice.approval_url %}<p class="notice">Your manager has asked for a decision. <a href="{{ invoice.approval_url }}">Review the manager’s question →</a> · <a href="/?page=management#routine-policy-{{ invoice.entity }}">Change collection limits →</a></p>{% endif %}
+    {% if invoice.pending %}<p class="notice">{{ invoice.status }}. No further decision is required while this recovery is in progress. The inbox returns this invoice if further action is needed.</p>{% endif %}
+    {% if invoice.legal_url %}<a class="text-link" href="{{ invoice.legal_url }}">Review legal work, cost and queue →</a>{% endif %}
+    {{ controls(invoice.forms) }}
+    {% if invoice.history %}<h3>What has happened</h3>{% for entry in invoice.history %}<p>{{ entry.date }} · {{ entry.method|title }} · {{ entry.outcome }}{% if entry.gross %} · {{ entry.cash|money }} net cash received · {{ entry.fee|money }} fee{% endif %}</p>{% endfor %}{% endif %}
+  </details>
+  {% else %}<p class="notice">No overdue customer invoices in this view.</p>{% endfor %}
+  {{ records(campaign.collection_waiting,true) }}
+  {{ records(campaign.collection_history,true) }}
+</section>

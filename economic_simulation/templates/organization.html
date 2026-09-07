@@ -1,0 +1,29 @@
+{% macro branch(n) %}
+<li class="org-branch" data-org-id="{{ n.id }}">
+  <article class="org-node org-{{ n.kind }}" data-org-name="{{ n.title }} {{ n.subtitle }}">
+    <div class="org-node-top"><span class="org-kind">{{ 'Real estate' if n.kind=='property' else 'Vacancy' if n.kind=='vacancy' else n.subtitle if n.kind=='employee' else 'Personal owner' if n.kind=='owner' else 'Company' }}</span>{% if n.status is defined and n.status=='joining' %}<span class="org-status">Joining</span>{% endif %}</div>
+    {% if n.url %}<a class="org-title" href="{{ n.url }}">{{ n.title }}</a>{% else %}<strong class="org-title">{{ n.title }}</strong>{% endif %}
+    {% if n.kind!='employee' %}<p class="org-subtitle">{{ n.subtitle }}</p>{% endif %}
+    {% if n.value is defined %}<p class="org-value">{{ n.value|money }} <small>estimated value</small></p>{% endif %}
+    <ul class="org-meta">{% for line in n.meta %}<li>{{ line }}</li>{% endfor %}</ul>
+    {% for item in n.links %}<a class="org-detail-link" href="{{ item.url }}">{{ item.label }} →</a>{% endfor %}
+    {% if n.children %}<button class="org-toggle" type="button" aria-expanded="true" aria-label="Collapse branch below {{ n.title }}" data-org-toggle><span aria-hidden="true">−</span> <span data-org-count>{{ n.children|length }} {{ 'reports' if org.chart=='employees' else 'holdings' }}</span></button>{% endif %}
+  </article>
+  {% if n.children %}<ul class="org-children">{% for child in n.children %}{{ branch(child) }}{% endfor %}</ul>{% endif %}
+</li>
+{% endmacro %}
+<link rel="stylesheet" href="/static/organization.css"><script src="/static/organization.js" defer></script>
+<div class="page-heading"><div><span class="eyebrow">YOUR EMPIRE, CONNECTED</span><h1>Your organization</h1><p>Explore ownership and employee reporting lines. Open a card to manage its details.</p></div></div>
+<nav class="org-tabs" aria-label="Organization charts"><a href="/?page=organization&amp;chart=ownership&amp;scope={{ g.scope }}" {% if org.chart=='ownership' %}aria-current="page"{% endif %}>Companies &amp; real estate</a><a href="/?page=organization&amp;chart=employees&amp;scope={{ g.scope }}{% if business_id %}&amp;business_id={{ business_id }}{% endif %}" {% if org.chart=='employees' %}aria-current="page"{% endif %}>Employee hierarchy</a></nav>
+{% if org.chart=='ownership' %}{% include 'ownership_transfer.html' %}{% endif %}
+<section class="panel org-panel" data-org-chart>
+  <div class="org-heading"><div><h2>{{ 'Who owns what' if org.chart=='ownership' else 'Who reports to whom' }}</h2><p>{% if org.chart=='ownership' %}{{ org.tree.companies }} companies · {{ org.tree.properties }} properties in this view. Lines connect each asset to its direct owner.{% else %}{{ org.tree.active }} active · {{ org.tree.joining }} joining · {{ org.tree.vacancies }} vacancies. Lines connect each position to its supervisor.{% endif %}</p></div></div>
+
+  {% if org.tree.root %}
+  <div class="org-toolbar"><label class="org-search-label" for="org-search">Find a name or role<input id="org-search" type="search" placeholder="Search this chart…" autocomplete="off"></label><div class="org-controls"><button class="secondary" type="button" data-org-expand>Expand all</button><button class="secondary" type="button" data-org-collapse>Collapse all</button><button class="secondary" type="button" data-org-fit>Fit chart</button><label for="org-zoom">Zoom<select id="org-zoom"><option value="35">35%</option><option value="50">50%</option><option value="65">65%</option><option value="80">80%</option><option value="100" selected>100%</option><option value="120">120%</option></select></label></div></div>
+  <p class="org-help">Scroll to explore. Use the branch buttons to expand or collapse. {% if org.chart=='ownership' %}Gold cards are real estate. A tenant label shows usage; the connecting line always shows ownership.{% else %}Dashed cards are vacancies. Choose “Change reporting line” on an employee to update their supervisor.{% endif %}</p>
+  <p class="org-search-status" role="status" aria-live="polite" data-org-search-status></p>
+  {% for warning in org.tree.warnings %}<p class="notice">{{ warning }}</p>{% endfor %}
+  <div class="org-viewport" tabindex="0" role="region" aria-label="{{ 'Ownership chart' if org.chart=='ownership' else 'Employee reporting chart' }}. Scroll horizontally and vertically to explore."><ul class="org-tree org-zoom-100">{{ branch(org.tree.root) }}</ul></div>
+  {% else %}<div class="empty"><h3>Your team starts with a business.</h3><p>Buy or start a company to see its positions and reporting lines here.</p><a class="primary" href="/?page=business_market">Explore businesses →</a></div>{% endif %}
+</section>

@@ -1,0 +1,25 @@
+{% from 'campaign_controls.html' import controls, records with context %}
+<div class="page-heading"><div><span class="eyebrow">MANAGE YOUR EMPIRE</span><h1>{{ campaign.title }}</h1><p>{{ campaign.intro }}</p></div></div>
+{% if campaign.property_context %}<section class="notice task-context"><b>{{ campaign.property_context.name }}</b><p>Owner and paying account: {{ campaign.property_context.owner }} · {{ campaign.property_context.cash|money }} cash on hand.</p><a href="{{ campaign.property_context.url }}">Return to property →</a></section>{% endif %}
+{% if campaign.shared_context %}<section class="notice task-context"><b>{{ campaign.shared_context.name }} · {{ campaign.shared_context.provider }}</b><p>Use this team for the selected work. Staff time, coverage and qualifications still apply.</p><div class="task-navigation"><a href="{{ campaign.shared_context.back }}">← Back to shared teams</a><a href="{{ campaign.shared_context.edit }}">Change this team’s staff or coverage →</a></div></section>{% endif %}
+{% if campaign.task_links %}<nav class="task-navigation" aria-label="Service actions">{% for link in campaign.task_links %}<a class="secondary" href="{{ link.url }}">{{ link.label }} →</a>{% endfor %}</nav>{% endif %}
+{% if campaign.focused_task %}<section id="task-focus" tabindex="-1">{{ controls([campaign.focused_task]) }}</section>{% endif %}
+{% if page=='home_office' %}{% include 'internal_departments.html' %}{% endif %}
+{% if page=='operations_center' %}{% include 'customer_collections.html' %}{% endif %}
+{% if page=='inbox' %}{% include 'decision_inbox.html' %}{% endif %}
+{% if page=='services' %}{% include 'specialists.html' %}{% endif %}
+{% if campaign.page=='forecast' %}<section class="panel"><form id="forecast-form"><label>Forecast horizon (days)<input type="number" name="days" value="30" min="1" max="90" required></label><button class="primary" type="submit">Calculate scenarios</button></form><div id="forecast-results" role="status" aria-live="polite"></div></section>{% endif %}
+{% if campaign.metrics %}<section class="metrics">{% for label,value in campaign.metrics %}<article><span>{{ label }}</span><strong>{{ value }}</strong></article>{% endfor %}</section>{% endif %}
+{% for note in campaign.notes %}<p class="notice">{{ note }}</p>{% endfor %}
+{% if campaign.links %}<div class="filters">{% for link in campaign.links %}<a class="filter" href="{{ link.url }}">{{ link.label }} →</a>{% endfor %}</div>{% endif %}
+{% if page=='home_office' %}
+<p class="fine-print">Service queues and capacity cover all owned companies. Each task has its own provider and receiving account.</p>
+<section id="service-queue">{% for item in campaign.tables if item.title=='Service work queue and digest' %}{{ records(item) }}{% endfor %}</section>
+<details class="panel" id="office-finances" {% if not campaign.office_companies %}open{% endif %}><summary>Home-office company finances and setup</summary>{% include 'home_office_company.html' %}</details>
+<div class="section-heading"><h2>Manage service work and departments</h2></div>{{ controls(campaign.forms) }}
+{% for item in campaign.tables if item.title not in ('Service work queue and digest','Departments and queue capacity') %}{{ records(item,true) }}{% endfor %}
+{% else %}
+{% if campaign.page in ('operations_center','commercial_contracts','property_services','developer') %}<div class="section-heading"><h2>Actions</h2></div>{{ controls(campaign.forms) }}{% endif %}
+{% for item in campaign.tables %}{{ records(item,campaign.page=='property_workbench' and item.title in ('Repair choices','Building options for owned lots','Flip scenarios','Systems and inspections','Completed project results','Funded flip commitments','Property offers')) }}{% endfor %}
+{% if campaign.page not in ('operations_center','commercial_contracts','property_services','developer') %}{{ controls(campaign.forms) }}{% endif %}
+{% endif %}

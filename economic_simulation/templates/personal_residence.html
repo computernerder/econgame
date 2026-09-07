@@ -1,0 +1,17 @@
+<section class="panel" id="personal-residence">
+<span class="eyebrow">YOUR HOME</span><h2>Personal residence</h2>
+{% if page=='property' %}
+{% if p.is_residence %}<p>This is {{ g.name }}’s home. It earns no rent. Holding costs of {{ p.upkeep|money }}/month, repairs and any loan payments continue from your personal account.</p>
+<form data-action="clear_residence" data-review="true" data-title="Move out of your personal residence"><input type="hidden" name="property_id" value="{{ p.id }}"><button class="secondary">Move out →</button></form>
+<p><a class="text-link" href="/?page=property_workbench&amp;scope=personal">Manage home repairs →</a></p>
+{% elif p.residence_blocker %}<p>{{ p.residence_blocker }}</p><p><a class="text-link" href="/?page=property_workbench&amp;scope=personal">Review property work and leases →</a></p>
+{% else %}<p>Make this your home. No rent is earned while you live here; holding costs and loan payments continue.</p>{% if g.residence.current %}<p>Your current home, <a class="text-link" href="{{ g.residence.current.url }}">{{ g.residence.current.name }}</a>, will become vacant when you move.</p>{% endif %}
+<form data-action="set_residence" data-review="true" data-title="Make this your personal residence"><input type="hidden" name="property_id" value="{{ p.id }}"><button class="primary">Make this my residence →</button></form>{% endif %}
+{% else %}
+{% if g.residence.current %}<h3><a class="text-link" href="{{ g.residence.current.url }}">{{ g.residence.current.name }} →</a></h3><p>{{ g.residence.current.county }} · Holding costs {{ g.residence.current.upkeep|money }}/month. Your home earns no rent; repairs and loan payments continue.</p>
+<form data-action="clear_residence" data-review="true" data-title="Move out of your personal residence"><input type="hidden" name="property_id" value="{{ g.residence.current.id }}"><button class="secondary">Move out →</button></form>
+{% else %}<p>You have not designated a personal residence.</p>{% endif %}
+{% if g.residence.choices %}<form data-action="set_residence" data-review="true" data-title="Choose your personal residence"><label>Vacant home<select name="property_id">{% for home in g.residence.choices %}<option value="{{ home.id }}">{{ home.name }} · {{ home.county }} · {{ home.upkeep|money }}/month holding costs</option>{% endfor %}</select></label><button class="primary">{{ 'Review move to another home' if g.residence.current else 'Make this my residence' }} →</button></form>
+{% else %}<p>{{ "To move to another home, choose" if g.residence.current else "Choose" }} a personally owned, vacant residential home with no divided units, condition of at least 40, and no unfinished work or sale commitment.</p><p><a class="text-link" href="/?page=market&amp;scope=personal&amp;category=residential">Find a home to buy →</a></p>{% endif %}
+{% endif %}
+</section>

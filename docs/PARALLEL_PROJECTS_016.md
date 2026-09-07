@@ -1,0 +1,21 @@
+# Concurrent projects — 0.16.0
+
+Engineering, construction, skilled trades and factories can operate multiple fixed-fee contracts at the same time. Each keeps its accepted fee, required effort, completed work, earned revenue and eventual invoice. Buying a business retains its original in-progress contract.
+
+On the business page, **Automatic jobs** now offers a maximum concurrent-project count (1–10, default 3) and a workload planning window (5–120 working days, default 20). The next quote can be accepted while other projects are active. Additional contracts must fit combined remaining work into projected capacity over that window. Shortening the window or reducing the count stops new acceptance without cancelling existing contracts. A single initial project remains available for a small business building its staff.
+
+The admission estimate uses the next five weekdays of scheduled, qualified work, including leave, training, shared employee assignments, management time and equipment condition. It extrapolates that average over the chosen window; it is a planning estimate, not a guaranteed completion date. Engineering reserves support and consulting time first. Factory admission also considers production and shipment demand. Automatic acceptance checks current-day capacity as well and uses the existing leadership/authority approval path.
+
+Each day's finite project budget is allocated proportionally to remaining contract work with deterministic integer rounding. No staff minute or shipment is counted twice. Construction and trades buy materials for the aggregate work actually delivered, within available cash and supplier credit. Factories retain finite production, raw-material cash, defects, finished-goods inventory and shipment demand; shipments fulfill multiple orders. Contracts are invoiced separately on completion: 14-day terms for services/trades/construction and 30-day terms for factories. Existing delayed/defaultable collections remain in effect.
+
+Authority forecasts include materials for every active contract, and delegated project-value checks inspect the new contract rather than an older lead contract. Required approvals prevent automatic acceptance and stop long skips. Reduced staffing slows existing jobs; closure writes off all remaining unbilled earnings. The staffing guide shows the combined remaining workload, while individual cards show each contract's progress and fee.
+
+Persistence retains original project fields as the lead contract and adds a parallel-contract list plus policy settings. A recognized older save receives a uniquely named recovery backup before its first update. Accounts, existing fee/progress, employee identities and original completed-job/invoice history remain intact. Source installation does not replace campaign saves.
+
+Validation:
+
+- New tests exercise simultaneous delivery in all four industries, conservation of minutes/shipments, separate one-time invoices, insufficient staffing, policy limits, cumulative material commitments, delegated contract-value approval, skips stopping before required decisions, read-only previews, save/load, legacy backup, closure writeoffs and daily/skip equivalence.
+- Full regression run: 307 passed; one completed-project UI label assertion failed. The label was corrected and the engineering, parallel-project, industry and template suites were rerun: 31 passed in 19.51 seconds. Both runs reported only the two existing dependency deprecation warnings.
+- Browser verification on an isolated copy of the user's campaign: changed only the copy's engineering planning window to 30 days; accepted job 37 alongside job 36; advanced April 10 to April 11, 2028. Both jobs progressed, delivering a combined 955 project minutes. Job 36 reached 37%; job 37 reached 3%. The combined unbilled balance was $15,671.72 and reconciled to the two jobs. Two progress cards were visually inspected.
+
+Known limits: contracts are divided by remaining work, without manual named-employee assignment or per-project priority. Qualification rules remain industry-specific; this update does not introduce mixed-discipline contract phases. Hiring guidance remains a forecast, and the planning window does not create guaranteed deadlines or customer demand. Existing home-office, repair and property-service queues retain their own finite-capacity workflows.

@@ -1,0 +1,77 @@
+/* Keep familiar colors while giving common tasks visible destinations. */
+.task-navigation{display:flex;flex-wrap:wrap;gap:12px;margin:18px 0 24px}
+.task-navigation a{font-size:13px;text-decoration:underline;text-underline-offset:3px}
+.task-navigation .secondary{text-decoration:none}
+.related-tools{margin:0 0 18px;font-size:13px}
+.related-tools>summary{cursor:pointer;color:var(--ink);padding:9px 0}
+.related-tools .filters{margin:8px 0}
+.hiring-shortcuts .section-heading{margin-top:0}
+.hiring-shortcuts{margin:20px 0}
+.hiring-shortcuts .people-filter{align-items:end;margin-bottom:12px}
+.hiring-shortcuts p,.employee-context p{font-size:13px}
+.employee-context{margin:20px 0}
+.task-context p{margin:8px 0}
+.workspace,main,.detail-grid>*,.renovation-grid>*{min-width:0}
+.table-panel{max-width:100%;overflow-x:auto}
+#leadership-activity table{min-width:960px}
+.table-panel:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #a06b27;outline-offset:3px}
+.form-error{margin:12px 0;padding:14px;border:1px solid #ce967a;border-radius:6px;background:#fff0e8;color:#793b21}
+.form-error:focus{outline:2px solid #a06b27}
+.employee-context .task-navigation{margin-bottom:0}
+.internal-departments{margin:24px 0 32px}
+.internal-departments .section-heading{align-items:center;flex-wrap:wrap;gap:16px}
+.internal-departments h2{margin:4px 0}
+.internal-departments .primary{display:inline-block;text-decoration:none;white-space:normal}
+.department-row-actions{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-width:145px}
+.work-condition-context{grid-column:1/-1;min-width:0;padding:18px;background:#f5f6f0;border:1px solid var(--border,#dce0d5);border-radius:6px}
+.work-condition-context .section-heading{margin:0;gap:10px;flex-wrap:wrap}
+.work-condition-context h3{margin:0;font-size:17px}
+.work-condition-context [data-work-property]{font-size:12px}
+.work-condition-context .fine-print{margin:10px 0 14px}
+.work-condition-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.work-condition-card{display:flex;flex-direction:column;gap:6px;align-items:stretch;text-align:left;white-space:normal;width:100%;min-width:0;padding:13px;background:white;border:1px solid #d9ded3;border-radius:6px;color:var(--ink);font-size:12px;font-weight:400}
+.work-condition-card[aria-pressed="true"]{border:2px solid #245344;padding:12px;background:#edf3e8}
+.work-condition-card .work-system-name{font-weight:600;font-size:13px}
+.work-condition-card strong{font-size:20px}
+.work-condition-card meter{width:100%;height:10px;accent-color:#245344}
+.work-condition-card .work-underway{color:#7a4d16}
+.work-selected-detail{margin:14px 0 0;font-size:13px}
+.work-repair-all{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin-top:14px}
+.work-repair-all button{flex-shrink:0}
+.work-repair-all p{flex:1;min-width:200px;margin:0;font-size:13px}
+[data-repair-summary]{font-size:13px;font-weight:600}
+form[data-action="property_work"] label[hidden]{display:none}
+form[data-action] label[hidden],.context-form-feedback [hidden]{display:none}
+.context-form-feedback{margin:12px 0 18px}
+.context-form-feedback p{margin:8px 0}
+.shared-explainer{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:0 0 16px}
+.shared-explainer p{margin:0;max-width:65ch}
+.shared-team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px;align-items:start;margin:20px 0}
+.shared-team{min-width:0;padding:24px;margin:0;font-size:14px}
+.shared-team h3{font-size:26px;margin:5px 0 14px}
+.shared-team h4{margin-bottom:10px}
+.shared-team p{line-height:1.65}
+.shared-roster{list-style:none;padding:0;margin:20px 0}
+.shared-roster li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--border,#d9ded3)}
+.shared-roster span{font-size:12px;text-align:right}
+.shared-status{background:#f2f4ec;padding:12px;border-radius:5px}
+.shared-team-actions{display:flex;flex-direction:column;align-items:stretch;gap:9px;margin:18px 0}
+.shared-team-actions a{white-space:normal;text-align:left;justify-content:flex-start}
+.shared-details{border-top:1px solid var(--border,#d9ded3);padding:14px 0}
+.shared-details summary{font-weight:600;cursor:pointer}
+.shared-details ul{padding-left:18px}.shared-details li{margin:12px 0}
+.shared-team footer{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px;padding-top:14px;border-top:1px solid var(--border,#d9ded3);font-size:13px;color:var(--ink)}
+.shared-assignments .campaign-form{padding:12px;font-size:13px}.shared-assignments .form-pair{display:none}
+@media(max-width:700px){.shared-explainer{grid-template-columns:1fr;gap:12px}.shared-team{padding:18px}}
+@media(max-width:700px){.sidebar .saved-game-label{flex:0 0 auto;max-width:14rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+@media(max-width:1100px){.work-condition-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.work-condition-context{padding:12px}.work-condition-grid{grid-template-columns:1fr}}
+@media(max-width:700px){.task-navigation{gap:10px}.hiring-shortcuts .people-filter{display:flex;flex-wrap:wrap}.hiring-shortcuts label{min-width:180px;flex:1}html{scroll-padding-top:240px}}
+.restaurant-filters{margin-top:20px}.restaurant-roster-scroll{max-height:36rem;overflow:auto;overscroll-behavior:contain}
+.restaurant-filters select{display:block;width:100%;margin-top:8px;padding:12px;border:1px solid var(--border,#d9ded3);border-radius:6px;background:var(--paper,#fffefb);color:inherit;font:inherit}
+.restaurant-roster-scroll table{min-width:850px}.restaurant-roster-scroll th{position:sticky;top:0;background:var(--paper,#fffefb);z-index:1}
+.restaurant-roster-scroll td{vertical-align:top}.restaurant-roster-scroll td:nth-child(n+3):nth-child(-n+9){white-space:nowrap;font-size:12px}
+.restaurant-roster-scroll td details[open]{min-width:230px}.restaurant-roster-scroll [hidden]{display:none}
+/* Navigation remains visible and operable at desktop and compact widths. */
+.mobile-navigation-toggle{display:none}.skip-navigation{position:fixed;left:16px;top:-100px;z-index:100;background:#fff;color:var(--ink);padding:12px 18px;border-radius:5px}.skip-navigation:focus{top:12px}.related-tools a[aria-current]{background:#eaf0e5;border-color:#315c42;font-weight:600}#main-content:focus{outline:none}
+@media(max-width:650px){.mobile-navigation-toggle{display:flex;width:100%;justify-content:space-between;align-items:center;gap:12px;text-align:left;margin-top:14px;padding:12px;background:#315545;color:white;font-size:13px}.mobile-navigation-toggle b{padding:2px 6px;border-radius:4px;background:#5d7258;color:white}#main-navigation{display:none;margin:12px 0 0;max-height:65vh;overflow-y:auto;overflow-x:hidden}#main-navigation[data-open="true"]{display:block}#main-navigation .nav-link{display:flex;font-size:13px;white-space:normal;margin:2px 0;padding:12px}#main-navigation .nav-link b{display:inline-block}#main-navigation .saved-game-label{margin:10px 12px}#main-navigation details .nav-link{padding-left:24px}.sidebar #main-navigation details summary{font-size:13px;padding:12px}.sidebar .brand{display:flex}.management-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible}.management-tabs a{min-width:0;text-align:center;white-space:normal}.mobile-navigation-toggle>span:last-child{white-space:nowrap}}

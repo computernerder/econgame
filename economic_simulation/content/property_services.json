@@ -1,0 +1,117 @@
+{
+  "catalog": [
+    {
+      "industry": "cleaning",
+      "name": "Willow Cleaning Company",
+      "region": "Willow Creek",
+      "asking": 9500000,
+      "cash_at_sale": 5000000,
+      "equipment": 2500000,
+      "staff": [
+        [
+          "manager",
+          340000,
+          40
+        ],
+        [
+          "cleaner",
+          280000,
+          40
+        ],
+        [
+          "cleaner",
+          280000,
+          40
+        ]
+      ],
+      "monthly_overhead": 50000,
+      "monthly_lease": 80000,
+      "daily_demand": 750,
+      "description": "Cleaning crews divide qualified hours between property plans and outside customers. Supplies consume cash before invoices collect in 14 days."
+    },
+    {
+      "industry": "landscaping",
+      "name": "Northbank Grounds Company",
+      "region": "Northbank",
+      "asking": 10500000,
+      "cash_at_sale": 5000000,
+      "equipment": 3500000,
+      "staff": [
+        [
+          "manager",
+          340000,
+          40
+        ],
+        [
+          "gardener",
+          320000,
+          40
+        ],
+        [
+          "gardener",
+          320000,
+          40
+        ]
+      ],
+      "monthly_overhead": 50000,
+      "monthly_lease": 80000,
+      "daily_demand": 650,
+      "description": "Grounds crews need equipment, supplies and travel time. Wet weather interrupts work and winter demand falls. Internal work displaces outside jobs."
+    },
+    {
+      "industry": "security",
+      "name": "Parkside Security Services",
+      "region": "Parkside",
+      "asking": 9000000,
+      "cash_at_sale": 5000000,
+      "equipment": 2000000,
+      "staff": [
+        [
+          "manager",
+          340000,
+          40
+        ],
+        [
+          "security_guard",
+          340000,
+          40
+        ],
+        [
+          "security_guard",
+          340000,
+          40
+        ]
+      ],
+      "monthly_overhead": 50000,
+      "monthly_lease": 80000,
+      "daily_demand": 750,
+      "description": "Licensed guards patrol client properties and serve outside customers. Coverage reduces property incident risk without guaranteeing prevention; payroll precedes collections."
+    }
+  ],
+  "startup": {
+    "cleaning": {
+      "deposit": 200000,
+      "fitout": 2500000,
+      "inventory": 0,
+      "expense": 200000,
+      "reserve": 5000000,
+      "days": 14
+    },
+    "landscaping": {
+      "deposit": 200000,
+      "fitout": 3500000,
+      "inventory": 0,
+      "expense": 200000,
+      "reserve": 5000000,
+      "days": 14
+    },
+    "security": {
+      "deposit": 200000,
+      "fitout": 2000000,
+      "inventory": 0,
+      "expense": 200000,
+      "reserve": 5000000,
+      "days": 14
+    }
+  }
+}

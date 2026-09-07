@@ -1,0 +1,12 @@
+<section class="work-condition-context" aria-label="Current property system conditions">
+<div class="section-heading"><h3>Current system conditions</h3><span data-work-property>{{ f.work_current.name }} · As of {{ f.work_current.date }}</span></div>
+<p class="fine-print">Higher is healthier. Below 40 needs repair; below 25 is urgent. Select a system below to plan its work. These are current condition ratings; inspection estimates are separate.</p>
+<script type="application/json" data-work-properties>{{ f.work_properties|tojson }}</script>
+<div class="work-repair-all"><button type="button" class="secondary" data-repair-all {% if not f.work_current.repair_count %}disabled{% endif %}>Repair all →</button><p>Review one ordinary repair for every system below 100 without work underway, using the contractor selected below. Each repair adds up to 15 condition points before workmanship effects.</p></div>
+<p data-repair-summary aria-live="polite">{{ f.work_current.repair_summary.get('outside','') }}</p>
+<div class="work-condition-grid" data-work-systems>{% for s in f.work_current.systems %}
+<button type="button" class="work-condition-card" data-work-system="{{ s.key }}" aria-pressed="{{ 'true' if s.key==f.work_system else 'false' }}"><span class="work-system-name">{{ s.name }}</span><strong>{{ s.condition }}/100</strong><meter min="0" max="100" value="{{ s.condition }}" aria-label="{{ s.name }} condition">{{ s.condition }}/100</meter><span>{{ s.priority }} · {{ s.age }} years old</span>{% if s.work %}<span class="work-underway">{{ s.work }}</span>{% endif %}</button>
+{% endfor %}</div>
+<p data-work-empty {% if f.work_current.systems %}hidden{% endif %}>{{ f.work_current.empty }}</p>
+<p class="work-selected-detail" data-work-detail aria-live="polite">{% for s in f.work_current.systems if s.key==f.work_system %}{{ s.name }} · {{ s.condition }}/100 · {{ s.priority }} · {{ s.credential }}{% if s.work %} · {{ s.work }}{% endif %}{% endfor %}</p>
+</section>

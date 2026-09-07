@@ -1,0 +1,91 @@
+{
+  "catalog": [
+    {
+      "industry": "factory",
+      "name": "Northbank Manufacturing",
+      "region": "Northbank",
+      "asking": 48000000,
+      "cash_at_sale": 18000000,
+      "equipment": 16000000,
+      "staff": [
+        [
+          "manager",
+          400000,
+          40
+        ],
+        [
+          "machine_operator",
+          380000,
+          40
+        ],
+        [
+          "machine_operator",
+          380000,
+          40
+        ],
+        [
+          "production_worker",
+          290000,
+          40
+        ]
+      ],
+      "monthly_overhead": 230000,
+      "monthly_lease": 260000,
+      "description": "An industrial factory fulfilling fixed-fee manufacturing orders. Machine operators lead production; supporting workers add capacity. Materials, wages and overhead reduce the order margin. Completed orders are paid after 14 days.",
+      "contract_fee": 6400000,
+      "contract_minutes": 12000,
+      "material_hourly_cost": 9000,
+      "project_active": true
+    },
+    {
+      "industry": "boutique",
+      "name": "Parkside Boutique",
+      "region": "Parkside",
+      "asking": 14000000,
+      "cash_at_sale": 5000000,
+      "equipment": 1800000,
+      "staff": [
+        [
+          "manager",
+          340000,
+          40
+        ],
+        [
+          "salesperson",
+          320000,
+          40
+        ],
+        [
+          "stocker",
+          270000,
+          40
+        ]
+      ],
+      "monthly_overhead": 65000,
+      "monthly_lease": 125000,
+      "description": "A clothing and accessories boutique. Personal selling and stock preparation must overlap. Wholesale purchases remain inventory until sold; pricing and local demand influence sales.",
+      "inventory_units": 240,
+      "unit_cost": 4200,
+      "unit_price": 9800,
+      "daily_demand": 35
+    }
+  ],
+  "startup": {
+    "factory": {
+      "deposit": 1800000,
+      "fitout": 16000000,
+      "inventory": 0,
+      "expense": 2400000,
+      "reserve": 18000000,
+      "days": 56
+    },
+    "boutique": {
+      "deposit": 750000,
+      "fitout": 1800000,
+      "inventory": 1008000,
+      "expense": 600000,
+      "reserve": 5000000,
+      "days": 28
+    }
+  }
+}

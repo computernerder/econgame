@@ -1,0 +1,22 @@
+<section class="panel" id="leadership-activity">
+<div class="section-heading"><div><span class="eyebrow">WHAT YOUR LEADERS HAVE DONE</span><h2>Leadership activity</h2></div>
+{% if leader_activity.notification.new %}<form data-action="leadership_activity_read"><input type="hidden" name="cursor" value="{{ leader_activity.notification.cursor }}"><button class="secondary">Mark current actions as read</button></form>{% endif %}</div>
+<p>{{ leader_activity.notification.new }} unread completed action{{ "s" if leader_activity.notification.new != 1 else "" }} across your businesses · {{ leader_activity.notification.pending }} request{{ "s" if leader_activity.notification.pending != 1 else "" }} awaiting approval. Marking actions as read never approves a request.</p>
+<form method="get" action="/#leadership-activity" class="leadership-filters">
+<input type="hidden" name="page" value="management">
+<label>Leader<select name="leader_id"><option value="">All leaders</option>{% for id,name in leader_activity.leaders %}<option value="{{ id }}" {% if id==leader_activity.leader_id %}selected{% endif %}>{{ name }}</option>{% endfor %}</select></label>
+<label>Business<select name="activity_business"><option value="">All businesses</option>{% for id,name in leader_activity.businesses %}<option value="{{ id }}" {% if id==leader_activity.business_id %}selected{% endif %}>{{ name }}</option>{% endfor %}</select></label>
+<label>Status<select name="activity_status">{% for key,label in leader_activity.statuses.items() %}<option value="{{ key }}" {% if key==leader_activity.status %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+<button class="secondary">Filter activity</button><a class="text-link" href="/?page=management#leadership-activity">Reset</a></form>
+<p class="fine-print">Cash spent is money paid when the action ran. Authority commitment includes reserved future spending and annualized new base pay; it is not an additional cash charge. Requests are proposals until executed. Older records may lack the leader's role, result, or request attribution.</p>
+<p class="fine-print">Scroll the table horizontally to see spending and commitments in a narrow window.</p><div class="table-panel" tabindex="0" role="region" aria-label="Leadership action details"><table><thead><tr><th>Date / leader</th><th>Business / action</th><th>Status / result</th><th>Cash spent</th><th>Commitment / proposal</th></tr></thead><tbody>
+{% for item in leader_activity.rows %}<tr>
+<td>{{ item.date }}{% if item.new %}<small><b>Unread</b></small>{% endif %}<small>{% if item.employee_link %}<a class="text-link" href="/?page=employee&amp;employment_id={{ item.actor }}">{{ item.actor_name }}</a>{% else %}{{ item.actor_name }}{% endif %}<br>{{ item.actor_role }}</small></td>
+<td><a class="text-link" href="/?page=business&amp;business_id={{ item.business_id }}&amp;scope={{ item.business_id }}">{{ item.business_name }}</a><small><b>{{ item.action }}</b><br>{{ item.detail }}</small></td>
+<td><b>{{ item.status_label }}</b>{% if item.resolved_by %}<small>Resolved by {{ item.resolved_by }}</small>{% endif %}{% if item.outcome %}<small>{{ item.outcome }}</small>{% endif %}
+{% if item.status=='open' %}<small>Review by {{ item.due or 'No deadline recorded' }}<br>{{ item.recommendation }}<br>{{ item.risk }}</small><a class="text-link" href="/?page=business&amp;business_id={{ item.business_id }}&amp;scope={{ item.business_id }}#leadership">Review request →</a>{% elif item.status=='deferred' %}<small>Deferred until {{ item.deferred_until }}</small>{% endif %}</td>
+<td class="numeric">{{ item.cash|money if item.cash is not none else 'Not recorded' }}{% if item.status in ('open','deferred','manager_queue') %}<small>Not executed</small>{% endif %}</td><td class="numeric">{{ item.commitment|money }}</td></tr>
+{% else %}<tr><td colspan="5">No leadership activity matches. Actions appear here when an available leader acts within their policies or requests your approval.</td></tr>{% endfor %}
+</tbody></table></div>
+<div class="leadership-pagination"><span>{{ leader_activity.total }} record{{ "s" if leader_activity.total != 1 else "" }} · Page {{ leader_activity.page }} of {{ leader_activity.pages }}</span>{% if leader_activity.previous %}<a class="text-link" href="{{ leader_activity.previous }}">← Newer</a>{% endif %}{% if leader_activity.next %}<a class="text-link" href="{{ leader_activity.next }}">Older →</a>{% endif %}</div>
+</section>

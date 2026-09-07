@@ -1,0 +1,482 @@
+Repository: git@github.com:computernerder/econgame.git (SSH), main branch. The working game remains at C:/Projects/EconmicSimulationGame. Saves, backups, virtual environments and scratch QA files are excluded from Git. Read README.md for checkout/setup instructions. Preserve the existing history; do not copy local campaign databases into source control.
+
+Navigation usability (0.33.8): company switching preserves the current tool and valid context; property and service destinations highlight the right section. Stale business/employee/property links show an explanation and the appropriate directory. Mobile navigation exposes every destination and the decision count; company tabs fit small screens. Keyboard skip-to-content and task-link focus are supported. The ended-campaign link opens the actual new-game form. See docs/NAVIGATION_USABILITY_0338.md for validation and limits. This increment changes navigation and presentation, not simulation or save schema. Restart after updating.
+
+Quieter time skips (0.33.7): routine completions stay in the activity log by default and financial events below $1,000 do not interrupt. Advance time now includes interruption preferences and a quieter preset. Handled manager issues and closed decisions do not re-pause. Interrupted target dates persist and Resume rechecks all approvals; a recovery day preserves the original target. Required approvals, unpaid payroll, reserves and failure still stop time. Explicit existing settings remain respected. See docs/QUIETER_SKIPS_0337.md for validation and limits. Restart after installation.
+
+Restaurant growth (0.33.6): enable meal-time operations from an owned restaurant business page. Opening days/hours, demand, stock, kitchen/dining layouts and real shift coverage support a larger single-location team. Prep cooks, dishwashers and hosts consume real time; managers fill workload gaps within headcount/cash/authority limits and stagger unpinned shifts. Search/filter the weekly roster, edit days/start times, see employer costs and seven-day coverage. Existing saves keep the prior restaurant model until a plan is saved. See docs/RESTAURANT_SCALE_0336.md for validation and limits. Restart after installation.
+
+Shared resources (0.33.5): Home Office team cards show named staff, coverage, assignments, jobs and direct task actions. Schedule regular support creates a staff agreement and an existing-shift reservation in one review; real hours, costs, leave, credentials and separate company books remain. Internal recruiting/IT/agent/repair links select the chosen provider and relevant fields. See docs/SHARED_RESOURCES_0335.md for validation and limits. Restart after installation.
+
+Internal property specialists (0.33.4): managers and directors prefer qualified home-office maintenance staff and licensed real estate agents, then other owned providers. Repairs, basic cleaning and grounds care consume shared employee time and actual resources. Closing preparation must finish before reduced brokerage applies. A per-business preference permits outside providers; scope, workload and financial limits remain enforced. See docs/INTERNAL_PROPERTY_SERVICES_0334.md for validation and limits. Restart after installation.
+
+Manager property coverage (0.33.3): default manager/director geography includes properties owned by the businesses they oversee. Previously blocked routine care returns to the manager queue when current scope, funding and workload permit, then executes on time advance with real costs and an audit entry. Explicit restrictions and deferrals remain binding. See docs/PROPERTY_MANAGER_SCOPE_0333.md for validation and limits. Restart after installation.
+
+Relevant forms (0.33.2): service requests hide and disable irrelevant fields, filter recipients/targets/roles/departments by the selected work, and explain empty choices before review. Related recruiting, IT, property transaction and tenant repair forms share the same dependency behavior. Accounting requests no longer carry stale legal targets. See docs/CONTEXT_FORMS_0332.md for validation and limits. Restart after installation.
+
+HR hiring costs (0.33.1): an accepted hire uses 60 completed HR minutes with no outside recruitment fee. HR payroll and separate paid campaigns remain. Hiring screens, cash requirements and confirmation show the current fee and capacity; shared staff work remains finite. See docs/HR_HIRING_0331.md for validation and limits. Restart after installation.
+
+Home-office leadership transfer (0.33.0): move an active manager/director into a Home Office Director or VP position from their employee page. Existing employment identity, leave, oversight and authority spending remain; future payroll moves to the office and the old position becomes vacant. Real executive priorities and bounded parent funding remain subject to scope and cash. See docs/HOME_OFFICE_PROMOTION_033.md for behavior, validation and limits. Restart after installation.
+
+Repair all (0.32.2): selected-property bulk repair with a combined cost preview, full-batch funding and qualification checks, active/full-system exclusions and real saved work jobs. Individual repair behavior, finite internal crew hours, authority enforcement and financial reconciliation remain. See docs/REPAIR_ALL_0322.md for validation and limits. Restart after installation.
+
+Manager leave queue (0.32.1): covered future vacation stays with its manager when they return before the start date. Only genuine exceptions interrupt time; the inbox and employee views show who will review the request, when, or why the player is needed. Explicit policies and actual leave capacity/payroll effects remain. See docs/MANAGER_LEAVE_0321.md for validation and limits. Restart after installation.
+
+Manager and director defaults (0.32.0): hiring a manager delegates daily work, including staged customer collection and real legal follow-up. Director appointments add bounded growth authority; the managing-director shortcut retains one employee and previews the responsibility raise. Explicit overrides, cash reserves and parent contracts remain effective. See docs/LEADERSHIP_DEFAULTS_032.md for behavior, validation and limitations. Restart after installation.
+
+Daily management defaults (0.31.0): available managers now handle daily routines without a separate setup step. Industry-sized default purchase limits, cumulative commitments, cash reserves and existing policies constrain actions. Manager questions go to the decision inbox; safe leave requests go to the manager, including next-day requests. Tenant repairs receive same-day review. Explicit opt-outs and employee identities are preserved. See docs/MANAGER_DEFAULTS_031.md for behavior, validation and limits. Restart after installation.
+
+Parent director inheritance (0.30.0): subsidiaries default to their nearest parent business director, with local-manager priority, explicit overrides, shared workload/budgets, career tracking and compensation reviews for added duties. Business leadership pages provide an inheritance toggle. Saved authority scopes remain explicit. See docs/DIRECTOR_INHERITANCE_030.md for behavior, validation and limits. Restart after installation.
+
+Internal department configuration (0.29.2): Home office now shows visible Add/configure, Edit department and Hire staff actions above the service queue. Editing loads saved staff, tools and coverage; company/role selectors load existing configurations and filter matching employees. See docs/DEPARTMENT_UI_0292.md for validation and limits. Restart after installation.
+
+Property work condition context (0.29.1): booking work now shows all eight system conditions, ages, attention levels and active work, with live property selection and selectable system cards. Costs and simulation behavior are unchanged. See docs/PROPERTY_WORK_VALUES_0291.md for validation and limits. Restart after installation.
+
+Manager-led routine operations (0.29.0): available local managers now perform daily work before directors. Managers can follow up overdue invoices, book cleaning/grounds care and renew existing service plans within their budgets. Directors retain strategic decisions and absence cover. Routine policies and separate manager/director authority controls are in Management overview. See docs/MANAGER_ROUTINES_029.md for behavior, validation and limits. Restart after installation.
+
+Customer collections (0.28.0): overdue invoices now offer reminders, installments, contingency agency recovery and direct legal work before write-off. Eligible invoices use 1% default / 8% late-payment tuning. Existing defaults and promised dates survive. See docs/CUSTOMER_COLLECTIONS_028.md for simulation behavior, validation and limits. Restart after installation.
+
+UI workflow update (0.27.0): visible team hiring and policy controls, leader-first management, queue-first home-office services, selected-property repair links, inline form errors, clearer cash labels and an active-campaign Home. Simulation behavior and saves are preserved. See docs/UI_WORKFLOWS_027.md for validation and limits. Restart after installation.
+
+Specialist hiring correction (0.26.3): HVAC, electrical, plumbing and real-estate vacancies now accept their automatic license requirements. Guided offers display and enforce licenses before a vacancy exists. See docs/SPECIALIST_HIRING_0263.md. Restart and retry the vacancy or offer.
+
+Leadership career tracking (0.26.2): director and executive appointments, changed scope/limits and removals now appear in employee career history. Current leadership duties are visible on employee pages, including existing saves. See docs/LEADERSHIP_HISTORY_0262.md for behavior and validation. Restart after installation.
+
+Leadership promotion pay (0.26.1): director and executive appointments now show and apply responsibility raises through the original employer payroll. Existing directors receive an inbox pay review on the next simulated day. Repeat appointments do not stack raises. See docs/LEADERSHIP_PAY_0261.md for behavior, validation and limitations. Restart after installation.
+
+Revenue streams and equipment kits (0.26.0): gas stations, engineering firms and factories can configure offerings and buy capability kits with real staff, inventory/material, equipment and cash constraints. Existing contracts and unconfigured operating models are preserved. See docs/REVENUE_KITS_026.md for behavior, validation and limitations. Restart after installation.
+
+Whole-dollar interface (0.25.1): all monetary displays and entry fields use whole dollars; exact cents remain in saved finances and unchanged agreements. 38 tests plus browser QA passed. See docs/WHOLE_DOLLARS_0251.md. Restart after installation.
+
+Empire Manager
+Comprehensive game design and implementation handoff
+Version 1.0 | 5 September 2026 | Working title, not final branding
+Purpose: give a fresh coding LLM enough context to build a coherent local business simulation without access to the planning conversation. This is a specification, not an implemented product. No performance, packaging or gameplay claims have been validated yet.
+Build a profitable empire by acquiring real estate and businesses, developing employees, constructing management hierarchies and sharing resources across subsidiaries. The campaign spans decades; the player may inspect one person or advance an established conglomerate through a year of operations.
+The intended player likes rapid visible progress, meaningful decisions, scaling and optimization, but loses interest in slow tutorials and overwhelming interfaces. The design must offer depth through progressive disclosure and delegation, not compulsory clerical work.
+Status legend: REQUIRED means explicitly requested by the user or necessary to preserve that request. DEFAULT means a proposed implementation decision that can be changed with approval. LATER means planned scope after the foundational gameplay works. Numeric economic values in this document are illustrative tuning seeds, never representations of current law or market prices.
+Product direction: a local PC application with a web-style interface. The proposed technical baseline is Python simulation, FastAPI application layer, HTML/CSS/HTMX, limited JavaScript, pywebview desktop window and SQLite saves. Validate this baseline during the technical milestone; do not implement two UI stacks.
+Reading route: sections 1–4 define scope and time; 5–13 define gameplay; 14–18 define interface and architecture; 19–22 define validation, milestones and decisions. The numbered sections are usable through Word's navigation pane.
+Handoff rule: implement in milestones. Preserve the complete design as a roadmap; do not claim that a small prototype contains the full simulation. Do not silently remove difficult requirements or substitute a generic shop clicker.
+1. Requirements and scope authority
+User requirements to preserve
+R01: Buy, own, lease and improve real estate; buy existing businesses and establish different business types.
+R02: Scale from a small organization to multiple companies, franchises and acquired conglomerates with their own central offices.
+R03: Keep individual employee records and inspect expandable organizational hierarchies; small businesses need few layers, not a mandatory corporate bureaucracy.
+R04: Hire people with degrees, certifications, experience, ambition and different skills; model unemployment, underemployment and multiple employment commitments.
+R05: Model scheduling, labor cost, compensation, granular benefits, time off, holidays, culture, morale, loyalty, engagement and burnout.
+R06: Model promotions, management quality, team compatibility and workplace politics; employees must affect outcomes beyond a flat productivity bonus.
+R07: Allow umbrella policies, company-specific overrides and shared employees across linked businesses and franchises where contracts permit.
+R08: Simulate regional economic and civic differences, crime and observable trends; capital can fund interventions with delayed effects.
+R09: Use different revenue and staffing models by industry. Centralizing compatible services rewards specialization before diversification.
+R10: Include profitability as the principal performance measure, plus employee and investment indicators, taxes and tax-planning mechanics.
+R11: Support campaigns spanning decades, one-day turns and larger time skips; new businesses require planning, capital and time.
+R12: Use management dashboards and menus; deliver a local PC game with a locally rendered web interface.
+Interpretation boundaries
+These requirements establish direction, not numerical tuning. The user has not explicitly selected starting capital, exact country, starting year, final title, owner succession, compulsory attention points or illegal tax evasion. Defaults and exclusions below are not retroactive user approvals.
+Profitability does not imply that every employee-friendly action must maximize profit. The player may accept lower returns for loyalty, regional improvement or resilience. Conversely, expensive benefits must not guarantee commercial success.
+2. Experience, progression and game modes
+Core loop
+Inspect opportunity and region; plan funding and staffing; acquire or open; set policies and authority; advance time; review explainable results; address exceptions; reinvest or divest. The same loop must work at a location, subsidiary or holding-company level.
+Progression changes responsibility
+At the beginning, choose employees and cover operating hours. At several locations, appoint managers and pool specialists. At regional scale, set budgets and service agreements. At conglomerate scale, assess executives, acquisitions, capital allocation and regional exposure. Employees remain individually inspectable throughout.
+Proposed default modes
+Guided start: inherit or acquire one functioning small business with a manager vacancy, a cash reserve and three contextual objectives. No wage-job prologue.
+Entrepreneur start: choose a property or business opportunity with enough capital to act immediately. Show an opening budget and runway forecast before committing.
+Sandbox: configurable capital, region count, starting date, difficulty and information visibility; label modified score records.
+Pacing targets to playtest
+Within five minutes, make a meaningful ownership or staffing decision. Within a 15–30-minute session, achieve a visible operational improvement, hire or promote someone, close a purchase, or advance a stable period and receive a useful review. These are usability goals, not promises of real-world simulation speed.
+Small upgrades may take days; hiring and opening can take weeks; acquisitions and integration can take months; education and civic change can take years. Faster turns compress waiting without erasing those delays or risks.
+Failure and continuation
+DEFAULT: the player represents the holding organization, not an immortal individual. People age and retire; control persists. Subsidiary distress does not automatically bankrupt the parent unless guarantees or funding commitments transmit the loss. Full insolvency offers a recap and restart, not a covert bailout. Campaign score rules must label rescues or sandbox changes.
+3. Time, turns and deterministic skips
+Authoritative calendar
+REQUIRED: minimum player step is one calendar day. Offer day, week, month, quarter, year and custom date. Month advancement follows calendar boundaries, not fixed 30-day arithmetic; account for leap years. The game never advances because real time passes while it is closed.
+DEFAULT: all advance controls call the same daily simulation pipeline. A large skip repeatedly advances days until its target, cancellation or a stop event. Batch optimization is allowed only after equivalence tests prove it preserves outcomes.
+Daily processing order
+Apply effective-dated commands, start-of-day obligations and scheduled events.
+Resolve workforce availability, accepted offers, leave, travel, shifts and management assignments.
+Calculate available capacity, market demand, service delivery, inventory use and project progress.
+Post financial accruals and scheduled cash settlements; evaluate debt and liquidity.
+Update employee conditions, bounded event probabilities, regional changes due that day and competitor decisions.
+Record observations, alerts and compact histories; commit the day atomically, then evaluate skip-stop rules.
+Recurrence and interrupts
+Payroll, rent, benefit invoices, taxes and reporting run from explicit calendars. A period's posting has a unique identifier, so restarting cannot repeat it. Stop on impending insolvency, binding acquisition choices, critical unfilled roles, major incidents and decisions outside manager authority. Allow player-defined thresholds, deadline reminders and digest-only notices.
+Each interruption includes what changed, options, cash exposure, deadline, default action and a link to supporting evidence. Noncritical events must be grouped to prevent notification overload. Urgent matters with same-day deadlines must be surfaced before executing an irreversible default.
+Reproducibility
+Persist world seed, random-stream states, pending events, date, content version and simulation version. Use stable iteration order and subsystem random streams. Identical initial state and dated commands must yield identical outcomes regardless of UI, pause or skip size. Forecasts use cloned state and separate randomness; viewing a forecast must never change the actual future.
+4. Ownership, reporting and shared space
+Separate structures
+Legal ownership is not an org chart, and an org chart is not a work schedule. Maintain independent structures for ownership, reporting, employment, assignments, brand affiliation and property occupancy.
+Entity
+Responsibility
+Key constraint
+Legal entity
+Owns assets, signs contracts, owes liabilities
+Explicit ownership and separate ledger
+Business operation
+Runs an industry at a location
+Belongs to a legal entity
+Brand
+Identity and operating standards
+Does not automatically employ people
+Office / location
+Physical operating or administrative site
+May host multiple entities
+Property / space
+Owned building and rentable units
+Leases consume available space
+Department / position
+Organizes work and reporting roles
+Vacant positions may still exist
+Employment
+Contract between a person and employer
+Separate from temporary assignments
+Assignment
+Work for an operation or service
+Time and qualifications are validated
+Headquarters and conglomerates
+A central office is a staffed location, not an automatic bonus. It has rent or ownership costs, desks/capacity abstractions, departments, service coverage and leadership. A purchased conglomerate retains its subsidiaries, headquarters, staff, policies, liabilities and history until the player explicitly restructures them.
+DEFAULT: begin with wholly owned, acyclic ownership trees. Store ownership interests so minority stakes can be added later, but do not expose unsupported investment types. A single entity may run several operations in one or several properties.
+Critical invariants
+No entity owns itself indirectly. No employee supervises themselves through a reporting cycle. Each filled position has at most one incumbent unless explicitly modeled as job sharing. A person may hold multiple employments, but their actual time cannot be created twice. Space allocation cannot exceed usable area. Reorganization preserves IDs and historical records instead of deleting and recreating people.
+5. Employees, education and recruitment
+Persistent people
+Every employed person is individually inspectable and retains a stable ID through hiring, transfers, resignation, retirement and acquisitions. The wider population may use cohorts; applicants are materialized into people when needed. Never silently collapse owned employees into anonymous headcounts at scale.
+Person fields include name, birth date, home region, career history, qualifications, experience, skills, preferences, ambition, personality and sparse professional relationships. Employment fields include employer, role, start/end dates, wage basis, contract hours, compensation package and reporting position.
+Degrees and competence
+Support high school, trade qualifications, associate, bachelor, master, doctorate, professional licenses and industry certifications. Record discipline, completion date and license expiry where applicable. Mandatory licenses differ from preferred degrees. Experience can substitute for preferences but not mandatory credentials. Education must not be a universal multiplier that makes every PhD a better cashier or manager.
+Recruitment workflow
+Create a funded position; specify duties, minimum credentials, preferences, hours, location and package; choose recruitment channels; receive applicants; screen/interview; make offers; wait for acceptance and notice; onboard; review probation. Recruitment has fees, manager time, delays and false positives/negatives. Better recruiters improve estimates rather than reveal perfect truth.
+Candidates compare total compensation, commute, stability, schedule, career path, manager reputation and alternatives. Current employees can apply internally or be referred. Poaching and counteroffers affect pay compression and colleagues' expectations.
+Labor-market states
+Distinguish unemployed, underemployed, fully employed, actively searching, studying and retired. Multiple jobs are not automatically misconduct: compatible part-time jobs may work well. Overlapping promised hours or excessive total workload create observable missed commitments and fatigue; detection is uncertain and no manager sees private information without an in-game source.
+Degrees, graduations, relocation, retraining and retirement alter regional supply over time. Demographic attributes must not hard-code intelligence, integrity or criminality; preferences should vary among individuals.
+6. Managers, hierarchy and workplace politics
+Authority and span of control
+Managers have budgets, direct reports, service responsibilities and decision limits. Workload grows with direct-report complexity, vacancies, locations, travel, conflict and organizational change. Leadership skill and administrative support increase sustainable capacity. A small firm can report directly to its owner; no arbitrary five-layer minimum.
+Promotions create vacancies and onboarding needs. Strong technical performance is evidence for specialist advancement, not proof of leadership ability. Offer parallel expert and management career ladders. Ambition may favor mastery, executive authority, stable hours, income, prestige or eventual entrepreneurship.
+Delegation contract
+The player sets hiring salary limits, staffing targets, overtime caps, training budget, purchasing limits and escalation rules. Managers act within those limits and log their decisions. Structural changes, guarantees and major acquisitions require explicit authority. Delegation must reduce clicks while preserving player inspection and override.
+DEFAULT: no spendable attention-point currency. Management workload, delayed decisions and report quality create practical limits. Do not block inspection with an artificial timer. Evaluate an attention resource only after playtesting demonstrates a need.
+Politics as causal events
+Track a limited relationship network: trust, mentorship, rivalry, favoritism and influence. Promotion disappointment, inconsistent rewards, integration changes and resource competition can trigger conflicts. Do not compute relationships between every pair of employees. Events must identify participants, precursor evidence, choices and delayed consequences.
+Example: a skilled supervisor and a popular supervisor both seek a location-manager vacancy. An external hire offers financial skill but costs more. The result affects retention and future development; none is universally correct. The player may create a specialist path or train the internal candidate, but both require time and budget.
+Reports and truth
+Separate actual operating state from manager estimates. Low-quality or self-serving reporting can delay warning, but formal financial statements still reconcile. Show source, date and confidence. Audits and skip-level reviews improve knowledge at a cost. Avoid unexplained sabotage that leaves the player no actionable clue.
+7. Compensation, benefits and culture
+Compensation package
+Support hourly and salaried pay, overtime rules, shift differentials, commission, bonuses, profit sharing, retirement contributions, signing/retention bonuses and severance. Equity/options are LATER because they require valuation, dilution and ownership accounting. Show total employer cost, estimated employee value and peer comparison; these are different quantities.
+Health and related benefits
+Use fictional but recognizable plan structures: HMO-like, PPO-like and high-deductible medical plans; employer premium contribution; employee-only/family tiers; deductible; out-of-pocket limit; network breadth; employer health-account contribution. Include dental coverage tiers and annual limits, vision, life and disability benefits. Premiums and plan features are gameplay data, not current insurance advice.
+Employees choose from eligible offered plans using their preferences and household coverage needs. Those needs need not be disclosed to the employer. Do not expose diagnoses or make private medical history a recruitment optimization tool. Benefit cost, perceived security, access to care and absence effects are aggregated and probabilistic.
+Leave, holidays and flexibility
+Track vacation and sick-leave accrual, carryover/caps, waiting periods, parental leave, paid holidays, floating holidays and shutdown policy. Remote/hybrid eligibility depends on duties. Include education support, childcare, transport, meals and discounts. Paid leave consumes coverage capacity and may create an accrued liability under the fictional ruleset; it is not a free morale toggle.
+Incentives must change behavior
+Sales commission can raise conversion but increase refunds or overselling. Throughput bonuses can harm quality. Team bonuses can encourage cooperation or resentment toward free riders. Profit sharing can align interests but becomes unattractive during downturns. Promotion promises must be recorded and tracked.
+Culture emerges from actual management behavior, workload, fairness and policy consistency, not just a selected label. Benefits should have diminishing returns and implementation delays. A premium package cannot compensate indefinitely for an abusive manager or bankrupt operation.
+8. Policies, schedules and shared employees
+Policy resolution
+Resolve each policy field independently: ruleset constraints; inherited holding/company defaults; permitted location or role overrides; individual agreement. Regional mandatory rules are constraints, not ordinary overrides that a lower level may silently cancel. If the game permits noncompliance, label it explicitly with simulated consequences.
+Every policy stores scope, version, effective date, creator, locked fields and inheritance source. Inherit means no local value; zero is a real value. Clearing an override restores inheritance. An employee contract or franchise agreement can restrict whether a new umbrella policy applies immediately.
+Editing experience
+Show effective policy beside its source. Preview affected employees, annualized cost, service-coverage impact and transition obligations before applying. Allow templates, staged rollout, exemptions and bulk edits. Changing benefits never retroactively rewrites already-posted payroll or past enrollment.
+Scheduling model
+Store shifts as time intervals, even if the UI initially offers morning/day/evening/night presets. Validate availability, overlapping jobs, rest periods, leave, skills, required coverage and travel. Calculate overtime across the appropriate employer/ruleset scope, not separately at each location to evade a threshold accidentally.
+Shared staff have one employment cost and multiple assignments. Allocate costs by recorded or planned service time; unused capacity stays in the service center. A cross-entity assignment needs a service agreement and a charge policy. Franchise access additionally requires contractual permission.
+Shared-service tradeoffs
+Pool HR, accounting, IT, legal, maintenance, purchasing, marketing and logistics. Track demand, queue, capacity, competence, travel and service level. Centralization can yield scale discounts and reused expertise, but excessive load causes delay and outages. A second headquarters acquired with a conglomerate offers redundancy and local knowledge as well as duplicated expense.
+Example: an IT specialist supports three stores. A major opening consumes the planned capacity, delaying routine work. Hiring another person, postponing the opening, outsourcing or accepting degraded service are meaningful alternatives, each with visible cost and risk.
+9. Employee outcomes and explainable behavior
+Distinct state variables
+Morale is current satisfaction; engagement is discretionary contribution; loyalty is attachment and willingness to remain; trust concerns management credibility; burnout is accumulated exhaustion. Ambition is a preference, not a happiness score. Job performance includes baseline duties and quality, not merely engagement.
+DEFAULT: store bounded 0–100 indices with stable daily updates and slower long-term components. Show rounded values or descriptive bands to avoid false precision. Every displayed change should expose its main contributors and observation confidence.
+Illustrative update structure
+Target morale is a weighted function of pay fairness, manager relationship, workload, schedule fit, perceived advancement and team conditions. Daily morale moves partway toward that target. Burnout accumulates under sustained excess load and recovers with rest, sustainable work and supportive management. Recovery is not instantaneous after buying a benefit.
+Effective output uses assigned hours, role skill, equipment/process capacity and availability, modified by bounded fatigue and engagement factors. Required work and discretionary effort remain distinct. Low engagement does not make a worker who meets their contract automatically incompetent.
+Retention and quiet quitting
+Withdrawal of discretionary effort can emerge after broken promises, poor management, blocked advancement or unfair rewards. It is not a randomly assigned moral defect. Resignation decisions compare current conditions with opportunities, notice obligations, loyalty and financial pressure. If using monthly hazard probabilities, convert them to daily hazards consistently; never apply a monthly probability on every daily tick.
+Absences, errors and conflict should be plausible probabilistic outcomes, not guaranteed punishment. Longer time steps must not multiply their rates incorrectly. Benefits and training require spending, time and access before they can affect outcomes.
+Feedback contract
+Employee detail shows recent changes, known causes, compensation history, workload, promotion history, manager and assignments. Offer interventions with cost, likely direction and uncertainty. Performance reviews and audits reveal evidence; omniscient developer views remain separate from normal play. Record before/after values so balance testing can distinguish a genuine relationship from coincidence.
+10. Business models and opening plans
+Industry
+Revenue basis
+Critical operating constraints
+Restaurant
+Customer transactions and average ticket
+Kitchen/service coverage, ingredients, waste, quality
+Retail
+Units sold and product margin
+Demand, inventory, purchasing, shrinkage, checkout capacity
+Engineering services
+Billable time, fixed-price contracts, retainers
+Skills, licenses, milestones, utilization, rework
+Property operations
+Rent and service charges
+Occupancy, lease terms, maintenance, financing
+Technology — later
+Subscriptions or licenses
+Development, acquisition/retention, support, hosting
+Manufacturing — later
+Product orders and deliveries
+Materials, capacity, yield, lead time, quality
+Operating rules
+Customers are aggregated by segment and region; named key clients exist when their contracts matter. Revenue is constrained by actual demand and fulfilled capacity. Payroll does not generate revenue directly. Unserved demand is lost, backlogged or penalized according to industry, not converted to profit automatically.
+Restaurants and shops require time-specific coverage. An engineering firm needs qualified project effort and may collect invoices after recognizing revenue. Property operations need maintenance capacity and tenant demand. Inventory purchases become expense when consumed or sold, not automatically at purchase. Opening costs distinguish expense, capital assets, deposits and working capital.
+New-business lifecycle
+Concept; regional research; business plan; financing; lease/purchase; permits/fit-out; recruitment; supplier/client preparation; opening; ramp-up; stabilization. Each stage has prerequisites, lead time, cost, uncertainty and cancellation terms. Starting a new business is neither free nor instant. The UI compares an opening plan against acquiring an operating business, including inherited risks.
+Require enough funding for committed costs and a configurable runway reserve. A warning can permit risky opening, but obligations remain payable. Delays may create idle payroll and rent before revenue. Industry entry requires relevant leadership and knowledge; unrelated expertise does not transfer perfectly.
+Specialization and diversification
+Compatible companies share suppliers, purchasing volume, equipment, recruiters, training and management knowledge. Model specific shared capabilities, not a global conglomerate discount. Diversification spreads correlated regional/industry risk but adds coordination costs and new skill requirements. Cash, managers and setup capacity should jointly constrain expansion.
+11. Property, acquisitions and franchises
+Real-estate lifecycle
+List properties with usable spaces, condition, permitted uses, asking price, estimated value, lease income, taxes, insurance, maintenance backlog and debt. Allow multiple occupiers and entities under one roof. Buying a building does not automatically buy its tenants; buying a tenant business does not automatically buy the building.
+Renovations have schedules, cash outflow, possible downtime and valuation effects. Space conversion needs an explicit project and simulated permission. Show rent escalation, vacancy, lease expiry, deposits and tenant default. Internal rent affects subsidiary reports but is eliminated from consolidated group results.
+Acquisition workflow
+Search targets; inspect disclosed financials and staff; commission due diligence; propose terms; arrange funding; sign; close on a date; integrate. Preserve target IDs, contracts, people and history. Support asset purchase versus entity/share purchase as distinct templates, with explicit included property and liabilities. Initial implementation may offer only whole-entity purchase, clearly labeled.
+Valuation uses normalized earnings, assets, liabilities, growth, risk and negotiated premiums. Do not use an unbounded revenue multiple. Due diligence estimates hidden liabilities and management problems; discoveries must follow seeded facts, not retroactively invent punishment after a purchase.
+Conglomerate purchases include ownership trees and central offices. Integration options are retain autonomy, shared-services migration, rebrand, merge operations, replace leaders or divest. Each has a phased plan, severance/transition cost and retention risk. Group-wide liquidity must be checked before closing.
+Franchise roles
+As franchisee, pay fees for brand support and accept contractual restrictions. As franchisor, establish a proven format, training/support capacity, territory and royalty terms. Franchise operators remain independent legal entities unless owned. Their gross sales and employees are not consolidated as group revenue/headcount simply because they use the brand.
+Franchise agreements define approved suppliers, quality audits, shared-staff access, cost reimbursement, minimum standards, renewal and termination. Rapid franchise growth can overload support or damage reputation. Offer conversion between owned and franchised locations only through explicit transactions.
+12. Regions, civic trends and crime
+Regional state and observation
+Regions differ in population, household income, cost of living, wages, unemployment, underemployment, education pipeline, rents, demand mix, infrastructure, taxes, labor rules and civic conditions. Industry and region exposures correlate; recessions must not be independent random rolls for every store.
+Display historical series, reporting lag, confidence bands and scenario forecasts. Forecasts are not guaranteed future facts. A university expansion may increase future technical supply; rising rents can increase asset value while making recruitment harder. The same trend can benefit one subsidiary and harm another.
+Crime model
+Use distinct categories: theft/shrinkage, vandalism, fraud and disruption to staff/customer safety. Model incident frequency and severity separately with bounded exposure, security, infrastructure and regional drivers. Do not derive crime from ethnicity or assign individual guilt from neighborhood statistics.
+Incidents affect direct loss, downtime, insurance claims, employee confidence and demand. Security can reduce exposure but has expense and possible employee/customer-friction costs. Insurance has premiums, deductible, coverage limit, exclusions and settlement delay; it does not instantly refund every loss.
+Capital-funded interventions
+Support workforce scholarships, training, housing, transport, childcare, healthcare access, neighborhood improvements and security. Each project has a sponsor, region, budget, duration, implementation capacity, outcome uncertainty, recurring obligations and beneficiaries. Player companies are not the only beneficiaries; competitors may gain qualified applicants too.
+Use delayed and diminishing effects, public co-funding limits and potential displacement or rising rents. Funding a community center cannot instantly erase crime. Distinguish measured outcomes from claimed causality and show ongoing project evaluation.
+Economic decades
+Track an inflation index, interest-rate regime, business cycles, demographic aging and skill demand. DEFAULT: a fictional modern starting era with procedural change, not a forecast of real history. Retirement and graduation continue replenishing the labor market. Civic investment and tax rules are simulated systems, not real-world financial, medical or legal recommendations.
+13. Accounting, taxes, financing and score
+Financial foundation
+Use an append-only double-entry ledger per legal entity with balanced postings, posting dates, source IDs and reversal entries. Represent money with integer minor units or decimal arithmetic; never binary floats for ledger amounts. Maintain accrual profit and cash flow separately. Loan proceeds are liabilities, not revenue; repayments of principal are not operating expenses.
+Reports include income statement, balance sheet, cash flow, labor cost, asset register, debt schedule and consolidation. Post transactions once with idempotency keys. Internal rent, service charges, dividends and sales require counterparties and elimination rules; eliminate internal unrealized profit where applicable. Consolidated assets must not count both subsidiaries' assets and the parent's investment in those subsidiaries.
+Illustrative payroll allocation fixture
+A shared employee costs $1,000 in wages plus $200 employer benefits/taxes per week. At 60/40 service usage, operations A/B receive $720/$480. Group labor expense remains $1,200, never $2,400. If an internal service markup is charged, it changes subsidiary margins but not group profit. The amounts are test data, not compensation guidance.
+Tax simulation
+DEFAULT: versioned fictional US-like jurisdiction rules with income, payroll, property and sales taxes; depreciation, interest deductions, losses, research and regional credits. Rates and eligibility are data-driven with effective dates. Model filing, payment, documentation costs, audit exposure and caps. Lawful optimization requires qualified finance/legal capacity and can involve complexity or commercial tradeoffs.
+Tax loopholes mean simulated opportunities within the fictional ruleset. Illegal evasion is not required by this handoff; exclude it from initial scope. Aggressive lawful interpretations may carry simulated challenge risk. Related-party charges cannot create unlimited consolidated profits or unrestricted credits.
+Score and risk
+Show trailing-year after-tax profit as headline profitability, with margin, invested-capital return, cash, debt and lifetime real profit separately. Exclude capital injections and unrealized appreciation from operating success. Track employee happiness, loyalty, engagement, retention and investment outcomes alongside profit, not as hidden additions to it. Lending needs rates, collateral, maturity, covenants and explicit guarantees; distress can spread only through modeled links.
+14. Interface and player workflows
+Navigation and presentation
+Use a persistent date, current scope, cash/runway, urgent-alert count and advance control. Navigation: Overview, Companies, Properties, People, Organization, Policies, Markets/Regions, Finance and Inbox. Preserve scope and filters when navigating between a manager, subsidiary and employee.
+Default screens show five to seven decision-relevant indicators, not all simulation fields. Detail drawers and advanced tabs expose depth. Search by employee, company, property or manager. Tables need sorting, filtering, paging/virtualization and saved views. Color must be paired with labels/icons; use readable contrast and keyboard-accessible controls.
+Required screens
+Overview: portfolio performance, funding exposure, management overload and upcoming obligations.
+Company/location: profit drivers, staffing coverage, active manager, shared services, policy exceptions and operating bottlenecks.
+Person: qualifications, contract, compensation, assignments, history, known concerns, reporting line and promotion paths.
+Organization: expandable reporting tree with vacancies and workload; switch to ownership view. Shared assignments are a separate overlay, not duplicate people.
+Policy editor: inherited/effective values, granular benefits, locks, overrides, impact preview and dated rollout.
+Opportunity: acquisition or opening plan, due diligence, financing, staffing and downside cases.
+Region: trends, confidence, competitors, labor supply, crime exposure and civic projects.
+Finance: drill-down from consolidated totals to entity ledger sources and eliminations.
+Transaction safety
+Commands show cost and consequences before commitment. Use optimistic revision checks so stale tabs cannot overwrite decisions. Submitted acquisitions or payroll actions cannot execute twice on double-click. Explain failures in player language and retain entered values. Reorganizations preview cycles, vacancies and affected assignments before acceptance.
+Forecast and skip UX
+Preview range, not certainty; show which managers will act and spending authority in force. Long skips display progress, can be cancelled at a committed day and stop at configured events. Completed skips provide a concise financial, employee and strategic digest with links to causes. Closing the window cancels safely after the current atomic step.
+15. Domain model and persistence contract
+Record
+Core fields / relationships
+World / Save
+Seed, date, versions, RNG states, revision, settings
+Region / Observation
+Drivers, ruleset, historical series, source and confidence
+Person / Qualification
+Stable ID, birth date, skills, degree discipline, expiry
+Employment / Position
+Person, employer, role, compensation, manager-position ID
+Assignment / Shift
+Person/employment, operation, time interval, service agreement
+LegalEntity / Ownership
+Owner, subsidiary, interest, effective dates, control
+Operation / Department
+Industry template, entity, location, capacity and manager
+Property / Space / Lease
+Owner, area, condition, occupier, term, payments
+Office / ServiceAgreement
+Location, departments, scope, SLA, charge method
+Policy / BenefitEnrollment
+Scope, field overrides, effective dates, source, plan
+Project / Contract
+Milestones, resources, revenue basis, deadlines, status
+Transaction / Posting
+Balanced lines, date, entity, counterparty, unique source
+Acquisition / Integration
+Target IDs, terms, due diligence, close date, plan
+FranchiseAgreement
+Brand, operator, territory, royalties, staff-access rights
+Event / Decision / History
+Participants, trigger, due date, options, outcome
+Model rules
+Use stable identifiers, not names, as keys. Distinguish vacancies from employees. Keep effective-dated history for ownership, managers, wages, policies and contracts. Derived dashboards are not sources of truth. Preserve terminated employments and sold assets in historical reports.
+Save one game in a versioned SQLite database with explicit migrations, foreign keys, transactions and indexes. Store snapshots sufficient to resume exactly; retain compact command/event history for debugging without requiring indefinite full replay. Keep aggregate daily/monthly series for decades and detailed operational logs under a documented retention policy.
+Before migration or large skip, create a recoverable checkpoint. Validate schema and content versions before loading. Migrations are transactional and never overwrite the only copy. Unsupported newer saves produce a clear error. Mod/content changes must be detected and versioned, not silently applied to an old save.
+16. Application architecture and desktop delivery
+Selected direction and proposed baseline
+REQUIRED product behavior: local PC application with web presentation. DEFAULT implementation: Python domain engine; FastAPI commands/queries; server-rendered templates plus HTML/CSS/HTMX; small JavaScript components for charts/org graphs; pywebview window; SQLite. Pin compatible dependency versions during the first technical milestone. Packaging through Nuitka is a proposal, subject to a Windows smoke test.
+The simulation imports no UI toolkit or web framework. Domain services accept commands and emit state changes/events. The application layer validates commands, controls transactions and exposes read models. The UI renders state and previews; it never independently calculates payroll, tax, morale or authoritative profit.
+Boundaries and module responsibilities
+domain: typed entities, invariants, calculation rules and industry interfaces.
+simulation: daily scheduler, seeded randomness, event resolution and skip controller.
+application: commands, queries, forecasts, permissions and game sessions.
+persistence: repositories, migrations, backups and ledger storage.
+content: business templates, regions, policies, benefits and tuning files.
+web: templates, routes, locally bundled assets and UI components.
+desktop: window lifecycle, local service startup, logs and platform checks.
+tests: unit, property/invariant, scenario, replay, UI and packaging tests.
+Responsive operation
+Run long simulations outside request/render handling. Use one authoritative writer per save and read-only snapshots/progress messages for the UI. Queue commands; do not concurrently mutate the same world from a worker and a web request. A forecast clones state instead of borrowing the live writer.
+Offline and security requirements
+Bundle assets, icons, fonts and JavaScript; no CDN, account, telemetry or runtime LLM dependency. Bind any local HTTP service only to loopback, use a per-launch token, validate origin/host and protect mutating requests. Disable arbitrary file access and remote navigation in the desktop bridge. Serve only packaged assets; escape employee/company text. Verify/install the required Windows webview runtime rather than assuming every PC has it. LAN/cloud play is out of scope.
+17. Simulation contracts and tuning
+Industry extension interface
+Each industry template declares prerequisites, roles, inputs, capacity calculation, demand segments, revenue-recognition method, expenses, risks and specialization tags. Its daily operating result returns quantities, service outcomes and proposed accounting events. Ledger code performs postings centrally; industry modules must not update cash directly.
+Example: engineering completion consumes qualified hours and may create earned but unbilled revenue. Billing creates a receivable; collection settles it. Restaurant sales consume ingredient cost and recognize cash/receivable sales. Rent accrues from an active lease and may remain unpaid. Tests must distinguish these paths.
+Balancing rules
+Keep coefficients, plan prices, benefit preferences, learning rates, incident hazards and opening lead times in validated content files. Store units and periods explicitly: dollars/week, hours/day, annual rate, fraction or 0–100 index. Never mix a percentage with a fraction silently. Include schema errors with file and field names.
+Use bounded functions and lagged changes to prevent runaway feedback. Regional wages should respond gradually to vacancies and supply. Reputation, loyalty and skill cannot grow forever. Managers cannot provide infinite capacity. Opening a business consumes scarce capital, staff and setup resources; the simulation must not reward infinitely splitting entities.
+Example opening-budget fixture
+An illustrative retail opening uses $20,000 deposit, $60,000 fit-out, $25,000 initial inventory, $10,000 recruitment/pre-opening expense and $85,000 reserve: $200,000 funding. Accounting distinguishes deposit asset, fit-out asset, inventory and expense. Reserve remains cash. A delay consumes rent/payroll from reserve, not a magical separate account. The fixture tests classification, not recommended startup costs.
+Reports and financial explanations
+Every important total should drill down to period, scope, formula inputs and ledger sources. Show actual, budget and forecast separately. Staff estimates may be inaccurate; arithmetic cannot be. Include an audit view for elimination entries and cost allocation so an LLM can diagnose suspicious profitability without modifying economic rules blindly.
+18. Content, competitors and long-term scale
+World generation
+Generate a reproducible fictional country with distinguishable regions, properties, existing businesses, employers and candidate supply. Initial-region characteristics must be documented. A prosperous technical region and a declining industrial region should present different viable strategies, not an obvious universally superior starting location.
+Competitors use the same resource and accounting constraints for modeled actions. They hire, raise wages, expand, contract, compete for demand and occasionally sell businesses. Distant companies may use aggregate operations until relevant, but materialization must conserve employees, liabilities and value. No arbitrary cash injections to make a competitor threatening.
+Lifecycle and history
+Add new graduates and firms, retire employees, expire leases, update market demand and handle management succession. Preserve notable employees and career histories; archive inactive detail efficiently. Do not simulate millions of civilians individually merely to support a few thousand employees. Persistent person identities and cohort population statistics must reconcile at their boundary.
+Performance design targets, not established results
+First milestone benchmark: 100 employees and several operations. Later benchmark: 10,000 persistent employees, 200 operations and 30 simulated years on a recorded reference PC. Provisional target: one simulated year in under 15 seconds for that benchmark, cancellable between daily commits. Measure memory, startup and p50/p95 query latency; adjust scope or implementation based on evidence, not promises.
+No pairwise all-employee relationship scan, database query per field, or rendering of the entire employee directory on every click. Bulk-load needed state, index relationships and paginate views. Aggregation may simplify customers, never silently remove the player's requested people/hierarchies.
+Modding boundaries
+LATER: validated data-only industry and policy packs. No arbitrary Python execution from a save or downloaded content pack. Version content and provide compatibility diagnostics. Portraits can begin as initials or locally generated icons; asset production must not delay testing the economic loop.
+19. Acceptance tests and exploit prevention
+Test ID
+Required observable result
+T01 Calendar
+Daily steps and one-year skip match state/ledger/RNG, including leap day
+T02 Resume
+Save/reload midway produces identical continuation and no duplicate payroll
+T03 Payroll
+Shared $1,200 cost allocates $720/$480; group expense remains $1,200
+T04 Ownership
+Cyclic ownership/reporting rejected without partial mutation
+T05 Policies
+Inherit, zero, override and reset differ; effective dates preserve history
+T06 Labor
+Overlapping shifts and missing licenses flagged; shared time is not duplicated
+T07 Benefits
+Enrollment, employer share, leave balance and cost appear in payroll/reports
+T08 Acquisition
+IDs/history survive close; cash/debt/assets reconcile; retries cannot double-buy
+T09 Consolidation
+Internal rent/services eliminated; external rent remains group revenue
+T10 Revenue
+Inventory and project revenue recognize correctly; borrowing is not profit
+T11 Leave
+Approved time off reduces coverage; recovery is gradual; wages post correctly
+T12 Managers
+Overload affects outcomes; delegated actions honor limits and are logged
+T13 Regions
+Same seed repeats incidents; interventions lag and have costs/caps
+T14 Forecast
+Opening forecasts does not mutate live world or advance its RNG
+T15 Skips
+Critical event stops at correct day; cancellation leaves a valid committed save
+T16 Offline
+Fresh Windows launch needs no internet assets or paid API
+T17 Security
+Remote origins/stale revisions/duplicate commands rejected safely
+T18 Recovery
+Interrupted save/migration retains last valid checkpoint and loadability
+Scenario tests
+Run a profitable store with a weak manager, an engineering firm with skill shortages, a conglomerate with duplicate headquarters, a franchise sharing maintenance and a leveraged landlord facing vacancy. Each must show different bottlenecks and viable choices. Verify that premium benefits sometimes pay back through retention, sometimes cost more than they return, and never bypass demand constraints.
+Exploit tests
+Prevent money from intercompany loops, repeated grants, duplicate workers, split-location overtime errors, free opening inventory, debt-as-revenue, double-counted subsidiaries and unlimited intra-group tax credits. A consistent strategy may be strong; an accounting loophole caused by implementation error is not gameplay.
+20. Implementation milestones and scope gates
+M0 — Technical and deterministic foundation
+Build typed IDs, date/seed handling, basic ledger, save/migration skeleton and a local desktop shell with one read view. Test actual Windows startup, offline assets and UI-to-command round trip. Pin dependencies and benchmark a headless year. Gate: calendar/replay/save tests pass; packaging feasibility documented.
+M1 — First playable business
+Deliver one operating retail business, one property/lease, about 20 employees, hiring, schedules, base pay, a manager, simple morale and profit/cash reports. Day/week/month advances and actionable interruptions work. Gate: 12 simulated weeks are playable; profit and cash reconcile; no fake UI buttons. This is a vertical slice, not the complete game.
+M2 — Employee and policy depth
+Add qualifications, ambition, career ladders, benefits enrollment, leave, policy inheritance, engagement/burnout, promotion and bounded politics. Org chart and person detail are usable. Gate: T05–T07 and T11–T12 pass; payroll preview matches postings.
+M3 — Multi-business ownership
+Add multiple entities/locations, central offices, shared employees, cost allocation, property purchases and whole-entity acquisitions. Add restaurant and engineering revenue models plus property operations. Gate: acquisition, consolidation and shared-time invariants pass.
+M4 — Regional economy and long campaigns
+Add distinct regions, persistent competitors, education/labor flows, retirement, crime, civic projects, economic cycles, fictional taxes and financing. Gate: 30-year seeded tests run without depleted workforce, ledger drift or uncontrolled value explosion.
+M5 — Conglomerates and franchise depth
+Add acquiring nested groups, integration plans, franchisee/franchisor contracts, pooled purchasing and industry-specific synergies. Gate: independent franchise accounting and acquired headquarters behave correctly.
+M6 — Balance, usability and distribution
+Playtest short-session reward, risk, notification volume and delegation. Complete target-scale benchmarks, recovery tests, installer/runtime checks and accessibility review. Ship documented limitations, not promises. Advanced manufacturing, equity markets, extensive historical eras and multiplayer remain separate later projects unless approved.
+At every milestone: working game, reproducible fixture, test report, updated decisions, known issues and next gate. Do not begin all systems simultaneously.
+21. Decision register and unresolved choices
+Decision
+Status
+Default / resolution
+Local game + web interface
+Accepted direction
+Offline desktop, not hosted service
+Python simulation
+Agreed planning direction
+Keep UI-independent engine
+Specific libraries/packager
+Proposed baseline
+FastAPI/HTMX/pywebview/SQLite; prove Windows packaging
+Name
+Open, nonblocking
+Empire Manager working title
+Country and legal system
+Proposed
+Fictional US-like rules, one currency initially
+Starting year / capital
+Open, nonblocking
+Modern fictional era; scenario-calibrated cash
+Owner succession
+Proposed
+Player controls holding company; people age
+Scoring formula
+Proposed
+Real after-tax profit headline plus separate scorecard
+Exact benefit prices/tax rates
+Tuning pending
+Synthetic, versioned economic data
+Attention-point currency
+Not approved
+No hard points; workload and delegation constraints
+Illegal tax evasion
+Not requested
+Excluded from initial implementation
+Minority/public ownership
+Later
+Whole ownership first; preserve extensible model
+Initial industries
+Proposed phased set
+Retail, restaurant, engineering, property operations
+Scale/latency targets
+Proposed, unverified
+Benchmark and report on reference hardware
+Decisions required before their implementation
+Before tuning starting scenarios, agree desired difficulty and which ownership opening is the default. Before advanced financing, decide whether minority stakes, a board and personal wealth are desired. Before historical eras, decide whether technological progress uses a fictional sequence or researched real periods. These do not block the foundational milestone.
+Change control
+Use numbered architecture/design decisions with date, reason, alternatives and migration effect. Any change removing a REQUIRED feature needs user approval. Proposed defaults may be refined with a visible rationale; do not present them as earlier user demands. New mechanics must state input, player decision, cost, outcome, time lag and test.
+This handoff is comprehensive design scope, not proof that the design is balanced or that an LLM can complete it in one pass. Use this explicit register to distinguish settled direction from proposals and choices still requiring playtesting.
+22. Instructions for the implementing LLM
+Start here
+Read the full handoff and inventory any existing repository before changing files. Preserve unrelated work and custom comments. Summarize the selected milestone and its acceptance gate. Ask only about decisions that genuinely block that milestone; use the labeled defaults for nonblocking details. Do not re-open settled product direction without evidence.
+Implement the smallest end-to-end path with real state transitions, ledger entries, save/load and usable screens. A dashboard with hard-coded metrics is a UI mockup, not the game. Build headless tests before complex visuals. Do not hide missing behavior behind clickable controls or fabricated success messages.
+Engineering conventions
+Use type annotations, small modules, explicit domain services and validated content schemas. Inject clock/randomness rather than reading global wall time. Use deterministic IDs/ordering where replay requires them. Financial writes go through the ledger; simulation state has one writer. Add migrations with backup and rollback. Keep domain logic independent from HTTP and HTML.
+Every command must validate prerequisites, ownership/control, available resources, expected revision and duplicate submission. Record actor, date, result and domain events. Bulk policies and reorganization commands need impact previews. UI errors must not leave half-applied purchases or payroll.
+Validation and reporting
+Run targeted tests after each meaningful change, plus the milestone regression set. For economic changes, include before/after seeded simulation results and conservation checks. For interface changes, inspect real screen states at supported sizes, including long names, empty results and large hierarchies. For packaging, test on Windows; do not infer Windows success from a Linux run.
+Report completed features, commands/tests executed, actual outcomes, limitations and next steps. Never claim tests, performance or offline packaging were verified when they were not. Avoid unnecessary dependencies and framework rewrites. No runtime LLM or network requirement may be introduced without explicit approval.
+Technical references for implementation verification
+These are reference entry points, not frozen version guarantees: Python documentation (https://docs.python.org/3/); FastAPI (https://fastapi.tiangolo.com/); HTMX (https://htmx.org/docs/); pywebview (https://pywebview.flowrl.com/); SQLite (https://sqlite.org/docs.html); pytest (https://docs.pytest.org/); Nuitka (https://nuitka.net/user-documentation/). Verify current compatible versions in M0 and record the lockfile.
+Definition of handoff success
+A new developer can identify what the user requested, what remains a default, what to build first, how entities relate, how money and time behave, and which tests prove correctness—without needing the original chat.

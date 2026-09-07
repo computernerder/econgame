@@ -1,0 +1,6 @@
+<section class="panel hiring-shortcuts" id="hire-employee">
+<div class="section-heading"><h2>Hire and plan your team</h2><a class="secondary" href="/?page=business&amp;business_id={{ b.id }}&amp;scope={{ b.id }}#vacancies">Manage vacancies →</a></div>
+<form method="get" class="people-filter"><input type="hidden" name="page" value="hiring"><input type="hidden" name="business_id" value="{{ b.id }}"><input type="hidden" name="scope" value="{{ b.id }}"><label>Role to hire<select name="role">{% for role in b.roles %}<option value="{{ role }}">{{ role|role_label }}</option>{% endfor %}</select></label><button class="primary">Find candidates →</button></form>
+<p>Choose an operating role or a specialist such as HR, IT or maintenance. Required licenses and eligible applicants appear before the offer. HVAC, electrical and plumbing roles are available in home-office, trades, construction and property-management companies.</p>
+<p><a class="text-link" href="/?page=management&amp;scope=personal#staffing-policy-{{ b.id }}">Edit hiring policy and staff target →</a> · <a class="text-link" href="/?page=business&amp;business_id={{ b.id }}&amp;scope={{ b.id }}#staffing-guide">View recommended staffing →</a></p>
+</section>

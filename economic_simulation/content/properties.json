@@ -1,0 +1,10 @@
+{
+  "properties": [
+    {"name":"Willow Lane","kind":"Cottage","region":"Willow Creek","description":"A modest first investment with a tired interior and an easy path to a rental.","full_value":11000000,"full_rent":120000,"upkeep":14000,"condition":45},
+    {"name":"Foundry Row","kind":"Townhouse","region":"Northbank","description":"Close to the old factory district. A larger renovation could make this a strong flip.","full_value":14500000,"full_rent":155000,"upkeep":18000,"condition":32},
+    {"name":"Juniper Court","kind":"Duplex","region":"Willow Creek","description":"Two homes, one asset. A steady rental opportunity with room to improve.","full_value":23000000,"full_rent":265000,"upkeep":29000,"condition":65},
+    {"name":"Park Avenue","kind":"Apartment","region":"Parkside","description":"A move-in-ready apartment near shops and transport, with fewer improvements left to make.","full_value":12500000,"full_rent":135000,"upkeep":16000,"condition":88},
+    {"name":"Orchard Street","kind":"Bungalow","region":"Parkside","description":"An older family home. Purchase the work, wait for completion, then choose rent or resale.","full_value":18000000,"full_rent":185000,"upkeep":21000,"condition":52},
+    {"name":"Canal Walk","kind":"Row house","region":"Northbank","description":"An affordable entry to ownership with dated finishes and predictable holding costs.","full_value":9500000,"full_rent":105000,"upkeep":12500,"condition":58}
+  ]
+}

@@ -1,0 +1,278 @@
+{
+  "catalog": [
+    {
+      "industry": "trades",
+      "name": "Willow Plumbing & Electrical",
+      "region": "Willow Creek",
+      "asking": 16000000,
+      "cash_at_sale": 5000000,
+      "equipment": 2200000,
+      "staff": [
+        [
+          "manager",
+          340000,
+          40
+        ],
+        [
+          "tradesperson",
+          420000,
+          40
+        ],
+        [
+          "tradesperson",
+          420000,
+          40
+        ],
+        [
+          "apprentice",
+          270000,
+          40
+        ]
+      ],
+      "monthly_overhead": 100000,
+      "monthly_lease": 180000,
+      "description": "A skilled-trades contractor taking plumbing and electrical service jobs. Qualified tradespeople supervise apprentices; materials and labor reduce the fixed-fee margin.",
+      "contract_fee": 480000,
+      "contract_minutes": 1200,
+      "material_hourly_cost": 3500,
+      "project_active": true
+    },
+    {
+      "industry": "construction",
+      "name": "Northbank Construction",
+      "region": "Willow Creek",
+      "asking": 42000000,
+      "cash_at_sale": 16000000,
+      "equipment": 12000000,
+      "staff": [
+        [
+          "manager",
+          420000,
+          40
+        ],
+        [
+          "builder",
+          440000,
+          40
+        ],
+        [
+          "builder",
+          440000,
+          40
+        ],
+        [
+          "laborer",
+          290000,
+          40
+        ],
+        [
+          "laborer",
+          290000,
+          40
+        ]
+      ],
+      "monthly_overhead": 100000,
+      "monthly_lease": 180000,
+      "description": "A general contractor delivering fixed-fee building projects with builders, laborers, equipment and materials. Completed projects are invoiced and paid later.",
+      "contract_fee": 12000000,
+      "contract_minutes": 24000,
+      "material_hourly_cost": 9000,
+      "project_active": true
+    },
+    {
+      "industry": "gas_station",
+      "name": "Willow Fuel Stop",
+      "region": "Willow Creek",
+      "asking": 32000000,
+      "cash_at_sale": 9000000,
+      "equipment": 12000000,
+      "staff": [
+        [
+          "manager",
+          340000,
+          40
+        ],
+        [
+          "cashier",
+          280000,
+          40
+        ],
+        [
+          "attendant",
+          280000,
+          40
+        ]
+      ],
+      "monthly_overhead": 100000,
+      "monthly_lease": 180000,
+      "description": "A staffed fuel station. Gallons purchased at wholesale become a cost only when sold; checkout, forecourt coverage and demand limit volume.",
+      "inventory_units": 5000,
+      "unit_cost": 290,
+      "unit_price": 390,
+      "daily_demand": 650
+    },
+    {
+      "industry": "grocery",
+      "name": "Parkside Fresh Foods",
+      "region": "Willow Creek",
+      "asking": 27000000,
+      "cash_at_sale": 8500000,
+      "equipment": 6000000,
+      "staff": [
+        [
+          "manager",
+          380000,
+          40
+        ],
+        [
+          "cashier",
+          270000,
+          40
+        ],
+        [
+          "cashier",
+          270000,
+          40
+        ],
+        [
+          "stocker",
+          280000,
+          40
+        ],
+        [
+          "stocker",
+          280000,
+          40
+        ]
+      ],
+      "monthly_overhead": 100000,
+      "monthly_lease": 180000,
+      "description": "A grocery store selling food baskets. Checkout and replenishment must overlap; perishable stock incurs daily spoilage.",
+      "inventory_units": 1200,
+      "unit_cost": 2400,
+      "unit_price": 3700,
+      "daily_demand": 300
+    },
+    {
+      "industry": "bank",
+      "name": "Willow Community Bank",
+      "region": "Willow Creek",
+      "asking": 125000000,
+      "cash_at_sale": 110000000,
+      "equipment": 4000000,
+      "staff": [
+        [
+          "manager",
+          520000,
+          40
+        ],
+        [
+          "teller",
+          310000,
+          40
+        ],
+        [
+          "teller",
+          310000,
+          40
+        ],
+        [
+          "loan_officer",
+          460000,
+          40
+        ]
+      ],
+      "monthly_overhead": 100000,
+      "monthly_lease": 180000,
+      "description": "A community bank serving simulated outside customers. Deposits are liabilities and loans are assets. Service fees and interest earn revenue; interest on deposits and credit losses are expenses.",
+      "daily_demand": 100
+    },
+    {
+      "industry": "car_dealership",
+      "name": "Northbank Motors",
+      "region": "Willow Creek",
+      "asking": 95000000,
+      "cash_at_sale": 42000000,
+      "equipment": 12000000,
+      "staff": [
+        [
+          "manager",
+          440000,
+          40
+        ],
+        [
+          "salesperson",
+          360000,
+          40
+        ],
+        [
+          "salesperson",
+          360000,
+          40
+        ],
+        [
+          "mechanic",
+          390000,
+          40
+        ]
+      ],
+      "monthly_overhead": 100000,
+      "monthly_lease": 180000,
+      "description": "A dealership buying and selling individual vehicles. Salespeople and mechanics provide overlapping sales and preparation coverage; unsold vehicles remain inventory.",
+      "inventory_units": 12,
+      "unit_cost": 2200000,
+      "unit_price": 2650000,
+      "daily_demand": 3
+    }
+  ],
+  "startup": {
+    "trades": {
+      "deposit": 600000,
+      "fitout": 2200000,
+      "inventory": 0,
+      "expense": 700000,
+      "reserve": 7000000,
+      "days": 21
+    },
+    "construction": {
+      "deposit": 1800000,
+      "fitout": 12000000,
+      "inventory": 0,
+      "expense": 2000000,
+      "reserve": 22000000,
+      "days": 56
+    },
+    "gas_station": {
+      "deposit": 2500000,
+      "fitout": 14000000,
+      "inventory": 1500000,
+      "expense": 2500000,
+      "reserve": 10000000,
+      "days": 56
+    },
+    "grocery": {
+      "deposit": 1800000,
+      "fitout": 6000000,
+      "inventory": 3000000,
+      "expense": 1400000,
+      "reserve": 10000000,
+      "days": 35
+    },
+    "bank": {
+      "deposit": 2500000,
+      "fitout": 4000000,
+      "inventory": 0,
+      "expense": 5000000,
+      "reserve": 110000000,
+      "days": 70
+    },
+    "car_dealership": {
+      "deposit": 3000000,
+      "fitout": 12000000,
+      "inventory": 26400000,
+      "expense": 2500000,
+      "reserve": 42000000,
+      "days": 42
+    }
+  }
+}

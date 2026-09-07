@@ -1,0 +1,3 @@
+<script type="application/json" data-department-context>{{ f.department_context|tojson }}</script>
+<p class="notice" data-department-status aria-live="polite">{{ f.department_status }}</p>
+<p class="fine-print">Only employees in the selected company and department role are listed. {% if f.department_hire %}<a data-department-hire href="{{ f.department_hire }}">Hire staff for this department →</a>{% endif %}</p>

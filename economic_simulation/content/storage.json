@@ -1,0 +1,40 @@
+{
+  "catalog": [
+    {
+      "industry": "self_storage",
+      "name": "Willow Secure Storage",
+      "region": "Willow Creek",
+      "asking": 24000000,
+      "cash_at_sale": 6500000,
+      "equipment": 8000000,
+      "staff": [
+        [
+          "property_manager",
+          320000,
+          24
+        ],
+        [
+          "maintenance",
+          300000,
+          16
+        ]
+      ],
+      "monthly_overhead": 100000,
+      "monthly_lease": 180000,
+      "description": "A 120-unit self-storage facility with existing monthly renters. Vacant units earn nothing. Property managers admit new tenants; maintenance coverage reduces outsourcing. The fitted-out operation leases industrial premises until you buy or arrange its own building.",
+      "storage_units": 120,
+      "storage_occupied": 85,
+      "storage_monthly_rent": 18000
+    }
+  ],
+  "startup": {
+    "self_storage": {
+      "deposit": 1000000,
+      "fitout": 8000000,
+      "inventory": 0,
+      "expense": 900000,
+      "reserve": 6500000,
+      "days": 42
+    }
+  }
+}

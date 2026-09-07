@@ -1,0 +1,27 @@
+<section class="internal-departments" id="internal-departments" aria-labelledby="departments-title">
+<div class="section-heading"><div><span class="eyebrow">PUT YOUR SHARED STAFF TO WORK</span><h2 id="departments-title">Internal departments</h2></div><a class="primary" href="{{ campaign.department_add_url }}">Add / configure department →</a></div>
+<p>Choose a team, then schedule regular support or request a specific job. The team’s company is already selected when you open a task.</p>
+<div class="shared-explainer"><p><b>Regular support</b><br>Reserve part of an employee’s shift for another business. Its account reimburses the employing company for assigned time.</p><p><b>Specific jobs</b><br>Recruiting, repairs and closing preparation use the same finite staff time. The review shows costs before work is booked.</p></div>
+{% if campaign.department_rows %}
+<div class="shared-team-grid">
+{% for d in campaign.department_rows %}
+<article class="panel shared-team" aria-label="{{ d.name }} at {{ d.provider }}">
+<header><span class="eyebrow">{{ d.provider }}</span><h3>{{ d.name }}</h3></header>
+<ul class="shared-roster">{% for person in d.roster %}<li><a href="{{ person.url }}">{{ person.name }}</a><span>{{ person.status }}</span></li>{% else %}<li>No assigned employees. <a href="{{ d.hire }}">Hire {{ d.name }} staff →</a></li>{% endfor %}</ul>
+<div class="shared-team-actions">{% for action in d.actions[:1] %}<a class="primary" href="{{ action.url }}">{{ action.label }} →</a>{% endfor %}</div>
+<p>{{ d.how }}</p>
+{% if d.actions|length>1 %}<div class="shared-team-actions">{% for action in d.actions[1:] %}<a class="secondary" href="{{ action.url }}">{{ action.label }} →</a>{% endfor %}</div>{% endif %}
+<p class="shared-status">{{ d.empty }}</p>
+{% if d.assignments %}<section class="shared-assignments"><h4>Regular support in progress</h4>{% for a in d.assignments %}<p><b>{{ a.employee }} → {{ a.target }}</b><br>{{ (a.minutes/60)|round(1) }} hours per scheduled day from {{ a.start }} · {{ a.travel }} minutes travel included.<br>Latest daily allocation: {{ a.cost|money }}</p>{{ controls([a.stop]) }}{% endfor %}</section>{% endif %}
+{% if d.queue %}<details class="shared-details" open><summary>{{ d.queue|length }} {{ 'job' if d.queue|length==1 else 'jobs' }} queued or underway</summary><ul>{% for job in d.queue %}<li><b>{{ job.label }}</b> · {{ job.recipient }}<br>{{ (job.remaining/60)|round(1) }} hours remaining · {{ job.status }}{% if job.due %} · due {{ job.due }}{% endif %}</li>{% endfor %}</ul><a href="{{ d.queue_url }}">Service queue and outcomes →</a>{% if d.name=='Maintenance' %}<br><a href="{{ d.repairs_url }}">Repair progress →</a>{% endif %}</details>{% endif %}
+<details class="shared-details"><summary>Coverage · {{ d.covered_count }} businesses{% if d.name in ('Maintenance','Real Estate Agent') %} · {{ d.property_count }} owned properties{% endif %}</summary>
+<p>County coverage: {{ d.counties or 'None configured' }}.<br>Industry experience: {{ d.industries|replace('_',' ') }}. Work outside this experience progresses more slowly.</p>
+<ul>{% for b in d.coverage %}<li><b>{{ b.name }}</b> · {{ b.county }}<br>{{ 'In coverage' if b.covered else 'Outside coverage — add this county' }}{% if b.covered and not b.expertise %} · Limited industry experience{% endif %}</li>{% endfor %}</ul><a href="{{ d.edit }}">Change coverage and expertise →</a></details>
+<details class="shared-details"><summary>Work hours and tools</summary><p>Latest recorded service-queue capacity: {{ (d.capacity/60)|round(1) }} hours.<br>{{ (d.used/60)|round(1) }} used on queued services · {{ (d.unused/60)|round(1) }} not used by that queue.</p><p>This is the latest daily record, not today’s availability. Repairs and regular support use time separately. Staff may also support their own employer.</p>{% if d.banked %}<p>{{ d.banked_label }} banked for {{ d.provider }}: {{ (d.banked/60)|round(1) }} hours. These hours belong to that receiving account.</p>{% endif %}<p>Tools level {{ d.tools }}</p></details>
+<footer><a href="{{ d.edit }}" aria-label="Edit {{ d.name }} department at {{ d.provider }}">Edit department →</a><a href="{{ d.hire }}">Hire {{ d.name }} staff →</a></footer>
+</article>
+{% endfor %}
+</div>
+{% else %}<p class="notice">No internal departments configured yet. Choose a company and department below. You can use an existing business; a separate home-office company is optional.</p>{% endif %}
+{% if campaign.focused_task != campaign.department_form %}{{ controls([campaign.department_form]) }}{% endif %}
+</section>

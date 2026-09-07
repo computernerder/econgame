@@ -1,0 +1,19 @@
+<dialog id="advance-dialog" aria-labelledby="advance-title">
+  <button class="dialog-close" data-close aria-label="Close dialog">×</button>
+  <span class="eyebrow">LET YOUR PLANS TAKE SHAPE</span><h2 id="advance-title">Advance time</h2>
+  {% if g.approval_links %}<div class="notice"><b>Owner approval needed before a long skip</b><p>Review these requests first. One day remains available for recovery.</p><nav class="recovery-links" aria-label="Pending approvals">{% for link in g.approval_links %}<a class="secondary" href="{{ link.url }}">{{ link.label }} →</a>{% endfor %}</nav></div>{% endif %}
+  <p class="dialog-cash">Cash on hand · {{ g.scope_name }}: <strong data-cash-on-hand>{{ g.cash|money }}</strong></p>
+  <p>Managers continue their daily work. Repairs finishing, training completing and employees starting can stay in the activity log while time continues.</p>
+  <fieldset id="advance-preferences"><legend>When to interrupt</legend>
+    <label class="skip-checkbox"><input id="skip-routine" type="checkbox" {% if g.pause_routine %}checked{% endif %}> Pause for routine completions</label>
+    <label>Minimum financial event to pause ($)<input id="skip-minimum" type="number" min="0" max="10000000" step="1" value="{{ (g.skip_threshold/100)|round|int }}" data-exact-dollars="{{ g.skip_threshold/100 }}" required></label>
+    <small>Below this amount, financial updates are logged without stopping. Zero includes every financial event. Approvals, unpaid payroll, breached reserves and business failure always stop time.</small>
+    <p><button type="button" class="secondary" id="skip-quiet">Use quieter skips · $1,000 minimum</button></p>
+    <small>Saved when you advance. Financial pause minimum: {{ g.skip_threshold|money }}. Routine completion pauses: {{ 'on' if g.pause_routine else 'off' }}.</small>
+  </fieldset>
+  <div class="time-options">{% for period in ['day','week','month','quarter','year'] %}<button class="secondary" data-period="{{ period }}">One {{ period }}</button>{% endfor %}</div>
+  <form data-action="advance"><label>Or choose a future date<input name="target" type="date" min="{{ g.date }}" required></label><button class="primary" type="submit">Advance to date →</button></form>
+  {% if g.resume_target %}<p><button class="secondary" data-resume-target="{{ g.resume_target }}">Resume to {{ g.resume_target }} →</button></p>{% endif %}
+  <p><a class="text-link" href="/?page=settings&amp;scope={{ g.scope }}">Cash alerts and campaign settings →</a></p>
+  <small>Long skips create a recovery checkpoint first. Month, quarter and year steps use the same calendar date, clamped to month end.</small>
+</dialog>

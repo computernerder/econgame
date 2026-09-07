@@ -1,0 +1,49 @@
+{
+  "catalog": [
+    {
+      "industry": "logistics",
+      "name": "Willow Freight & Logistics",
+      "region": "Willow Creek",
+      "asking": 30000000,
+      "cash_at_sale": 9000000,
+      "equipment": 12000000,
+      "staff": [
+        [
+          "manager",
+          340000,
+          40
+        ],
+        [
+          "driver",
+          320000,
+          40
+        ],
+        [
+          "driver",
+          320000,
+          40
+        ],
+        [
+          "dispatcher",
+          330000,
+          40
+        ]
+      ],
+      "monthly_overhead": 180000,
+      "monthly_lease": 180000,
+      "daily_demand": 12,
+      "fleet_vehicles": 4,
+      "description": "A truck fleet with drivers and dispatchers. Group companies receive transport at allocated operating cost; remaining capacity serves outside customers. One delivery requires 30 qualified driver minutes and 10 overlapping dispatcher minutes. Trucks, fuel and staff capacity are finite."
+    }
+  ],
+  "startup": {
+    "logistics": {
+      "deposit": 1000000,
+      "fitout": 12000000,
+      "inventory": 0,
+      "expense": 1200000,
+      "reserve": 9000000,
+      "days": 35
+    }
+  }
+}

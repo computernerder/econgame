@@ -1,0 +1,76 @@
+{
+  "properties": [
+    {
+      "name": "Willow Business Center",
+      "kind": "Retail and office building",
+      "category": "commercial",
+      "region": "Willow Creek",
+      "description": "Flexible shop and office premises for customer-facing businesses.",
+      "full_value": 11000000,
+      "full_rent": 125000,
+      "upkeep": 18000,
+      "condition": 70,
+      "usable_area": 180
+    },
+    {
+      "name": "Willow Industrial Yard",
+      "kind": "Warehouse and workshop",
+      "category": "industrial",
+      "region": "Willow Creek",
+      "description": "Workshop, storage and loading space for trades and construction.",
+      "full_value": 25000000,
+      "full_rent": 260000,
+      "upkeep": 35000,
+      "condition": 70,
+      "usable_area": 900
+    },
+    {
+      "name": "Foundry Business Center",
+      "kind": "Retail and office building",
+      "category": "commercial",
+      "region": "Northbank",
+      "description": "Flexible shop and office premises for customer-facing businesses.",
+      "full_value": 11000000,
+      "full_rent": 125000,
+      "upkeep": 18000,
+      "condition": 70,
+      "usable_area": 180
+    },
+    {
+      "name": "Foundry Industrial Yard",
+      "kind": "Warehouse and workshop",
+      "category": "industrial",
+      "region": "Northbank",
+      "description": "Workshop, storage and loading space for trades and construction.",
+      "full_value": 25000000,
+      "full_rent": 260000,
+      "upkeep": 35000,
+      "condition": 70,
+      "usable_area": 900
+    },
+    {
+      "name": "Park Business Center",
+      "kind": "Retail and office building",
+      "category": "commercial",
+      "region": "Parkside",
+      "description": "Flexible shop and office premises for customer-facing businesses.",
+      "full_value": 11000000,
+      "full_rent": 125000,
+      "upkeep": 18000,
+      "condition": 70,
+      "usable_area": 180
+    },
+    {
+      "name": "Park Industrial Yard",
+      "kind": "Warehouse and workshop",
+      "category": "industrial",
+      "region": "Parkside",
+      "description": "Workshop, storage and loading space for trades and construction.",
+      "full_value": 25000000,
+      "full_rent": 260000,
+      "upkeep": 35000,
+      "condition": 70,
+      "usable_area": 900
+    }
+  ]
+}

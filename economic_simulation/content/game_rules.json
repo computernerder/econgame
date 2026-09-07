@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "policies": {"medical":"none","employer_share":80,"dental":"none","vision":false,"life":false,"disability":false,"health_account":0,"retirement_percent":0,"education":0,"transport":0,"childcare":0,"meals":0,"vacation_days":24,"sick_days":8,"floating_holidays":2,"paid_holidays":true,"remote_days":0,"commission_percent":0,"profit_share_percent":0,"overtime_limit":60,"security":0},
+  "medical": {"none":{"premium":0,"deductible":0,"limit":0,"network":0},"hmo":{"premium":42000,"deductible":150000,"limit":600000,"network":55},"ppo":{"premium":65000,"deductible":75000,"limit":450000,"network":90},"high_deductible":{"premium":31000,"deductible":300000,"limit":700000,"network":70}},
+  "dental": {"none":0,"basic":2200,"extended":4800},
+  "tax": {"income_percent":18,"payroll_percent":6,"sales_percent":5,"property_basis_points":80,"research_credit_percent":10,"credit_cap_percent":25,"equipment_life_months":84},
+  "regions": [
+    {"id":"Willow Creek","population":90000,"income":52,"wages":95,"demand":100,"employment":94,"education":55,"infrastructure":65,"crime":20,"rent":95},
+    {"id":"Northbank","population":160000,"income":75,"wages":115,"demand":115,"employment":97,"education":80,"infrastructure":78,"crime":28,"rent":120},
+    {"id":"Parkside","population":110000,"income":60,"wages":100,"demand":105,"employment":92,"education":60,"infrastructure":57,"crime":24,"rent":100}
+  ],
+  "civic": {"scholarships":{"cost":1500000,"days":365,"driver":"education","gain":5},"housing":{"cost":3500000,"days":270,"driver":"rent","gain":-4},"transport":{"cost":2000000,"days":180,"driver":"infrastructure","gain":5},"childcare":{"cost":1200000,"days":180,"driver":"employment","gain":2},"healthcare":{"cost":1800000,"days":270,"driver":"employment","gain":2},"neighborhood":{"cost":1000000,"days":120,"driver":"crime","gain":-4},"security":{"cost":800000,"days":90,"driver":"crime","gain":-3}},
+  "startup": {"retail":{"deposit":2000000,"fitout":6000000,"inventory":2500000,"expense":1000000,"reserve":8500000,"days":28},"restaurant":{"deposit":2000000,"fitout":7000000,"inventory":500000,"expense":1200000,"reserve":6500000,"days":42},"engineering":{"deposit":1000000,"fitout":1500000,"inventory":0,"expense":900000,"reserve":5500000,"days":21},"property_management":{"deposit":650000,"fitout":800000,"inventory":0,"expense":500000,"reserve":3500000,"days":14},"rental":{"deposit":0,"fitout":0,"inventory":0,"expense":300000,"reserve":3000000,"days":7},"office":{"deposit":1000000,"fitout":2500000,"inventory":0,"expense":700000,"reserve":6000000,"days":28}},
+  "services": {"hr":"leadership","accounting":"finance","it":"technology","legal":"legal","maintenance":"maintenance","purchasing":"logistics","marketing":"retail","logistics":"logistics"}
+}

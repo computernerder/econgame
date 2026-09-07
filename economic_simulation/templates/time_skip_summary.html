@@ -1,0 +1,13 @@
+{% if g.progress.total or g.resume_target %}
+<div class="time-status" aria-live="polite">
+  <div>
+    <b>{{ 'Advancing time' if g.progress.running else 'Latest time advance' }}</b>
+    <p id="progress-text">{{ g.progress.message }}</p>
+    {% if g.progress.stops %}<ul>{% for stop in g.progress.stops %}<li><strong>{{ stop.title }}</strong>{% if stop.detail %}: {{ stop.detail }}{% endif %}</li>{% endfor %}</ul>{% endif %}
+    {% if g.progress.links %}<nav class="recovery-links" aria-label="Resolve time blocker">{% for link in g.progress.links %}<a class="secondary" href="{{ link.url }}">{{ link.label }} →</a>{% endfor %}</nav>{% endif %}
+    {% if g.progress.digest %}<details><summary>Updates recorded without stopping · {{ g.progress.digest|sum(attribute='count') }}</summary><ul>{% for item in g.progress.digest %}<li>{{ item.title }} · {{ item.count }}</li>{% endfor %}</ul><a href="/?page=activity&amp;scope={{ g.scope }}">Read the activity log →</a></details>{% endif %}
+    {% if g.resume_target and not g.progress.running %}<p><button class="secondary" data-resume-target="{{ g.resume_target }}">Resume to {{ g.resume_target }} →</button> <small>Required approvals and cash guardrails still apply.</small></p>{% endif %}
+  </div>
+  {% if g.progress.running %}<progress id="skip-progress" max="{{ g.progress.total }}" value="{{ g.progress.completed }}"></progress><button class="secondary" id="cancel-skip">Pause</button>{% endif %}
+</div>
+{% endif %}

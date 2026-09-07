@@ -1,0 +1,6 @@
+<script type="application/json" data-field-context>{{ {'fields':f.field_context,'notes':f.context_notes|default([])}|tojson }}</script>
+<div class="context-form-feedback" aria-live="polite" aria-atomic="true">
+<div data-context-notes>{% for note in f.context_notes_current %}<p class="fine-print">{{ note }}</p>{% endfor %}</div>
+<div data-context-errors {% if not f.context_errors %}hidden{% endif %} class="notice error">{{ f.context_errors|join(' ') }}</div>
+{% if f.action=='service_request' %}<a class="text-link" data-context-setup href="/?page=home_office&amp;scope={{ g.scope }}&amp;action_focus=department_configure#task-focus" hidden>Configure an internal department →</a>{% endif %}
+</div>
