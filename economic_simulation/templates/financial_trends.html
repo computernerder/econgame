@@ -1,0 +1,16 @@
+<section class="wealth-trends" aria-label="Financial trends">
+<div class="section-heading"><div><span class="eyebrow">WATCH YOUR PROGRESS</span><h2>Financial trends</h2><p>{{ g.trend_scope }} · {{ g.trends.first }} to {{ g.trends.last }}</p></div><a class="text-link" href="/?page=finance&amp;scope={{ g.scope }}{% if g.trends.consolidated %}&amp;consolidated=true{% endif %}">Open financial detail →</a></div>
+<p class="fine-print">Daily closing balances and rolling results from the saved journal. {% if g.trends.consolidated %}Uses today's ownership scope throughout; internal charges and ownership stakes are excluded.{% endif %} {% if g.trends.count==1 %}One recorded day so far. Advance time to see the trend.{% endif %}</p>
+<div class="trend-grid">
+{% for chart in g.trends.charts if page=='finance' or (page=='portfolio' and chart.key in ('wealth','income')) or (page!='portfolio' and chart.key in ('cash','profit')) %}<article class="panel trend-card">
+<div class="trend-heading"><h3>{{ chart.title }}</h3><strong>{{ chart.current|money }}</strong></div>
+<small>{{ '+' if chart.change>0 else '' }}{{ chart.change|money }} since {{ g.trends.first }}</small>
+<svg class="trend-chart" viewBox="0 0 640 180" role="img" aria-label="{{ chart.title }} from {{ g.trends.first }} to {{ g.trends.last }}; current {{ chart.current|money }}">
+<text x="0" y="18">{{ chart.high|money }}</text><text x="0" y="165">{{ chart.low|money }}</text>
+<path class="chart-gridline" d="M60 20H620 M60 150H620"/>
+<polyline class="chart-line {{ 'loss-line' if chart.current<0 }}" points="{{ chart.path }}"/>
+{% for point in chart.points %}<circle class="chart-point" cx="{{ point.x }}" cy="{{ point.y }}" r="3" tabindex="0" data-chart-date="{{ point.date }}" data-chart-value="{{ point.value|money }}"><title>{{ point.date }} · {{ point.value|money }}</title></circle>{% endfor %}
+</svg><p class="chart-reading" aria-live="polite">{{ g.trends.last }} · {{ chart.current|money }}</p>
+<p class="fine-print">{{ chart.note }}</p>
+<details><summary>View daily values</summary><div class="trend-values table-panel"><table><thead><tr><th>Date</th><th>{{ chart.title }}</th></tr></thead><tbody>{% for point in chart.points|reverse %}<tr><td>{{ point.date }}</td><td>{{ point.value|money }}</td></tr>{% endfor %}</tbody></table></div></details>
+</article>{% endfor %}</div></section>

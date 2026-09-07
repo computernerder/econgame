@@ -1,0 +1,21 @@
+/* Financial progress belongs to the existing green-and-cream identity. */
+.trend-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.trend-card{padding:22px;min-width:0;margin:0}
+.trend-heading{display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+.trend-heading h3{margin:0;font-size:16px}.trend-heading strong{font-size:24px;white-space:nowrap}
+.trend-chart{display:block;width:100%;height:auto;margin-top:14px;overflow:visible}
+.trend-chart text{font:18px sans-serif;fill:#66786e}
+.chart-gridline{stroke:#dedfd3;fill:none}.chart-line{fill:none;stroke:#285646;stroke-width:2.5;stroke-linejoin:round}
+.chart-line.loss-line{stroke:#a34e39}.chart-point{fill:#285646;opacity:0;cursor:crosshair}
+.chart-point:last-of-type,.chart-point:hover,.chart-point:focus{opacity:1;outline:2px solid #ab782f;outline-offset:3px}
+.chart-reading{font-size:12px;min-height:18px;margin:0}.trend-values{max-height:280px;overflow:auto}
+.trend-card .fine-print{min-height:40px}.wealth-trends{margin:24px 0}.trend-card summary{font-size:13px}
+.cash-sparkline{width:88px;height:25px;display:block}.cash-sparkline polyline{fill:none;stroke:#285646;stroke-width:1.4;vector-effect:non-scaling-stroke}
+.topbar .leadership-indicator{background:transparent;border:0;border-radius:0;box-shadow:none;color:#61736c;font-size:12px;padding:4px;text-decoration:underline;text-underline-offset:3px}
+.financial-breakdown{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;align-items:start}
+.financial-breakdown .panel{margin:0;min-width:0}.financial-breakdown details[open]{grid-column:1/-1}
+.financial-breakdown summary small{display:none}
+.company-art{width:100%;height:125px;margin-bottom:16px;background:#e6ebdf;border-radius:6px}
+.company-card-top{flex-wrap:wrap}.company-card-top .company-art{flex-basis:100%}
+@media(min-width:1200px){.financial-breakdown{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:750px){.trend-grid,.financial-breakdown{grid-template-columns:1fr}.trend-heading{flex-wrap:wrap}.trend-heading strong{font-size:22px}.trend-card{padding:16px}.cash-sparkline{display:none}}

@@ -10,11 +10,10 @@ from typing import Any
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-from jinja2 import Environment, DictLoader, select_autoescape
+from jinja2 import Environment, DictLoader, select_autoescape, pass_context
 from pydantic import BaseModel, Field
 
 from . import __version__
-from .build_info import build_info
 from .build_info import build_info
 from .application import Game, money
 from .domain import RuleError, Engine
@@ -50,12 +49,21 @@ def create_app(game: Game, token: str, host: str, *, network_access=None, lifesp
     env = Environment(loader=DictLoader(templates), autoescape=select_autoescape(), finalize=whole_money_text)
     env.filters["money"] = money
     env.filters["dollars"] = dollars
+    from .readable_names import text_label, account_label, name_catalog
+    @pass_context
+    def human(context, value):
+        return text_label(context['g']['labels'], value)
+    @pass_context
+    def account_name(context, value):
+        return account_label(context['g']['labels'], value)
+    env.globals['human'] = human
+    env.globals['account_name'] = account_name
+    env.filters['human'] = human
+    env.filters['account_name'] = account_name
     from .ui_workflows import role_label
     env.filters["role_label"] = role_label
     origin = f"http://{host}"
     env.globals['network_mode'] = network_access is not None
-    build = build_info()
-    env.globals['build'] = build
     build = build_info()
     env.globals['build'] = build
 
@@ -65,7 +73,6 @@ def create_app(game: Game, token: str, host: str, *, network_access=None, lifesp
         # Network URLs contain no launcher key; do not send referrers off-site.
         referrer_policy = "same-origin" if network_access is not None else "no-referrer"
         response.headers.update({"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff", "Referrer-Policy": referrer_policy, "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"})
-        response.headers["X-Empire-Build"] = build["header"]
         response.headers["X-Empire-Build"] = build["header"]
         return response
 
@@ -110,6 +117,12 @@ def create_app(game: Game, token: str, host: str, *, network_access=None, lifesp
             from .vermont import county
             region=county(region)
             view = game.view(scope)
+            view['labels'] = name_catalog(game.world)
+            from .financial_trends import trend_view
+            trend_group = (consolidated and page == 'finance') or page == 'overview'
+            view['trends'] = trend_view(game.world, game.store, view['group_entities'] if trend_group else [scope], trend_group)
+            view['cash_trend'] = trend_view(game.world, game.store, [scope])['charts'][0] if trend_group else view['trends']['charts'][0]
+            view['trend_scope'] = view['scope_name'] + (' and currently owned companies' if trend_group else ' account')
             view['navigation_notice']=context['notice']
             view["counties"]=sorted(r["id"] for r in game.world.systems["regions"])
             view["account_balances"] = account_balances(game.world)

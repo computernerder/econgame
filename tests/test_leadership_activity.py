@@ -132,7 +132,8 @@ def test_notification_history_and_read_command_render_on_real_pages(game):
         for page in ('overview','business','finance'):
             response=client.get('/',params=dict(page=page,business_id=b.id,scope=b.id))
             assert response.status_code==200
-            assert '1 unread action' in response.text
+            assert '>Leadership activity</a>' in response.text
+            assert '1 unread action' not in response.text
         assert 'Recent leadership actions' in client.get('/?page=business&business_id='+b.id).text
         assert client.get('/api/progress').json()['leadership_activity']['new']==1
         assert game.world.to_dict()==before

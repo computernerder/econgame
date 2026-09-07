@@ -202,9 +202,9 @@ function updateCash(data) {
   });
   const indicator = document.getElementById('leadership-indicator');
   if (indicator && data.leadership_activity) {
-    const text = data.leadership_activity.label;
+    const text = 'Leadership activity';
     if (indicator.textContent !== text) indicator.textContent = text;
-    indicator.classList.toggle('has-updates', data.leadership_activity.new > 0 || data.leadership_activity.pending > 0);
+    indicator.classList.remove('has-updates');
   }
   if (data.cash_scope !== scope || typeof data.cash_label !== 'string') return;
   document.querySelectorAll('[data-cash-on-hand]').forEach(element => {

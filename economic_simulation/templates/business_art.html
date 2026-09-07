@@ -1,0 +1,14 @@
+{# Small code-native illustrations share the property's architectural palette. #}
+<svg class="company-art" viewBox="0 0 320 120" role="img" aria-label="{{ b.industry_name }} illustration">
+<path d="M0 104H320" stroke="#bbc7b4"/><circle cx="270" cy="25" r="15" fill="#e5ce91"/>
+{% if b.industry in ('factory','trades','construction','logistics','self_storage') %}
+<path d="M65 102V49L120 29V49L175 29V49H252V102Z" fill="#c3cbbc" stroke="#476457" stroke-width="2"/><path d="M218 49V17H232V49" fill="#476457"/>
+<path d="M87 70H110V86H87ZM135 70H158V86H135ZM195 68H233V102H195Z" fill="#6d8a78"/>
+{% elif b.industry in ('engineering','bank','office','security','property_management') %}
+<path d="M80 102V35H240V102Z" fill="#d9d1bb" stroke="#476457" stroke-width="2"/><path d="M70 35L160 13L250 35Z" fill="#476457"/>
+<path d="M98 48H119V68H98ZM139 48H160V68H139ZM180 48H201V68H180ZM145 80H175V102H145Z" fill="#749483"/>
+{% else %}
+<path d="M80 102V43H240V102Z" fill="#e7dbc3" stroke="#476457" stroke-width="2"/><path d="M69 44H251L241 24H79Z" fill="#476457"/>
+<path d="M81 46H239V60H81Z" fill="#a2b28e"/><path d="M93 69H144V93H93ZM184 69H228V93H184ZM154 65H176V102H154Z" fill="#769483"/>
+{% if b.industry=='restaurant' %}<path d="M40 103V84M26 84H54M277 103V84M263 84H291" stroke="#476457" stroke-width="3"/>{% elif b.industry=='gas_station' %}<path d="M35 102V70H55V102M35 78H55M55 77Q69 76 66 96" fill="#c89b6b" stroke="#476457" stroke-width="2"/>{% else %}<path d="M40 103V73M280 103V73" stroke="#476457" stroke-width="3"/><circle cx="40" cy="68" r="14" fill="#9dad83"/><circle cx="280" cy="68" r="14" fill="#9dad83"/>{% endif %}
+{% endif %}</svg>
