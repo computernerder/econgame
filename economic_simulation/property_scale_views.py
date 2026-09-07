@@ -16,14 +16,17 @@ def detail(world,pid):
                 try:designs.append(Development(Engine(world)).quote(p,design,level))
                 except RuleError:continue
     from .business_models import INDUSTRY_NAMES
-    description=p.description
+    development=next((j for j in reversed(world.systems.get('developments',[])) if j['property_id']==pid),None)
+    building=bool(development and development['status']=='building')
+    description=(development['label']+' under construction. The budget is funded; lease or occupy after completion.' if building else p.description)
+    if building:designs=[]
     if p.category!='land' and description=='Vacant serviced land. Fund a suitable building before occupation or rent.':
         description=p.kind+'. '+('Ready to lease or occupy with a compatible business.' if p.status=='vacant' else 'Use and occupancy follow the property status and current agreements.')
-    return dict(description=description,land=p.category=='land',designs=designs,specialization=', '.join(INDUSTRY_NAMES.get(k,k.replace('_',' ').title()) for k in p.specialization),
+    return dict(description=description,building=building,acquisition_basis=p.basis-(development['spent'] if development else 0),committed_basis=p.basis+(development['prepaid'] if development else 0),land=p.category=='land',designs=designs,specialization=', '.join(INDUSTRY_NAMES.get(k,k.replace('_',' ').title()) for k in p.specialization),
         systems=[] if p.category=='land' else [dict(key=k,name='Heating / cooling' if k=='heating_cooling' else k.replace('_',' ').title(),condition=v['condition'],age=v['age'],
             license=TRADE_LICENSES.get(k,'General qualified work'),priority='Urgent' if v['condition']<25 else 'Repair due' if v['condition']<40 else 'Monitor' if v['condition']<65 else 'Serviceable') for k,v in facts.items()],
         work=[j for j in world.systems.get('property_work',[]) if j['property_id']==pid and j['status']=='working'],
-        development=next((j for j in reversed(world.systems.get('developments',[])) if j['property_id']==pid),None))
+        development=development)
 
 def extend(view,world,names,businesses,scope):
     page=view['page'];e=Engine(world);c=Campaign(e)

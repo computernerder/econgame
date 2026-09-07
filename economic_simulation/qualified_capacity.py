@@ -25,7 +25,6 @@ def capacities(rules,b,buckets,employees):
     return result
 
 def consume(rules,b,buckets,employees,minutes):
-    from .workforce import Workforce
     if not hasattr(rules.e,'named_capacity'):rules.e.named_capacity={}
     pool=rules.e.named_capacity.setdefault(b.id,{})
     costs=0;used_staff=[];quality_minutes=0;used=0
@@ -38,12 +37,29 @@ def consume(rules,b,buckets,employees,minutes):
         remaining=take
         for hour in range(len(values)):
             n=min(remaining,values[hour]);values[hour]-=n;remaining-=n
-        policy=Workforce(rules.e).effective(b.id,emp)[0];today=date.fromisoformat(rules.w.date)
-        overtime=emp.salary*max(0,emp.weekly_hours-40)//max(1,emp.weekly_hours*2)
-        wages=daily_share(emp.salary+overtime+emp.compensation.get('shift_premium',0),today)
-        daily=wages+daily_share(Workforce(rules.e).benefit_cost(emp,policy),today)+wages*GAME_RULES['tax']['payroll_percent']//100
-        initial=getattr(rules.e,'named_initial',{}).get(b.id,{}).get(emp.id,emp.weekly_hours*60//max(1,len(emp.days)))
-        costs+=daily*take//max(1,initial)
+        costs+=labor_cost(rules,b,emp,take)
         quality_minutes+=take*rules.person(emp.person_id).skills.get('maintenance',30)
         if not minutes:break
     return used,costs,used_staff,quality_minutes//max(1,used)
+
+
+def labor_cost(rules,b,emp,minutes):
+    """The same real payroll allocation used by quotes and delivered service work."""
+    from .workforce import Workforce
+    policy=Workforce(rules.e).effective(b.id,emp)[0];today=date.fromisoformat(rules.w.date)
+    overtime=emp.salary*max(0,emp.weekly_hours-40)//max(1,emp.weekly_hours*2)
+    wages=daily_share(emp.salary+overtime+emp.compensation.get('shift_premium',0),today)
+    daily=wages+daily_share(Workforce(rules.e).benefit_cost(emp,policy),today)+wages*GAME_RULES['tax']['payroll_percent']//100
+    initial=getattr(rules.e,'named_initial',{}).get(b.id,{}).get(emp.id,emp.weekly_hours*60//max(1,len(emp.days)))
+    return daily*minutes//max(1,initial)
+
+
+def estimated_cost(rules,b,buckets,employees,minutes):
+    pool=getattr(rules.e,'named_capacity',{}).get(b.id,{})
+    available={role:sum(values) for role,values in buckets.items()};cost=0
+    for emp in sorted(employees,key=lambda e:e.id):
+        role=rules.position(emp.position_id).role
+        take=min(minutes,pool.get(emp.id,emp.weekly_hours*60//max(1,len(emp.days))),available.get(role,0))
+        cost+=labor_cost(rules,b,emp,take);minutes-=take;available[role]=available.get(role,0)-take
+        if not minutes:break
+    return cost

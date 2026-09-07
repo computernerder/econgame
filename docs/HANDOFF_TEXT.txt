@@ -1,3 +1,5 @@
+Usability study follow-up (0.36.0): warranty recovery cost/retry safeguards, accepted-hire opening waits, construction funding clarity, direct claim/service resolution, local form drafts, visible success notices, table paging and descriptive tasks. See docs/USABILITY_FOLLOWUP_036.md for behavior, validation and limits. Existing costs, payroll, saved records and approval checks remain.
+
 Visual financial progress (0.35.1): journal-backed 90-day cash/net-worth/income/profit charts, account sparkline, compact financial disclosures, quiet leadership link, readable ledger/activity names and business illustrations. No save or simulation changes. See docs/VISUAL_PROGRESS_0351.md for behavior, validation and remaining study findings.
 
 GitHub builds and Unraid updates (0.35.0): visible image build number and commit below the brand and on login; complete four-shard GitHub test workflow publishes only tested main images to GHCR. Fixed Unraid pull controller uses locking, backups, private-copy preflight, health checks, and snapshot rollback. See docs/GITHUB_UPDATES_035.md for setup; public GHCR package visibility is a one-time user setting.

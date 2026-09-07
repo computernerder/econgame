@@ -44,6 +44,10 @@ def should_pause(engine,fallback=False):
             if reason.get(field):
                 record=next((r for r in engine.world.systems.get(key,[]) if r['id']==reason[field]),None)
                 if record and record['status']!='open':return False
+                if record and record.get('source','').startswith('opening-staff:'):
+                    from .expansion import opening_staff
+                    b=next((b for b in engine.world.businesses if b.id==record['entity']),None)
+                    if not b or b.status!='developing' or not opening_staff(engine.world,b)['missing']:return False
         return True
     # The aggregate legacy boolean can outlive an issue handled during the day.
     # Only an identifiable, unresolved reason may interrupt the player.

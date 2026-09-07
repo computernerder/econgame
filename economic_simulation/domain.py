@@ -297,7 +297,7 @@ class Engine:
         if action in ('close_operation','settle_obligations','negotiate_terms','write_off_invoice','liquidate_assets'):
             from .distress import Distress
             return Distress(self).action(action,args,command_id)
-        if action in ('department_configure','service_request','service_priority','outsource_service','cancel_service'):
+        if action in ('department_configure','service_request','service_priority','outsource_service','cancel_service','close_legal_claim'):
             from .service_office import ServiceOffice
             return ServiceOffice(self).action(action,args,command_id)
         if action=='develop_property':

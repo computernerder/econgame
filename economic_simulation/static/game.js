@@ -62,7 +62,11 @@ function message(text, error = false, links = []) {
     const rounded = Math.round(Number(amount.replaceAll(',', '')));
     return ((before || after) && rounded ? '−' : '') + '$' + rounded.toLocaleString('en-US');
   });
-  notice.className = 'notice' + (error ? ' error' : '');
+  notice.className = 'notice' + (error ? ' error' : ' success-toast');
+  if (!error) {
+    const close = document.createElement('button'); close.type = 'button'; close.className = 'toast-close';
+    close.textContent = 'Dismiss'; close.addEventListener('click', () => { notice.hidden = true; }); notice.append(close);
+  }
   notice.hidden = false;
   appendRecoveryLinks(notice, links);
 }
@@ -79,7 +83,8 @@ async function command(payload) {
     });
     const data = await response.json();
     if (!response.ok) throw recoveryError(data, 'The input could not be accepted. Check the fields and try again.');
-    sessionStorage.setItem('game-notice', data.message);
+    document.dispatchEvent(new CustomEvent('game-command-complete', {detail:payload}));
+    sessionStorage.setItem('game-notice', (payload.action === 'advance' ? '' : 'Completed: ') + data.message);
     if (['new_campaign','open_campaign'].includes(payload.action)) {
       location.assign('/?page=overview');
     } else if (payload.action === 'copy_campaign') {
@@ -147,6 +152,13 @@ document.querySelectorAll('[data-immediate]').forEach(button => button.addEventL
 document.querySelectorAll('form[data-action]').forEach(form => form.addEventListener('submit', async event => {
   event.preventDefault();
   form.querySelector('.form-error')?.remove();
+  if (!form.reportValidity()) return;
+  if (form.dataset.action === 'start_business') {
+    const name = form.elements.namedItem('name');
+    name.setCustomValidity(name.value.trim().length < 2 ? 'Enter a business name with 2–80 characters.' : '');
+    name.addEventListener('input', () => name.setCustomValidity(''), {once:true});
+    if (!form.reportValidity()) return;
+  }
   const args = Object.fromEntries(new FormData(form));
   form.querySelectorAll('input[data-exact-dollars]').forEach(input => {
     if (!input.dataset.moneyEdited && input.value === input.defaultValue) args[input.name] = input.dataset.exactDollars;

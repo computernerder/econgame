@@ -75,3 +75,12 @@ form[data-action] label[hidden],.context-form-feedback [hidden]{display:none}
 /* Navigation remains visible and operable at desktop and compact widths. */
 .mobile-navigation-toggle{display:none}.skip-navigation{position:fixed;left:16px;top:-100px;z-index:100;background:#fff;color:var(--ink);padding:12px 18px;border-radius:5px}.skip-navigation:focus{top:12px}.related-tools a[aria-current]{background:#eaf0e5;border-color:#315c42;font-weight:600}#main-content:focus{outline:none}
 @media(max-width:650px){.mobile-navigation-toggle{display:flex;width:100%;justify-content:space-between;align-items:center;gap:12px;text-align:left;margin-top:14px;padding:12px;background:#315545;color:white;font-size:13px}.mobile-navigation-toggle b{padding:2px 6px;border-radius:4px;background:#5d7258;color:white}#main-navigation{display:none;margin:12px 0 0;max-height:65vh;overflow-y:auto;overflow-x:hidden}#main-navigation[data-open="true"]{display:block}#main-navigation .nav-link{display:flex;font-size:13px;white-space:normal;margin:2px 0;padding:12px}#main-navigation .nav-link b{display:inline-block}#main-navigation .saved-game-label{margin:10px 12px}#main-navigation details .nav-link{padding-left:24px}.sidebar #main-navigation details summary{font-size:13px;padding:12px}.sidebar .brand{display:flex}.management-tabs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));overflow:visible}.management-tabs a{min-width:0;text-align:center;white-space:normal}.mobile-navigation-toggle>span:last-child{white-space:nowrap}}
+
+/* Visible confirmation even when the browser restores a long page's scroll. */
+.success-toast { position:fixed; right:24px; bottom:24px; z-index:110; max-width:480px; max-height:45vh; overflow:auto; box-shadow:0 6px 28px #203f3333; border:1px solid #779581; }
+.toast-close { display:block; margin-top:10px; }
+.table-pages { display:flex; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:14px; }
+.table-pages span { font-size:.85rem; }
+.draft-status button { padding:4px 8px; }
+tr[hidden] { display:none; }
+@media(max-width:600px) { .success-toast { left:12px; right:12px; bottom:12px; max-width:none; } }

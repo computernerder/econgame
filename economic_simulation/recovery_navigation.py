@@ -29,6 +29,7 @@ def recovery_links(world, message, args=None):
     Unrecognized errors retain an inbox/activity fallback.
     """
     args=args or {};names=entity_names(world);text=message.casefold()
+    if text.startswith(('use a business name','enter a whole number','enter a value between','choose a supported service','choose a legal work product')):return []
     scope=next((args[k] for k in ('business_id','entity','recipient','scope') if isinstance(args.get(k),str) and args[k] in names),'personal')
     request=next((r for r in world.systems.get('management_requests',[]) if r['id']==args.get('request_id') and r['business_id'] in names),None)
     if request:scope=request['business_id']

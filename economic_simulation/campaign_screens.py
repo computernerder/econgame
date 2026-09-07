@@ -32,7 +32,7 @@ def populate(view, world, page, scope, campaign, owned, names):
         tables.append(table('Opening budgets', ['Industry', 'Deposit', 'Equipment', 'Stock', 'Sunk costs', 'Reserve', 'Total', 'Days'], [
             (k.replace('_', ' ').title(), *(money(q[x]) for x in ('deposit', 'fitout', 'inventory', 'expense', 'reserve', 'total')), q['days'])
             for k in GAME_RULES['startup'] for q in [rules.opening_quote(k)]]))
-        forms.append(form('start_business', 'Start a business', 'Budget includes the default cash reserve shown above. Staffing and permits may delay opening.', account + [
+        forms.append(form('start_business', 'Start a business', 'Budget includes the default cash reserve in the opening budgets below. Staffing and permits may delay opening.', account + [
             field('name', 'Business name'), select('industry', 'Industry', choices({k: k.replace('_', ' ').title() for k in GAME_RULES['startup']})), select('region', 'County', regions)]))
         for b in owned:
             base = [hidden('business_id', b.id)]

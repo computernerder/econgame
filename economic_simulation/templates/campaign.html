@@ -19,7 +19,7 @@
 <div class="section-heading"><h2>Manage service work and departments</h2></div>{{ controls(campaign.forms) }}
 {% for item in campaign.tables if item.title not in ('Service work queue and digest','Departments and queue capacity') %}{{ records(item,true) }}{% endfor %}
 {% else %}
-{% if campaign.page in ('operations_center','commercial_contracts','property_services','developer') %}<div class="section-heading"><h2>Actions</h2></div>{{ controls(campaign.forms) }}{% endif %}
+{% if campaign.page in ('operations_center','commercial_contracts','property_services','developer','expansion') %}<div class="section-heading"><h2>Actions</h2></div>{{ controls(campaign.forms) }}{% endif %}
 {% for item in campaign.tables %}{{ records(item,campaign.page=='property_workbench' and item.title in ('Repair choices','Building options for owned lots','Flip scenarios','Systems and inspections','Completed project results','Funded flip commitments','Property offers')) }}{% endfor %}
-{% if campaign.page not in ('operations_center','commercial_contracts','property_services','developer') %}{{ controls(campaign.forms) }}{% endif %}
+{% if campaign.page not in ('operations_center','commercial_contracts','property_services','developer','expansion') %}{{ controls(campaign.forms) }}{% endif %}
 {% endif %}

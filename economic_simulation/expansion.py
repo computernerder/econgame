@@ -10,6 +10,18 @@ from .industries import PROJECTS
 from .business_views import descendants
 
 
+def opening_staff(world, business):
+    """Accepted hires cover recruitment, but only active staff permit opening."""
+    from .business_models import OPENING_ROLES
+    positions={p.id:p for p in world.positions}
+    staff=[e for e in world.employments if e.employer==business.id and e.status in ('active','joining')]
+    active={positions[e.position_id].role for e in staff if e.status=='active'}
+    promised={positions[e.position_id].role for e in staff if e.status=='joining' and e.start_date>=world.date}
+    required=set(OPENING_ROLES[business.industry])
+    pending=[e.start_date for e in staff if e.status=='joining' and positions[e.position_id].role in required-active]
+    return dict(missing=required-active-promised, waiting=required-active, starts=max(pending,default=''))
+
+
 class Expansion(Campaign):
     def __init__(self,engine):super().__init__(engine);self.rules=BusinessRules(engine)
 
@@ -135,11 +147,19 @@ class Expansion(Campaign):
                 plan['phase']='Permits and design' if elapsed<7 else 'Fit-out and supplier preparation' if self.w.date<plan['due'] else 'Staffing and commissioning'
             if plan['due']>self.w.date:continue
             if plan['kind']=='opening':
-                staff=self.rules.staff(b.id);roles={self.rules.position(emp.position_id).role for emp in staff}
-                from .business_models import OPENING_ROLES
-                required=OPENING_ROLES[b.industry]
-                if not required<=roles:
-                    self.decision('opening-staff:'+b.id,'Opening needs staff',b.name+' needs '+', '.join(sorted(required-roles))+' before it can open.',b.id);stop=True;continue
+                staffing=opening_staff(self.w,b)
+                decision=next((d for d in self.s['decisions'] if d['source']=='opening-staff:'+b.id),None)
+                if staffing['missing']:
+                    # A genuinely new gap can reopen a previously covered recruitment issue.
+                    detail=b.name+' needs '+', '.join(sorted(staffing['missing']))+' before it can open.'
+                    if decision:decision.update(status='open',detail=detail)
+                    self.decision('opening-staff:'+b.id,'Opening needs staff',detail,b.id);stop=True;continue
+                if decision and decision['status']=='open':
+                    decision.update(status='resolved',choice='staffed',resolved=self.w.date)
+                    decision['options']['staffed']='Required roles recruited'
+                if staffing['waiting']:
+                    plan['phase']='Accepted hires start '+staffing['starts']+'; commissioning waits for active staff'
+                    continue
                 b.status='operating';b.opening_on=None;plan['status']='complete';plan['phase']='Open and ramping up';b.capacity_percent=70
                 if b.industry in PROJECTS:b.project_active=True
                 self.e.event('New business opened',b.name+' is trading. Capacity ramps toward normal over its first month.',True);stop=True

@@ -22,6 +22,7 @@ def prepare(campaign,world,scope,property_id='',action_focus='',work_system='',d
     for index,form in enumerate(forms):
         form.setdefault('anchor','task-'+form['action']+'-'+str(index))
         for field in form['fields']:
+            if form['action']=='start_business' and field['name']=='name':field.update(required=True,minlength=2,maxlength=80)
             if field['name'] in ('department','role','hiring_role') and not (form['action']=='service_request' and field['name']=='department'):
                 for option in field['options']:option['label']=role_label(str(option['value']))
             if prop and field['name']=='property_id' and any(o['value']==prop.id for o in field['options']):

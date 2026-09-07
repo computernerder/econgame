@@ -10,6 +10,11 @@ def name_catalog(world):
     names.update(personal='Personal portfolio')
     from .holding_company import name
     names['company'] = name(world)
+    for number,task in enumerate(world.systems.get('service_tasks',[]),1):
+        work=task.get('product') or task.get('department','service')
+        label=work.upper() if work in ('hr','it') else work.replace('_',' ').title()
+        target=names.get(task.get('target_id'))
+        names[task['id']]=label+' for '+names.get(task['recipient'],task['recipient'])+(' · '+target if target else '')+' · '+task.get('created','')+' · request '+str(number)
     return names
 
 

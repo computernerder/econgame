@@ -72,7 +72,12 @@ def items(world,manager_care=None):
                 if not license or person.licenses.get(license,'')>=today:continue
                 if any(p['kind']=='license' and p.get('person_id')==person.id and p['status']=='active' for p in s.get('plans',[])):continue
                 page='workforce';action='renew_license';targets=dict(employment_id=emp.id,license=license)
-            elif src.startswith(('retirement:','retention:','opening-staff:')):page='people'
+            elif src.startswith('opening-staff:'):
+                from .expansion import opening_staff
+                business=businesses.get(d['entity'])
+                if not business or business.status!='developing' or not opening_staff(world,business)['missing']:continue
+                page='people'
+            elif src.startswith(('retirement:','retention:')):page='people'
             add('decision',d['id'],d['entity'],d['title'],d['detail'],page,action,targets,due=d['due'],amount=d['cost'],source=d)
     from .routine_management import ready_property_care
     if manager_care is None:manager_care=ready_property_care(world)
@@ -330,6 +335,15 @@ def inbox_view(world):
                 for r in world.systems.get('management_requests',[]) if r['id'] in manager_care]
     for row in rows:
         row['forms']=[]
+        if row['kind']=='claim':
+            from .legal_recovery import claim_summary
+            from .money_display import money
+            claim=next(c for c in world.systems['legal_claims'] if 'claim:'+c['id']==row['id'])
+            summary=claim_summary(world,claim)
+            row['detail']+=f" Legal work to date: {money(summary['spent'])}; cash recovered: {money(summary['recovered'])}; completed attempts: {summary['attempts']}. Outside recovery must cost less than the claim, including prior work. Internal legal work still consumes payroll and capacity."
+            row['forms'].append(form('close_legal_claim','Stop pursuing this claim','Closes the unbooked claim without creating cash or erasing legal expenses. Existing repair work is unaffected.',[hidden('claim_id',claim['id'])],button='Review closing claim →'))
+        if row['kind']=='service':
+            row['forms'].append(form('cancel_service','Cancel unfinished work','Delivered work remains an expense. Unused outside reserves are refunded or returned to the supplier agreement.',[hidden('task_id',row['targets'].get('task_id',''))],button='Review cancellation →'))
         if row['kind']=='time_off':
             row['forms'].append(form('time_off_decide','Review time-off request','Paid leave preserves wages. Unpaid leave removes wage accrual for the approved calendar dates; benefits continue. Approval reserves entitlement and reduces scheduled work only on those dates.',
                 [hidden('request_id',row['source']['id']),field('choice','Decision','approve','select',choices({'approve':'Approve','decline':'Decline'}))]))

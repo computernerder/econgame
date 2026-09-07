@@ -22,6 +22,9 @@ class ServiceOffice(Campaign):
     def action(self,action,args,source):
         from .business_rules import BusinessRules
         rules=BusinessRules(self.e)
+        if action=='close_legal_claim':
+            from .legal_recovery import close_claim
+            return close_claim(self.e,args)
         if action=='department_configure':
             provider=rules.company(args.get('provider',''))
             role=args.get('department','')
@@ -95,6 +98,10 @@ class ServiceOffice(Campaign):
             ServiceProducts(self.e).prepare(task,args)
             # Outside specialists are reserved and prepaid; unused balance is an asset.
             from .supplier_contracts import SupplierContracts
+            from .legal_recovery import check_recovery
+            contract=SupplierContracts(self.e).available_contract(task)
+            rate=contract['rate'] if contract else 150
+            check_recovery(self.w,task,task['effort']*rate if mode in ('outside','mixed') else 0,new=True)
             reserved=SupplierContracts(self.e).reserve(task,source)
             if mode in ('outside','mixed') and not reserved:
                 prepaid=task['effort']*150
@@ -125,6 +132,8 @@ class ServiceOffice(Campaign):
             if not task:raise RuleError('Choose unfinished service work.')
             if task.get('supplier_contract'):raise RuleError('This task already reserves contracted outside capacity. Cancel it before changing suppliers; expired credits are not refundable.')
             self.require(task['recipient'])
+            from .legal_recovery import check_recovery
+            check_recovery(self.w,task,task['remaining']*150)
             needed=max(0,task['remaining']*150-task.get('prepaid',0))
             if needed:self.e.post(task['recipient'],source,'Reserve replacement outside specialists',{'asset:cash':-needed,'asset:prepaid_services':needed})
             task['prepaid']=task.get('prepaid',0)+needed;task['mode']='outside'
@@ -152,6 +161,7 @@ class ServiceOffice(Campaign):
             tasks=sorted((t for t in self.s.get('service_tasks',[]) if t['provider']==b.id and t['department']==role and t['status'] in ('queued','working') and t['mode']!='outside'),key=lambda t:(t['priority'],t['due'],t['id']))
             for task in tasks:
                 if task['remaining']<=0:continue
+                if not self.recovery_allowed(task):continue
                 recipient=next((x for x in self.w.businesses if x.id==task['recipient']),None)
                 prop=next((x for x in self.w.properties if x.id==task['target_id']),None)
                 region=prop.region if prop and task.get('product')=='property_representation' else recipient.region if recipient else prop.region if prop else b.region
@@ -163,6 +173,9 @@ class ServiceOffice(Campaign):
                 used=min(capacity,max(travel+1,(task['remaining']*100+max(1,speed)-1)//max(1,speed)+travel))
                 progress=min(task['remaining'],(used-travel)*speed//100)
                 if progress<=0:continue
+                if task['department']=='legal' and task['matter'] in ('collection','dispute'):
+                    from .qualified_capacity import estimated_cost
+                    if not self.recovery_allowed(task,estimated_cost(rules,b,buckets,qualified,used)):continue
                 capacity-=used;dept['last_used']+=used
                 actual,cost,used_staff,_=consume(rules,b,buckets,qualified,used)
                 if 'labor_remaining' in task:task['labor_remaining']=max(0,task['labor_remaining']-actual)
@@ -172,6 +185,17 @@ class ServiceOffice(Campaign):
                 task['internal_cost']+=cost;dept['last_cost']+=cost
                 task['staff']=sorted(set(task['staff'])|set(used_staff))
                 self.progress(task,progress,quality)
+
+    def recovery_allowed(self,task,additional=0):
+        from .legal_recovery import check_recovery
+        try:
+            check_recovery(self.w,task,additional+(task['remaining']*task.get('outside_rate',150) if task['mode'] in ('outside','mixed') else 0))
+            return True
+        except RuleError as error:
+            self.action('cancel_service',dict(task_id=task['id']),task['id']+':recovery-guard')
+            task['outcome']+=' '+str(error)
+            self.e.event('Recovery spending stopped',task['outcome'],True)
+            return False
 
     def progress(self,task,effort,quality):
         task['remaining']-=effort;task['worked']+=effort;task['status']='working'
@@ -190,6 +214,7 @@ class ServiceOffice(Campaign):
                 remaining=task['prepaid'];task['prepaid']=0
                 self.e.post(task['recipient'],task['id']+':refund','Unused outside capacity refunded',{'asset:prepaid_services':-remaining,'asset:cash':remaining})
             if task['status'] not in ('queued','working'):continue
+            if not self.recovery_allowed(task):continue
             if task['mode'] in ('outside','mixed') and task['remaining']>0:
                 used=min(suppliers.capacity(task),task['remaining']);cost=used*task.get('outside_rate',150)
                 if used:
@@ -291,6 +316,7 @@ class ServiceOffice(Campaign):
             if claim:
                 task['exposure']=claim['amount']
                 if claim['amount']>5000000 and task['mode']=='internal':
+                    task['requires_outside']=True
                     task['outcome']='This specialist matter requires outside counsel. The recorded claim remains open.';return
                 if stable_roll(self.w,'warranty-settlement:'+target)>=quality:
                     task['outcome']='Contractor refused settlement; the documented callback claim remains unresolved.';return

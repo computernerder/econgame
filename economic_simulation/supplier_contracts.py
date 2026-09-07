@@ -38,10 +38,13 @@ class SupplierContracts(Campaign):
     def contract(self,task):
         return next((c for c in self.s.get('supplier_contracts',[]) if c['id']==task.get('supplier_contract')),None)
 
+    def available_contract(self,task):
+        if task['mode']!='outside':return None
+        return next((c for c in self.s.get('supplier_contracts',[]) if c['buyer']==task['recipient'] and c['department']==task['department']
+                     and c['status']=='active' and c['expires']>=self.w.date and c['available']>=task['effort']),None)
+
     def reserve(self,task,source):
-        if task['mode']!='outside':return False
-        contract=next((c for c in self.s.get('supplier_contracts',[]) if c['buyer']==task['recipient'] and c['department']==task['department']
-                       and c['status']=='active' and c['expires']>=self.w.date and c['available']>=task['effort']),None)
+        contract=self.available_contract(task)
         if not contract:return False
         cost=task['effort']*contract['rate'];contract['available']-=task['effort'];contract['credit']-=cost
         task.update(supplier_contract=contract['id'],outside_rate=contract['rate'],prepaid=cost)
