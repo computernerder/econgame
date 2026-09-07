@@ -37,7 +37,9 @@ def test_business_can_own_home_but_requires_suitable_operating_premises(game):
     assert next(p for p in game.world.properties if p.id==pid).owner==bid
     act(game,'rent',entity=bid,property_id=pid)
     step(game,10)
-    assert next(p for p in game.world.properties if p.id==pid).tenant.startswith('Household')
+    rented=next(p for p in game.world.properties if p.id==pid)
+    assert rented.status=='rented' and rented.tenant and rented.lease_end>game.world.date
+    assert not any(char.isdigit() for char in rented.tenant)
     game.store.audit(game.world)
 
 

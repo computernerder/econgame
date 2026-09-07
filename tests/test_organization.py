@@ -36,7 +36,7 @@ def test_ownership_displays_nested_subsidiaries_and_company_real_estate(game):
     engine=Engine(copy.deepcopy(game.world))
     engine.post('personal','test-org-capital','Test capital',{'asset:cash':500000000,'equity:capital':-500000000})
     game.store.commit(engine,game.world.revision);game.world=engine.world
-    root=next(b for b in game.world.businesses if b.name=='Northbank Enterprise Group')
+    root=next(b for b in game.world.businesses if any(child.market_parent==b.id for child in game.world.businesses))
     act(game,'acquire_business',business_id=root.id,entity='personal');step(game,3)
     chart=ownership_tree(game.world,root.id)
     assert chart['companies']==3 and chart['properties']==2
